@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::content},~{::head},'Вход', ~{::scripts})}">
+<head>
+
+</head>
+<body>
+<th:block th:fragment="content">
+    <h2>
+        Вход
+    </h2>
+    <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div style="padding-top:30px" class="panel-body">
+
+                <form action="/login" th:action="@{/user/login}" method="post" id="loginform" class="form-horizontal"
+                      role="form">
+
+                    <div class="mb-2 input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="login-username" type="text" class="form-control" name="username" value=""
+                               placeholder="имя пользователя">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="login-password" type="password" class="form-control" name="password"
+                               placeholder="пароль">
+                    </div>
+
+                    <div style="margin-top:10px" class="form-group">
+                        <!-- Button -->
+
+                            <input class="btn btn-success" type="submit" value="Войти">
+                    </div>
+
+                    <span style="color: red;" th:text="${error}"></span>
+                    <span style="color: green;" th:text="${logout}"></span>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="scripts">
+
+</th:block>
+</body>
+</html>
