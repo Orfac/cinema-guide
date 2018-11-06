@@ -38,16 +38,6 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping("{userId}/orders")
-    public String getUserOrders() {
-        return "userOrders";
-    }
-
-    @RequestMapping("{userId}/rating")
-    public String getUserRating() {
-        return "userRating";
-    }
-
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String updateUser(User user) {
         try {

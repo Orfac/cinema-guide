@@ -14,8 +14,8 @@ public class OrderController {
 
     @RequestMapping("/orders")
     public String index(ModelMap model) {
-        model.put("films", orderRepository.findAll());
-        return "billboard";
+        model.put("orders", orderRepository.findAll());
+        return "userOrders";
     }
 
 }
