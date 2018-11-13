@@ -16,5 +16,5 @@ public class CinemaHall extends BaseEntity {
     private CinemaTheatre cinemaTheatre;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaHall")
-    private Set<Place> places;
+    private Set<Seat> seats;
 }
