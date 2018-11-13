@@ -7,5 +7,4 @@ import javax.persistence.Entity;
 @Entity
 public class Genre extends BaseEntity {
 
-
 }
