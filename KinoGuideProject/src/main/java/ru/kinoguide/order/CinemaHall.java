@@ -14,4 +14,7 @@ public class CinemaHall extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "cinema_theatre_id", nullable = false)
     private CinemaTheatre cinemaTheatre;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaHall")
+    private Set<Place> places;
 }
