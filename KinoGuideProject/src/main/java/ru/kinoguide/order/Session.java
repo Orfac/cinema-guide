@@ -5,8 +5,9 @@ import ru.kinoguide.films.Film;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+// todo нужно ли что-нибудь изменять?
 @Table(name = "sessions")
+@Entity
 public class Session {
 
 
