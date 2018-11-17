@@ -3,7 +3,9 @@ package ru.kinoguide.order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.kinoguide.user.User;
 
 @Controller
 @RequestMapping("/orders")
@@ -12,9 +14,8 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @RequestMapping("/orders")
-    public String index(ModelMap model) {
-        model.put("orders", orderRepository.findAll());
+    public String index(ModelMap model, @ModelAttribute("user") User user) {
+        model.put("orders", orderRepository.findAllByUserOrderByDateDesc(user));
         return "userOrders";
     }
 

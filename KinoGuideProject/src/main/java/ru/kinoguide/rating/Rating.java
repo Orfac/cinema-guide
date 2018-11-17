@@ -19,4 +19,26 @@ public class Rating extends BaseEntity {
 
     @Column(nullable = false)
     private int rate;
+
+    /**
+     * For user proximity calculation
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return film.hashCode();
+    }
+
+    public Film getFilm() {
+        return film;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public int getRate() {
+        return rate;
+    }
 }

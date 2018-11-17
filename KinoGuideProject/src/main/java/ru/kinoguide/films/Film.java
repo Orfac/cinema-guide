@@ -23,9 +23,7 @@ public class Film extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
     private Set<Rating> ratingSet;
 
-    @ManyToMany(
-//            TODO ? cascade = CascadeType.,
-    )
+    @ManyToMany(cascade = CascadeType.ALL) // TODO Саня решить вопрос с каскадностью
     @JoinTable(name = "films_genres", joinColumns =
     @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))

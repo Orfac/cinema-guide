@@ -1,12 +1,14 @@
 package ru.kinoguide.films;
 
+import ru.kinoguide.BaseEntity;
+
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Table(name = "rewards")
 @Entity
-public class Reward {
+public class Reward extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;

@@ -1,5 +1,6 @@
 package ru.kinoguide.order;
 
+import ru.kinoguide.BaseEntity;
 import ru.kinoguide.films.Film;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.util.Date;
 // todo нужно ли что-нибудь изменять?
 @Table(name = "sessions")
 @Entity
-public class Session {
+public class Session  extends BaseEntity {
 
 
     @Column(nullable = false)
