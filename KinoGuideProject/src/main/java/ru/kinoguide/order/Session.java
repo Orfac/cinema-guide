@@ -12,10 +12,10 @@ import java.util.Date;
 public class Session  extends BaseEntity {
 
 
-    @Column(nullable = false)
+    @Column(name = "start_time", nullable = false)
     private Date startTime;
 
-    @Column(nullable = false)
+    @Column(name = "end_time", nullable = false)
     private Date endTime;
 
     @ManyToOne

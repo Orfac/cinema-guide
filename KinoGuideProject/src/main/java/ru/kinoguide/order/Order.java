@@ -20,5 +20,5 @@ public class Order extends BaseEntity {
     @Column(name = "date", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
-    private Instant date;
+    private Instant dateCreated;
 }

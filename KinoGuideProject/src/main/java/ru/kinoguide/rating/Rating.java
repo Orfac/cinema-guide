@@ -1,10 +1,13 @@
 package ru.kinoguide.rating;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.kinoguide.BaseEntity;
 import ru.kinoguide.films.Film;
 import ru.kinoguide.user.User;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Table(name = "user_films_rating")
@@ -19,6 +22,11 @@ public class Rating extends BaseEntity {
 
     @Column(nullable = false)
     private int rate;
+
+    @Column(name = "date", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
+    private Instant date;
 
     /**
      * For user proximity calculation
@@ -40,5 +48,9 @@ public class Rating extends BaseEntity {
 
     public int getRate() {
         return rate;
+    }
+
+    public Instant getDate() {
+        return date;
     }
 }

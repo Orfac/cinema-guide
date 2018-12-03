@@ -1,6 +1,8 @@
 package ru.kinoguide.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +17,7 @@ public class OrderController {
     private OrderRepository orderRepository;
 
     public String index(ModelMap model, @ModelAttribute("user") User user) {
-        model.put("orders", orderRepository.findAllByUserOrderByDateDesc(user));
+        model.put("orders", orderRepository.findAllByUser(user, new PageRequest(1, 20, Sort.Direction.DESC, "dateCreated")));
         return "userOrders";
     }
 
