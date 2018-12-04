@@ -11,7 +11,6 @@ import java.util.Date;
 @Entity
 public class Session  extends BaseEntity {
 
-
     @Column(name = "start_time", nullable = false)
     private Date startTime;
 

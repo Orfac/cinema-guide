@@ -14,6 +14,6 @@ public interface RatingRepository extends PagingAndSortingRepository<Rating, Int
 
     Page<Rating> findAllByUser(User user, Pageable pageable);
 
-    @Query("SELECT r1, r2 FROM Rating r1 INNER JOIN Rating r2 ON r1.film = r2.film AND r1.user = u1 AND r2.user = u2")
+    @Query("SELECT r1, r2 FROM Rating r1 INNE1R JOIN Rating r2 ON r1.film = r2.film AND r1.user = u1 AND r2.user = u2")
     Page<Rating> findCommonRates( User u1, User u2, Pageable pageable);
 }
