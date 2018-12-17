@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-// todo нужно ли что-нибудь изменять?
-@Table(name = "sessions")
 @Entity
 public class Session  extends BaseEntity {
 

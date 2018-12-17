@@ -2,8 +2,7 @@ package ru.kinoguide.Entity;
 
 import javax.persistence.*;
 
-// todo чекни
-@Table(name = "tickets")
+
 @Entity
 public class Ticket extends BaseEntity {
 

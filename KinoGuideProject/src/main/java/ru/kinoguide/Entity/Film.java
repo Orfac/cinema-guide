@@ -8,7 +8,6 @@ import javax.validation.constraints.Min;
 import java.time.Instant;
 import java.util.Set;
 
-@Table(name = "films")
 @Entity
 public class Film extends BaseEntity {
 

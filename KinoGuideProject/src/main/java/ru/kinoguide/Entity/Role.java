@@ -3,7 +3,6 @@ package ru.kinoguide.Entity;
 
 import javax.persistence.*;
 
-@Table(name = "roles")
 @Entity
 public class Role extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true)

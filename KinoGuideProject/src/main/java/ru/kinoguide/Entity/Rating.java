@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "user_films_rating")
 public class Rating extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "film_id", nullable = false)

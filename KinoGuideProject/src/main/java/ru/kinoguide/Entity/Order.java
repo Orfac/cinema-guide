@@ -6,11 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.Instant;
 
-@Table(name = "orders")
 @Entity
 public class Order extends BaseEntity {
-    //    @ManyToMany()
-//    private Set<Order> orderSet;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

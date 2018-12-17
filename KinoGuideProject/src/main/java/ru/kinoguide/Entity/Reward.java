@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-@Table(name = "rewards")
 @Entity
 public class Reward extends BaseEntity {
     @ManyToOne

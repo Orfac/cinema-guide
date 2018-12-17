@@ -3,7 +3,7 @@ package ru.kinoguide.Entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "seats", uniqueConstraints = @UniqueConstraint(columnNames = {"row","column","cinema_hall_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"row","column","cinema_hall_id"}))
 public class Seat extends BaseEntity {
 
     @ManyToOne
