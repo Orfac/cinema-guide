@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users") // Table here is required because User extends BaseEntity
+@Table(name = "\"user\"") // Table here is required because User extends BaseEntity
 public class User extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
