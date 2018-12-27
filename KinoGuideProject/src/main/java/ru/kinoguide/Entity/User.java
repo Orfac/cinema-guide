@@ -2,6 +2,7 @@ package ru.kinoguide.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,6 +16,9 @@ public class User extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Rating> ratingSet;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Order> orderList;
 
     public String getName() {
         return name;

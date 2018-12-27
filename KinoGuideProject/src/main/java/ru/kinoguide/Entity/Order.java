@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(name = "\"order\"")
 public class Order extends BaseEntity {
 
     @ManyToOne
@@ -17,4 +18,23 @@ public class Order extends BaseEntity {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
     private Instant dateCreated;
+
+    public Order() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Instant getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Instant dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 }

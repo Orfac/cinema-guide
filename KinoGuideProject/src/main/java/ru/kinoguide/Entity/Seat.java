@@ -10,10 +10,10 @@ public class Seat extends BaseEntity {
     @JoinColumn(name = "cinema_hall_id", nullable = false) //fetchtype
     private CinemaHall cinemaHall;
 
-    @Column(nullable = false)
+    @Column(name = "row", nullable = false)
     private int row;
 
-    @Column(nullable = false)
+    @Column(name = "\"column\"", nullable = false)
     private int column;
 
 
