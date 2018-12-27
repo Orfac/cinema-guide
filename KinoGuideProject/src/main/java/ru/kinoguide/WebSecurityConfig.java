@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -32,16 +33,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/films/**", "/js/**", "/css/**").permitAll()
+                .antMatchers("/films/**", "/js/**", "/css/**", "/assets/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf() // disabling because it causes errors when handling some forms
-                .disable();
-        // https://stackoverflow.com/questions/21128058/invalid-csrf-token-null-was-found-on-the-request-parameter-csrf-or-header
-//                .logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // .logoutUrl("/logout") did not work and I had to to it like this WHY?
-//                .logoutSuccessUrl("/users/login?logout")
-//                .permitAll();
+                .disable()
+                // https://stackoverflow.com/questions/21128058/invalid-csrf-token-null-was-found-on-the-request-parameter-csrf-or-header
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // .logoutUrl("/logout") did not work and I had to to it like this WHY?
+                .logoutSuccessUrl("/users/login?logout")
+                .permitAll();
     }
 
     @Autowired
