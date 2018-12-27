@@ -13,7 +13,6 @@ public class UserPrincipalImpl implements UserDetails {
         this.user = user;
     }
 
-    // TODO What is that
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
