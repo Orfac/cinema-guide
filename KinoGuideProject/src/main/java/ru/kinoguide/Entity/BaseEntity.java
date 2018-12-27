@@ -1,4 +1,4 @@
-package ru.kinoguide;
+package ru.kinoguide.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

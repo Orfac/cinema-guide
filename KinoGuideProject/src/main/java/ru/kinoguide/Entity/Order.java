@@ -1,18 +1,14 @@
-package ru.kinoguide.order;
+package ru.kinoguide.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.kinoguide.BaseEntity;
-import ru.kinoguide.user.User;
 
 import javax.persistence.*;
 import java.time.Instant;
 
-@Table(name = "orders")
 @Entity
 public class Order extends BaseEntity {
-    //    @ManyToMany()
-//    private Set<Order> orderSet;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

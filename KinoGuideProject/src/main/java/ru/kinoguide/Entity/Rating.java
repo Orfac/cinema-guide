@@ -1,16 +1,12 @@
-package ru.kinoguide.rating;
+package ru.kinoguide.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.kinoguide.BaseEntity;
-import ru.kinoguide.films.Film;
-import ru.kinoguide.user.User;
 
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "user_films_rating")
 public class Rating extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "film_id", nullable = false)

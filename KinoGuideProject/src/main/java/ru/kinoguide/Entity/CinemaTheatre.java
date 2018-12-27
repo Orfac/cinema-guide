@@ -1,12 +1,9 @@
-package ru.kinoguide.order;
-
-import ru.kinoguide.BaseEntity;
+package ru.kinoguide.entity;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "cinema_theatres")
 public class CinemaTheatre extends BaseEntity {
 
     @Column(nullable = false, unique = true)

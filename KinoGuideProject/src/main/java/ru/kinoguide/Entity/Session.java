@@ -1,13 +1,9 @@
-package ru.kinoguide.order;
-
-import ru.kinoguide.BaseEntity;
-import ru.kinoguide.films.Film;
+package ru.kinoguide.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
-// todo нужно ли что-нибудь изменять?
-@Table(name = "sessions")
 @Entity
 public class Session  extends BaseEntity {
 
@@ -24,4 +20,7 @@ public class Session  extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "film_id", nullable = false)
     private Film film;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "session")
+    private Set<Ticket> tickets;
 }

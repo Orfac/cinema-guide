@@ -1,12 +1,9 @@
-package ru.kinoguide.films;
-
-import ru.kinoguide.BaseEntity;
+package ru.kinoguide.entity;
 
 import javax.persistence.*;
 import java.util.Date;
 
 
-@Table(name = "rewards")
 @Entity
 public class Reward extends BaseEntity {
     @ManyToOne

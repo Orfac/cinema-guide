@@ -1,10 +1,7 @@
-package ru.kinoguide.films;
-
-import ru.kinoguide.BaseEntity;
+package ru.kinoguide.entity;
 
 import javax.persistence.*;
 
-@Table(name = "groups")
 @Entity
 public class Group extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true)

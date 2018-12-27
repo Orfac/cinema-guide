@@ -1,14 +1,8 @@
-package ru.kinoguide.order;
-
-import ru.kinoguide.BaseEntity;
-import ru.kinoguide.user.User;
+package ru.kinoguide.entity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
 
-// todo чекни
-@Table(name = "tickets")
+
 @Entity
 public class Ticket extends BaseEntity {
 

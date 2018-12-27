@@ -1,11 +1,8 @@
-package ru.kinoguide.films;
+package ru.kinoguide.entity;
 
-
-import ru.kinoguide.BaseEntity;
 
 import javax.persistence.*;
 
-@Table(name = "roles")
 @Entity
 public class Role extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true)

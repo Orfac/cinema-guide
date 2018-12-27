@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.kinoguide.entity.User;
+import ru.kinoguide.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{

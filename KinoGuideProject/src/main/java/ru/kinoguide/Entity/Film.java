@@ -1,16 +1,13 @@
-package ru.kinoguide.films;
+package ru.kinoguide.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.kinoguide.BaseEntity;
-import ru.kinoguide.rating.Rating;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.time.Instant;
 import java.util.Set;
 
-@Table(name = "films")
 @Entity
 public class Film extends BaseEntity {
 
