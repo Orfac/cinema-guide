@@ -1,0 +1,6 @@
+ru.kinoguide
+ru.kinoguide.controller
+ru.kinoguide.entity
+ru.kinoguide.repository
+ru.kinoguide.service
+ru.kinoguide.user
