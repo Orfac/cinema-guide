@@ -8,10 +8,10 @@ import java.util.Set;
 @Entity
 @Table(name = "\"user\"") // Table here is required because User extends BaseEntity
 public class User extends BaseEntity {
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
