@@ -29,7 +29,7 @@ public class UserController {
         return "userList";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "login")
     public String login(ModelMap model, @RequestParam(name = "error", required = false) String error, @RequestParam(name = "logout", required = false) String logout) {
         if (error != null) {
             model.put("error", "Invalid username or password");
