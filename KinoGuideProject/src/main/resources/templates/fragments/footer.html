@@ -2,7 +2,7 @@
 <body th:fragment="footer (menu)">
 
 <!--footer starts from here-->
-<footer class="footer">
+<footer class="fixed-bottom">
 
         <ul class="list-inline text-center">
             <li th:fragment="menuItem (path,title)" th:class="${title==menu ? 'list-inline-item active' : 'list-inline-item'}">
@@ -17,8 +17,8 @@
             <li th:replace="::menuItem ('/','Мои оценки')">
             </li>
         </ul>
-        <p class="text-center">Copyright 2018 | Specially Designed For <a href="http://se.ifmo.ru">Helios Corp.</a></p>
-        <p class="text-center">Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+        <p class="text-center m-0">Copyright 2018 | Specially Designed For <a href="http://se.ifmo.ru">Helios Corp.</a></p>
+        <p class="text-center small m-0">Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
 </footer>
 
 

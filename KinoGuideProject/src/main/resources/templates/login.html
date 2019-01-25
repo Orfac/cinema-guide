@@ -6,40 +6,46 @@
 </head>
 <body>
 <th:block th:fragment="content">
-    <h2>
-        Вход
-    </h2>
-    <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-info">
-            <div style="padding-top:30px" class="panel-body">
 
-                <form action="/login" th:action="@{/user/login}" method="post" id="loginform" class="form-horizontal"
-                      role="form">
-
-                    <div class="mb-2 input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="login-username" type="text" class="form-control" name="username" value=""
-                               placeholder="имя пользователя">
-                    </div>
-
+    <div class="row align-middle">
+        <div class="col-md-4 col-xs-3"></div>
+        <div class="col-md-4 col-xs-6">
+            <form>
+                <div class="form-group">
+                    <label class="control-label" for="login">
+                        Имя пользователя
+                    </label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input id="login-password" type="password" class="form-control" name="password"
-                               placeholder="пароль">
+                        <div class="input-group-text">
+                            <span class="fa fa-user"></span>
+                        </div>
+                        <input class="form-control" id="login" name="login" type="text" placeholder="имя пользователя"/>
                     </div>
-
-                    <div style="margin-top:10px" class="form-group">
-                        <!-- Button -->
-
-                            <input class="btn btn-success" type="submit" value="Войти">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password">
+                        Пароль
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <span class="fa fa-lock"></span>
+                        </div>
+                        <input class="form-control" id="password" name="password" type="password" placeholder="пароль"/>
                     </div>
-
-                    <span style="color: red;" th:text="${error}"></span>
-                    <span style="color: green;" th:text="${logout}"></span>
-                </form>
-            </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-block" value="Войти">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 help-login-link-left"><a href="#">Забыли пароль?</a> </div>
+                    <div class="col-md-6 help-login-link-right"><span><a href="#">Регистрация</a> </span></div>
+                </div>
+            </form>
         </div>
+        <div class="col-md-4 col-xs-3"></div>
     </div>
+
+
 </th:block>
 <th:block th:fragment="scripts">
 
