@@ -1,8 +1,12 @@
 package ru.kinoguide.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.repository.UserRepository;
 
+import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
@@ -18,6 +23,10 @@ public class UserController {
 
     @Autowired
     private UserRepository usersRepo;
+
+    @Qualifier("passwordEncoder")
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @ModelAttribute("users")
     public Collection<User> getUsers() {
@@ -29,16 +38,52 @@ public class UserController {
         return "userList";
     }
 
-    @RequestMapping(value = "login")
-    public String login(ModelMap model, @RequestParam(name = "error", required = false) String error, @RequestParam(name = "logout", required = false) String logout) {
-        if (error != null) {
-            model.put("error", "Invalid username or password");
-        }
-        if (logout != null) {
-            model.put("logout", "You have logout successfully");
-        }
+    @RequestMapping(path = "login")
+    public String login(@RequestParam(name = "error", required = false)
+                                String error, String logout, Model model) {
+//        User user = new User();
+//        model.addAttribute("user", user);
         return "login";
     }
+
+//
+//    @RequestMapping(path = "login", method = RequestMethod.POST)
+//    public String processToLogin(@Valid User user, BindingResult userBindingResult, @RequestParam(name = "error", required = false)
+//            String error, String logout, ModelMap model) {
+//        System.out.println("login POST");
+//        userBindingResult.rejectValue("name", "fuck");
+//        if (error == null) {
+////            userBindingResult.
+//        }
+//        if (error != null) {
+//            model.put("error", "Invalid username or password");
+//        }
+//        if (logout != null) {
+//            model.put("logout", "You have logout successfully");
+//        }
+//        return "login";
+//    }
+
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String register(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "register";
+    }
+
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public String register(@Valid User user, BindingResult userBindingResult) {
+        if (!userBindingResult.hasErrors()) {
+            if (usersRepo.findByName(user.getName()) == null) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+                usersRepo.save(user);
+            } else {
+                userBindingResult.rejectValue("name", "Имя уже занято", "Имя уже занято");
+            }
+        }
+        return "register";
+    }
+
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String updateUser(User user) {
@@ -50,15 +95,6 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.GET)
-    public String updateUserForm(Integer id, ModelMap model) {
-        User user = id != null ? usersRepo.findOne(id) : null;
-        if (user == null) {
-            user = new User();
-        }
-        model.put("user", user);
-        return "updateUser";
-    }
 
     @RequestMapping(value = "delete", method = RequestMethod.GET)
     public String deleteUser(Integer id, ModelMap model) {

@@ -186,9 +186,7 @@
                             <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>ru.kinoguide.Application</mainClass>
                         </manifest>
-
                     </archive>
-
                 </configuration>
             </plugin>
         </plugins>

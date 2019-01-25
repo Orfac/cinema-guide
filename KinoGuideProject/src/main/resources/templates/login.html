@@ -6,20 +6,26 @@
 </head>
 <body>
 <th:block th:fragment="content">
-
     <div class="row align-middle">
         <div class="col-md-4 col-xs-3"></div>
+
         <div class="col-md-4 col-xs-6">
-            <form>
+            <form th:action="@{/user/login}" method="post">
+                <div th:if="${param.error}" class="alert alert-error">
+                    Неправильная комбинация логина и пароля.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    Вы успешно вышли.
+                </div>
                 <div class="form-group">
-                    <label class="control-label" for="login">
+                    <label class="control-label" for="name">
                         Имя пользователя
                     </label>
                     <div class="input-group">
                         <div class="input-group-text">
                             <span class="fa fa-user"></span>
                         </div>
-                        <input class="form-control" id="login" name="login" type="text" placeholder="имя пользователя"/>
+                        <input class="form-control" id="name" name="name" type="text" placeholder="имя пользователя"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,7 +44,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 help-login-link-left"><a href="#">Забыли пароль?</a> </div>
-                    <div class="col-md-6 help-login-link-right"><span><a href="#">Регистрация</a> </span></div>
+                    <div class="col-md-6 help-login-link-right"><span><a href="/user/register">Регистрация</a> </span></div>
                 </div>
             </form>
         </div>
