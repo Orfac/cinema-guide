@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kinoguide.repository.FilmRepository;
 
 @Controller
-@RequestMapping("/films")
+@RequestMapping("/film")
 public class FilmsController {
 
     @Autowired

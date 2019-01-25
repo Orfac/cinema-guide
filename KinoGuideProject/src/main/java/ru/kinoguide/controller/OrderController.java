@@ -11,7 +11,7 @@ import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.entity.User;
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
