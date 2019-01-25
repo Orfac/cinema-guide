@@ -1,40 +1,74 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::content},~{::head},'Регистрация', ~{::scripts})}">
+      th:replace="~{fragments/layout :: layout (~{::content},~{::head},'Вход', ~{::scripts})}">
 <head>
 
 </head>
 <body>
 <th:block th:fragment="content">
-    <h2>
-        Регистрация
-    </h2>
-    <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-info">
-            <div style="padding-top:30px" class="panel-body">
-                <form th:action="@{/user/register}" th:object="${user}" method="post"
-                      class="form-horizontal"
-                      role="form">
-                    <div class="mb-2 input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input th:field="*{name}" type="text" class="form-control" placeholder="имя пользователя">
-                        <p th:each="error: ${#fields.errors('name')}"
-                           th:text="${error}">Validation error</p>
-                    </div>
+
+    <div class="row align-middle">
+        <div class="col-md-4 col-xs-3"></div>
+        <div class="col-md-4 col-xs-6">
+            <h3 class="text-center">Регистрация</h3>
+            <form>
+                <div class="form-group">
+                    <label class="control-label" for="login">
+                        Выберите имя пользователя
+                    </label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input th:field="*{password}" type="password" class="form-control" name="password"
-                               placeholder="пароль">
-                        <p th:each="error: ${#fields.errors('password')}"
-                           th:text="${error}">Validation error</p>
+                        <div class="input-group-text">
+                            <span class="fa fa-user"></span>
+                        </div>
+                        <input class="form-control" id="login" name="login" type="text" placeholder="Ваш логин"/>
                     </div>
-                    <div style="margin-top:10px" class="form-group">
-                        <input class="btn btn-success" type="submit" value="Регистрация">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="email">
+                        Введите вашу электронную почту
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <span class="fa fa-at"></span>
+                        </div>
+                        <input class="form-control" id="email" name="password" type="email" placeholder="Ваша почта"/>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password">
+                        Выберите пароль
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <span class="fa fa-lock"></span>
+                        </div>
+                        <input class="form-control" id="password" name="password" type="password" placeholder="Ваш пароль"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password-repeat">
+                        Повторите выбранный пароль
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <span class="fa fa-lock"></span>
+                        </div>
+                        <input class="form-control" id="password-repeat" name="password-repeat" type="password" placeholder="Ваш пароль"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-block" value="Зарегистрироваться">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 help-login-link-left">Уже есть аккаунт? </div>
+                    <div class="col-md-6 help-login-link-right"><span><a href="#">Войти</a> </span></div>
+                </div>
+            </form>
         </div>
+        <div class="col-md-4 col-xs-3"></div>
     </div>
+
+
 </th:block>
 <th:block th:fragment="scripts">
 
