@@ -8,8 +8,6 @@ import java.util.Collection;
 
 @Transactional(readOnly = true)
 public interface UserRepository extends CrudRepository<User, Integer> {
-//    @Cacheable("users") ? TODO
-
     User findByName(String name);
     Collection<User> findAll();
 }

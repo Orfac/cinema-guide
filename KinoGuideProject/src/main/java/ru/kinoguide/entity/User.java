@@ -1,7 +1,10 @@
 package ru.kinoguide.entity;
 
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -9,9 +12,11 @@ import java.util.Set;
 @Table(name = "\"user\"") // Table here is required because User extends BaseEntity
 public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
+    @NotEmpty
     private String name;
 
     @Column(nullable = false)
+    @NotEmpty
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

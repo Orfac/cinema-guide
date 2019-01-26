@@ -18,7 +18,7 @@ public class GlobalController {
     public void initUserAndFocus(ModelMap modelMap, Principal principal) {
         if (principal != null) {
             User user = userRepository.findByName(principal.getName());
-            modelMap.put("user", user);
+            modelMap.put("loggedUser", user);
         }
     }
 }
