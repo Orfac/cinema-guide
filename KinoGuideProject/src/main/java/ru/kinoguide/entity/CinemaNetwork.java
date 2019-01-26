@@ -10,4 +10,20 @@ public class CinemaNetwork extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork")
     private Set<CinemaTheatre> cinemaTheatreSet;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<CinemaTheatre> getCinemaTheatreSet() {
+        return cinemaTheatreSet;
+    }
+
+    public void setCinemaTheatreSet(Set<CinemaTheatre> cinemaTheatreSet) {
+        this.cinemaTheatreSet = cinemaTheatreSet;
+    }
 }

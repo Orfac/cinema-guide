@@ -8,8 +8,8 @@
 <th:block th:fragment="content">
     <div class="row align-middle">
         <div class="col-md-4 col-xs-3"></div>
-
         <div class="col-md-4 col-xs-6">
+            <h3 class="text-center">Авторизация</h3>
             <form th:action="@{/user/login}" method="post">
                 <div th:if="${param.error}" class="alert alert-error">
                     Неправильная комбинация логина и пароля.

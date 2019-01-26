@@ -18,6 +18,10 @@
             </li>
             <li th:replace="::menuItem ('/films/billboard','Афиша')">
             </li>
+
+            <li th:replace="::menuItem ('/cinema/?id=1','Кинотеатр')">
+            </li>
+
             <th:block th:if="${loggedUser} != null">
                 <li th:class="${'Мои Заказы'==menu ? 'nav-item active' : 'nav-item'}">
                     <a class="nav-link" th:href="@{'/user/' + ${loggedUser.id} + '/orders'}">
