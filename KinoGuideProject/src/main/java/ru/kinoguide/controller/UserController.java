@@ -39,8 +39,10 @@ public class UserController {
     }
 
     @RequestMapping({"login", "logout"})
-    public String login(@RequestParam(name = "error", required = false)
-                                String error, String logout, Model model) {
+    public String login(
+            @RequestParam(name = "error", required = false) String error,
+            @RequestParam(name = "logout", required = false) String logout,
+            Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "login";
