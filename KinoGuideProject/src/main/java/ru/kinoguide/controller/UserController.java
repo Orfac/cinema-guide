@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
@@ -59,7 +59,6 @@ public class UserController {
     public String register(@Valid User user, BindingResult userBindingResult) {
         if (!userBindingResult.hasErrors()) {
             if (usersRepo.findByName(user.getName()) == null) {
-                System.out.println("//" + user.getPassword() + " //");
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 usersRepo.save(user);
                 return "redirect:login";

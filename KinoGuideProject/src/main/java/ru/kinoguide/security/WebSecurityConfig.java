@@ -47,12 +47,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .csrf()
-                .disable();
+                .disable()
+                .exceptionHandling()
+                .accessDeniedPage("/access-denied");
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
+    protected void configure(AuthenticationManagerBuilder authBuilder)
             throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
+        authBuilder.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 }

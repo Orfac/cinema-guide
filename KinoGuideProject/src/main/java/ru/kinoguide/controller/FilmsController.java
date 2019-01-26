@@ -13,7 +13,7 @@ public class FilmsController {
     @Autowired
     private FilmRepository filmRepository;
 
-    @RequestMapping("/billboard")
+    @RequestMapping("billboard")
     public String index(ModelMap model) {
         model.put("films", filmRepository.findAll());
         return "billboard";
