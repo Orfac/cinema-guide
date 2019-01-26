@@ -21,6 +21,11 @@ public class IndexController implements ErrorController {
         return "error";
     }
 
+    @RequestMapping("/access-denied")
+    public String accessDenied() {
+        return "access-denied";
+    }
+
     @RequestMapping(value = {"", "/"})
     public String root() {
         return "index";

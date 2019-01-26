@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
@@ -16,39 +17,44 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Bean(name = "passwordEncoder")
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+        http
+                .authorizeRequests()
+                .antMatchers("/user/register",
+                        "/js/**", "/css/**", "/assets/**").
+                permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
                 .loginPage("/user/login")
                 .usernameParameter("name")
                 .passwordParameter("password")
 //                .loginProcessingUrl("/user/login")
                 .permitAll()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/user/register", "/film/**", "/rating/**", "/cinema/**", "/session/**",
-                        "/js/**", "/css/**", "/assets/**").permitAll()
-                .anyRequest().authenticated()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .logoutSuccessUrl("/user/login?logout")
+                .permitAll()
                 .and()
                 .csrf()
                 .disable()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/users/login?logout")
-                .permitAll();
+                .exceptionHandling()
+                .accessDeniedPage("/access-denied");
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
+    protected void configure(AuthenticationManagerBuilder authBuilder)
             throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        authBuilder.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 }

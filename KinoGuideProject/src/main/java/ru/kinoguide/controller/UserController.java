@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
@@ -38,31 +38,15 @@ public class UserController {
         return "userList";
     }
 
-    @RequestMapping(path = "login")
-    public String login(@RequestParam(name = "error", required = false)
-                                String error, String logout, Model model) {
-//        User user = new User();
-//        model.addAttribute("user", user);
+    @RequestMapping({"login", "logout"})
+    public String login(
+            @RequestParam(name = "error", required = false) String error,
+            @RequestParam(name = "logout", required = false) String logout,
+            Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
         return "login";
     }
-
-//
-//    @RequestMapping(path = "login", method = RequestMethod.POST)
-//    public String processToLogin(@Valid User user, BindingResult userBindingResult, @RequestParam(name = "error", required = false)
-//            String error, String logout, ModelMap model) {
-//        System.out.println("login POST");
-//        userBindingResult.rejectValue("name", "fuck");
-//        if (error == null) {
-////            userBindingResult.
-//        }
-//        if (error != null) {
-//            model.put("error", "Invalid username or password");
-//        }
-//        if (logout != null) {
-//            model.put("logout", "You have logout successfully");
-//        }
-//        return "login";
-//    }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String register(Model model) {
@@ -77,13 +61,13 @@ public class UserController {
             if (usersRepo.findByName(user.getName()) == null) {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 usersRepo.save(user);
+                return "redirect:login";
             } else {
                 userBindingResult.rejectValue("name", "Имя уже занято", "Имя уже занято");
             }
         }
         return "register";
     }
-
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String updateUser(User user) {
@@ -92,7 +76,7 @@ public class UserController {
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
-        return "redirect:/users";
+        return "redirect:/user";
     }
 
 
@@ -100,7 +84,7 @@ public class UserController {
     public String deleteUser(Integer id, ModelMap model) {
         usersRepo.delete(id);
         model.put("message", "User has been deleted successfully!");
-        return "redirect:/users";
+        return "redirect:/user";
     }
 
 }

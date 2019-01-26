@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::content},~{::head}, 'error', ~{::scripts})}">
+<head>
+
+</head>
+<body>
+<th:block th:fragment="content">
+    <div class="starter-template">
+        <h1>Нет прав</h1>
+        <p class="lead">У вас недостаточно прав</p>
+    </div>
+</th:block>
+<th:block th:fragment="scripts">
+</th:block>
+</body>
+</html>

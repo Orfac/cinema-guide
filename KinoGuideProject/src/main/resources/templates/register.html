@@ -10,7 +10,7 @@
         <div class="col-md-4 col-xs-3"></div>
         <div class="col-md-4 col-xs-6">
             <h3 class="text-center">Регистрация</h3>
-            <form>
+            <form th:action="@{/user/register}" th:object="${user}" method="post">
                 <div class="form-group">
                     <label class="control-label" for="login">
                         Выберите имя пользователя
@@ -19,7 +19,7 @@
                         <div class="input-group-text">
                             <span class="fa fa-user"></span>
                         </div>
-                        <input class="form-control" id="login" name="login" type="text" placeholder="Ваш логин"/>
+                        <input th:field="*{name}" class="form-control" id="login" type="text" placeholder="Ваш логин"/>
                     </div>
                     <p th:each="error: ${#fields.errors('name')}"
                        th:text="${error}">Validation error</p>
@@ -32,7 +32,7 @@
                         <div class="input-group-text">
                             <span class="fa fa-at"></span>
                         </div>
-                        <input class="form-control" id="email" name="password" type="email" placeholder="Ваша почта"/>
+                        <input class="form-control" id="email" type="email" placeholder="Ваша почта"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,7 +43,7 @@
                         <div class="input-group-text">
                             <span class="fa fa-lock"></span>
                         </div>
-                        <input class="form-control" id="password" name="password" type="password" placeholder="Ваш пароль"/>
+                        <input th:field="*{password}" class="form-control" id="password" type="password" placeholder="Ваш пароль"/>
                     </div>
                     <p th:each="error: ${#fields.errors('password')}"
                        th:text="${error}">Validation error</p>
@@ -56,7 +56,7 @@
                         <div class="input-group-text">
                             <span class="fa fa-lock"></span>
                         </div>
-                        <input class="form-control" id="password-repeat" name="password-repeat" type="password" placeholder="Ваш пароль"/>
+                        <input class="form-control" id="password-repeat" type="password" placeholder="Ваш пароль"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 help-login-link-left">Уже есть аккаунт? </div>
-                    <div class="col-md-6 help-login-link-right"><span><a href="#">Войти</a> </span></div>
+                    <div class="col-md-6 help-login-link-right"><span><a href="/user/login">Войти</a> </span></div>
                 </div>
             </form>
         </div>
