@@ -7,10 +7,12 @@ import ru.kinoguide.entity.User;
 import java.util.Collection;
 
 public class UserPrincipalImpl implements UserDetails {
-    private User user;
+    private String name;
+    private String password;
 
-    UserPrincipalImpl(User user) {
-        this.user = user;
+    public UserPrincipalImpl(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
     @Override
@@ -20,13 +22,14 @@ public class UserPrincipalImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return name;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -48,7 +51,4 @@ public class UserPrincipalImpl implements UserDetails {
         return true;
     }
 
-    public User getUser() {
-        return user;
-    }
 }
