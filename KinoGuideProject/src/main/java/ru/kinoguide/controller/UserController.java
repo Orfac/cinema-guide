@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +14,6 @@ import ru.kinoguide.entity.User;
 import ru.kinoguide.repository.UserRepository;
 
 import javax.validation.Valid;
-import java.util.Collection;
 
 @Controller
 @RequestMapping("user")
@@ -28,17 +26,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @ModelAttribute("users")
-    public Collection<User> getUsers() {
-        return usersRepo.findAll();
-    }
-
-    @RequestMapping("")
-    public String index(ModelMap model) {
-        return "userList";
-    }
-
-    @RequestMapping({"login", "logout"})
+    @RequestMapping("login")
     public String login(
             @RequestParam(name = "error", required = false) String error,
             @RequestParam(name = "logout", required = false) String logout,
