@@ -16,5 +16,27 @@ public class Seat extends BaseEntity {
     @Column(name = "\"column\"", nullable = false)
     private int column;
 
+    public CinemaHall getCinemaHall() {
+        return cinemaHall;
+    }
 
+    public void setCinemaHall(CinemaHall cinemaHall) {
+        this.cinemaHall = cinemaHall;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
 }

@@ -10,7 +10,24 @@
         <table>
             <th:block th:each="order : ${orders}">
                 <tr>
-                    <td th:text="${order.name}">
+                    <td>Номер заказа</td>
+                    <td>Дата заказа</td>
+                    <td>Билеты</td>
+                    <td>Статус</td>
+                </tr>
+                <tr>
+                    <td th:text="${order.id}">
+                    </td>
+                    <td th:text="${#temporals.format(order.dateCreated.atZone(zoneOffset), 'dd.MM.yyyy HH:mm', #locale)}">
+                    </td>
+                    <td>
+                        <div th:each="ticket : ${order.ticketList}">
+                            <span>Ряд: </span>
+                            <span th:text="${ticket.seat.row}"></span>
+                        <br/>
+                            <span>Место: </span>
+                            <span th:text="${ticket.seat.column}"></span>
+                        </div>
                     </td>
                 </tr>
             </th:block>

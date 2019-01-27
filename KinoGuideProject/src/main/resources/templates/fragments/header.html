@@ -19,17 +19,17 @@
             <li th:replace="::menuItem ('/film/billboard','Афиша')">
             </li>
 
-            <li th:replace="::menuItem ('/cinema/?id=1','Кинотеатр')">
+            <li th:replace="::menuItem ('path','Кинотеатр')">
             </li>
 
             <th:block th:if="${loggedUser != null}">
                 <li th:class="${'Мои Заказы'==menu ? 'nav-item active' : 'nav-item'}">
-                    <a class="nav-link" th:href="@{'/user/' + ${loggedUser.id} + '/orders'}">
+                    <a class="nav-link" th:href="@{/order(user=${loggedUser.id})}">
                         Мои Заказы
                     </a>
                 </li>
                 <li th:class="${'Мои Оценки'==menu ? 'nav-item active' : 'nav-item'}">
-                    <a class="nav-link" th:href="@{'/user/' + ${loggedUser.id} + '/rating'}">
+                    <a class="nav-link" th:href="@{/rating(user=${loggedUser.id})}">
                         Мои Оценки
                     </a>
                 </li>

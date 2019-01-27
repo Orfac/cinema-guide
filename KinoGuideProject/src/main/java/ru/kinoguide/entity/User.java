@@ -44,4 +44,16 @@ public class User extends BaseEntity {
     public Set<Rating> getRatingSet() {
         return ratingSet;
     }
+
+    public void setRatingSet(Set<Rating> ratingSet) {
+        this.ratingSet = ratingSet;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
 }
