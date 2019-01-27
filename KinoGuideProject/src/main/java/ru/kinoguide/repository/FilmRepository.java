@@ -12,5 +12,5 @@ import ru.kinoguide.entity.Session;
 public interface FilmRepository extends PagingAndSortingRepository<Film, Integer> {
     @Query("SELECT f from Film f WHERE EXISTS " +
             "(SELECT s FROM Session s WHERE s.startTime > CURRENT_DATE and s.film = f)")
-    Page<Session> findFilmsWhichHaveSessionsSinceNow(Pageable pageable);
+    Page<Film> findFilmsWhichHaveSessionsSinceNow(Pageable pageable);
 }
