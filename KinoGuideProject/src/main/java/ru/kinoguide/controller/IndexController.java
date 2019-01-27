@@ -2,6 +2,7 @@ package ru.kinoguide.controller;
 
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,12 +18,13 @@ public class IndexController implements ErrorController {
 
     @RequestMapping("/error")
     public String handleError(ModelMap modelMap) {
-        modelMap.put("message", "Error!");
+        modelMap.put("error", "Упс!"); // TODO output exception?
         return "error";
     }
 
     @RequestMapping("/access-denied")
-    public String accessDenied() {
+    public String accessDenied(Model model) {
+        model.addAttribute("error", "Доступ запрещен");
         return "access-denied";
     }
 

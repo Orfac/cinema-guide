@@ -75,51 +75,61 @@
                         <li class="list-inline-item">
                             Жанры:
                         </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn btn-outline-info" role="button">Анимация</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn btn-outline-info" role="button">Приключения</a>
+                        <li th:each="genre : ${film.genreSet}" class="list-inline-item">
+                            <a th:text="${genre.name}" href="#" class="btn btn-outline-info" role="button">Анимация</a>
                         </li>
                     </ul>
                 </li>
                 <li class="list-group-item">
-                    Страна: Франция
+                    <span>Страна: </span>
+                    <span th:text="${film.country}"></span>
                 </li>
                 <li class="list-group-item">
-                    Дата начала съёмок: 17.01.2017
+                    <span>Дата начала съемок: </span>
+                    <span th:text="${#temporals.format(film.dateShootingStart.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                </li>
+                <li class="list-group-item" th:if="${film.dateShootingEnd != null}">
+                    <span>Дата конца съемок: </span>
+                    <span th:text="${#temporals.format(film.dateShootingEnd.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                </li>
+                <li class="list-group-item" th:if="${film.datePremiere != null}">
+                    <span>Дата премьеры: </span>
+                    <span th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
                 </li>
                 <li class="list-group-item">
-                    Дата конца съёмок: 17.01.2018
+                    <span>Продолжительность: </span>
+                    <span th:text="${film.duration}"></span>
+                    <span> минут</span>
                 </li>
                 <li class="list-group-item">
-                    <b>Дата премьеры: 17.01.2019</b>
-                </li>
-                <li class="list-group-item">
-                    Продолжительность: 1,5 час(а)
+                    <span>Краткая аннотация: </span>
+                    <span th:text="${film.info}"></span>
                 </li>
                 <li class="list-group-item" id="plot">
                     <h5 class="mb-0">
-                        <button class="btn container-fluid btn-outline-info text-left" data-toggle="collapse" data-target="#collapsePlot"
+                        <button class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
+                                data-target="#collapsePlot"
                                 aria-expanded="true" aria-controls="collapsePlot">
-                            Сюжет
+                            Полная аннотация
                         </button>
                     </h5>
-                    <div id="collapsePlot" class="collapse" aria-labelledby="headingOne" data-parent="#plot">
+                    <div th:text="${film.annotation}" id="collapsePlot" class="collapse" aria-labelledby="headingOne" data-parent="#plot">
                         <div class="card-body pl-0">
                             Могучие галлы издревле черпали силу в секретном напитке, который готовил великий старец.
                             Но пришла беда, откуда не ждали – почтенный друид свалился с дерева и сломал обе ноги.
-                            Теперь Астериксу и Обеликсу предстоит отправиться в опасное путешествие, чтобы отыскать нового
+                            Теперь Астериксу и Обеликсу предстоит отправиться в опасное путешествие, чтобы отыскать
+                            нового
                             друида, достойного постичь рецепт тайного зелья…
                         </div>
                     </div>
 
                 </li>
-                <li class="list-group-item" id="cast">
+                <li th:each="group : ${film.groupSet}" class="list-group-item" id="cast">
                     <h5 class="mb-0">
-                        <button class="btn container-fluid btn-outline-info text-left" data-toggle="collapse" data-target="#collapseCast"
+                        <button th:text="'Съёмочная группа: ' + ${group.name}" class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
+                                data-target="#collapseCast"
                                 aria-expanded="true" aria-controls="collapseCast">
-                            Съёмочная группа:
+
                         </button>
                     </h5>
                     <div id="collapseCast" class="collapse" aria-labelledby="headingOne" data-parent="#cast">

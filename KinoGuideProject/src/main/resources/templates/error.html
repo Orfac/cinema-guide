@@ -7,8 +7,8 @@
 <body>
 <th:block th:fragment="content">
     <div class="starter-template">
-        <h1>Это не та страница, что вы ищите</h1>
-        <p class="lead">Не удалось найти указанную страницу</p>
+        <h1>Что-то пошло не так</h1>
+        <p class="lead" th:text="${error}">Упс! Текст ошибки</p>
         <a href="/">На главную</a>
     </div>
 </th:block>

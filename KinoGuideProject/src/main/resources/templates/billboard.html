@@ -12,11 +12,20 @@
     <table>
         <th:block th:each="film : ${films}">
             <tr>
+                <td>
+                    <a
+                </td>
                 <td th:text="${film.name}">
                     Название фильма
                 </td>
                 <td th:text="${film.info}">
-                    Описание
+                    Краткая информация
+                </td>
+                <td th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'yyyy', #locale)}">
+                        Год
+                </td>
+                <td>
+                    <span th:each="genre : ${film.genreSet}" th:text="${genre.name}">Жанр</span>
                 </td>
             </tr>
         </th:block>
