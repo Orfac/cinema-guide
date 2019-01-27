@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::content},~{::head},'Вход', ~{::scripts})}">
+<head>
+
+</head>
+<body>
+<th:block th:fragment="content">
+
+    <h2 class="text-center mb-3">
+        Астерикс и тайное зелье, 2018
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <img src="http://happy-cinema.ru/upload/iblock/522/5222b8f5fd17d01d410007f525a894e5.jpg"
+                 alt="asteriks" class="img-fluid">
+
+            <h3 class="text-center">Оценки</h3>
+            <ul class="list-group">
+                <li class="list-group-item text-center">
+                    Моя оценка: <span class="text-success">7/10</span>
+                </li>
+                <li class="list-group-item text-center">
+                    Средняя оценка: <span class="text-success">7/10</span>
+                </li>
+
+                <li class="list-group-item text-center">
+                    <table class="table table-sm w-100 m-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Оценка</th>
+                            <th scope="col">Близость</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Антон</td>
+                            <td class="text-success">7/10</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td>Антон</td>
+                            <td class="text-success">10/10</td>
+                            <td>83%</td>
+                        </tr>
+                        <tr>
+                            <td>Антон</td>
+                            <td class="text-warning">5/10</td>
+                            <td>52%</td>
+                        </tr>
+                        <tr>
+                            <td>Антон</td>
+                            <td class="text-danger">2/10</td>
+                            <td>40%</td>
+                        </tr>
+                        <tr>
+                            <td>Антон</td>
+                            <td class="text-danger">1/10</td>
+                            <td>30%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </li>
+
+            </ul>
+
+        </div>
+        <div class="col-md-9">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <ul class="list-inline inlin">
+                        <li class="list-inline-item">
+                            Жанры:
+                        </li>
+                        <li th:each="genre : ${film.genreSet}" class="list-inline-item">
+                            <a th:text="${genre.name}" href="#" class="btn btn-outline-info" role="button">Анимация</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <span>Страна: </span>
+                    <span th:text="${film.country}"></span>
+                </li>
+                <li class="list-group-item">
+                    <span>Дата начала съемок: </span>
+                    <span th:text="${#temporals.format(film.dateShootingStart.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                </li>
+                <li class="list-group-item" th:if="${film.dateShootingEnd != null}">
+                    <span>Дата конца съемок: </span>
+                    <span th:text="${#temporals.format(film.dateShootingEnd.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                </li>
+                <li class="list-group-item" th:if="${film.datePremiere != null}">
+                    <span>Дата премьеры: </span>
+                    <span th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                </li>
+                <li class="list-group-item">
+                    <span>Продолжительность: </span>
+                    <span th:text="${film.duration}"></span>
+                    <span> минут</span>
+                </li>
+                <li class="list-group-item">
+                    <span>Краткая аннотация: </span>
+                    <span th:text="${film.info}"></span>
+                </li>
+                <li class="list-group-item" id="plot">
+                    <h5 class="mb-0">
+                        <button class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
+                                data-target="#collapsePlot"
+                                aria-expanded="true" aria-controls="collapsePlot">
+                            Полная аннотация
+                        </button>
+                    </h5>
+                    <div th:text="${film.annotation}" id="collapsePlot" class="collapse" aria-labelledby="headingOne" data-parent="#plot">
+                        <div class="card-body pl-0">
+                            Могучие галлы издревле черпали силу в секретном напитке, который готовил великий старец.
+                            Но пришла беда, откуда не ждали – почтенный друид свалился с дерева и сломал обе ноги.
+                            Теперь Астериксу и Обеликсу предстоит отправиться в опасное путешествие, чтобы отыскать
+                            нового
+                            друида, достойного постичь рецепт тайного зелья…
+                        </div>
+                    </div>
+
+                </li>
+                <li th:each="group : ${film.groupSet}" class="list-group-item" id="cast">
+                    <h5 class="mb-0">
+                        <button th:text="'Съёмочная группа: ' + ${group.name}" class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
+                                data-target="#collapseCast"
+                                aria-expanded="true" aria-controls="collapseCast">
+
+                        </button>
+                    </h5>
+                    <div id="collapseCast" class="collapse" aria-labelledby="headingOne" data-parent="#cast">
+                        <div class="card-body pl-0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item pl-1">
+                                    Режиссёр: Михалков Н.С.
+                                </li>
+                                <li class="list-group-item pl-1">
+                                    Постановщик: Сергеев Н.С.
+                                </li>
+                                <li class="list-group-item pl-1">
+                                    Продюсер: Михалков Н.С.
+                                </li>
+                                <li class="list-group-item pl-1">
+                                    Оператор: Гаврилов Н.С.
+                                </li>
+                                <ul class="list-inline inline pl-1 pt-1">
+                                    <li class="list-inline-item m-0">
+                                        Актёрский состав:
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        Сергеев Е.К.,
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        Горбачёв М.Д.,
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        Депардье Ж.Ж.,
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        Клавье К.К.,
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        Курнаков И.Е.
+                                    </li>
+
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+
+                </li>
+
+            </ul>
+
+
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <h4>
+                Список сеансов на <b><u>24.01</u></b>
+            </h4>
+        </div>
+        <div class="col-md-8 text-right">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <button class="btn btn-outline-info">
+                        <small>21.01</small>
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button class="btn btn-outline-info">
+                        <small>22.01</small>
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button class="btn btn-outline-info">
+                        <small>23.01</small>
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button class="btn btn-info">
+                        <small>24.01</small>
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button class="btn btn-outline-info">
+                        <small>25.01</small>
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button class="btn btn-outline-info">
+                        <small>26.01</small>
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button class="btn btn-outline-info">
+                        <small>27.01</small>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 small">
+
+            <a href="#">
+                <button class="btn btn-outline-light">
+                    <img src="https://st.kp.yandex.net/im/poster/3/1/7/kinopoisk.ru-Bohemian-Rhapsody-3173882.jpg"
+                         alt="bogem-raps" class="img-fluid">
+                </button>
+            </a>
+
+
+        </div>
+        <div class="col-md-10">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 small">
+
+            <a href="#">
+                <button class="btn btn-outline-light">
+                    <img src="https://st.kp.yandex.net/im/poster/3/1/7/kinopoisk.ru-Bohemian-Rhapsody-3173882.jpg"
+                         alt="bogem-raps" class="img-fluid">
+                </button>
+            </a>
+
+
+        </div>
+        <div class="col-md-10">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="card">
+                        <button class="btn btn-link">
+                            <div class="card-body text-center">
+                                <p>13:30</p>
+                                <p>200р</p>
+                            </div>
+                        </button>
+
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="scripts">
+
+</th:block>
+</body>
+</html>

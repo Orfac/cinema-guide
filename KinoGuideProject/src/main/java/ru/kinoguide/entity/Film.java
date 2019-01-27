@@ -14,8 +14,11 @@ public class Film extends BaseEntity {
     @Column(name = "name", nullable = false, unique = false)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String info;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
+    private Set<Group> groupSet;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
     private Set<Rating> ratingSet;
@@ -51,7 +54,7 @@ public class Film extends BaseEntity {
     @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "ageRating")
+    @Column(name = "ageRating", nullable = false)
     private String ageRating;
 
     public String getName() {
@@ -140,5 +143,13 @@ public class Film extends BaseEntity {
 
     public void setAgeRating(String ageRating) {
         this.ageRating = ageRating;
+    }
+
+    public Set<Group> getGroupSet() {
+        return groupSet;
+    }
+
+    public void setGroupSet(Set<Group> groupSet) {
+        this.groupSet = groupSet;
     }
 }

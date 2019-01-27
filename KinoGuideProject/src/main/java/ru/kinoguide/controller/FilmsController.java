@@ -14,6 +14,7 @@ import ru.kinoguide.repository.FilmRepository;
 
 import java.time.Instant;
 
+
 @Controller
 @RequestMapping("/film")
 public class FilmsController {
@@ -32,6 +33,7 @@ public class FilmsController {
         return "billboard";
     }
 
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String film(
             Model model,
@@ -47,5 +49,4 @@ public class FilmsController {
         model.addAttribute("film", film);
         return "film";
     }
-
 }
