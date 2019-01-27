@@ -49,4 +49,20 @@ public class Rating extends BaseEntity {
     public Instant getDate() {
         return date;
     }
+
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
 }
