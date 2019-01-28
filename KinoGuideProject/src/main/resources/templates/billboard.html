@@ -25,7 +25,7 @@
                         Год
                 </td>
                 <td>
-                    <span th:each="genre : ${film.genreSet}" th:text="${genre.name}">Жанр</span>
+                    <span th:each="genre : ${film.genreList}" th:text="${genre.name}">Жанр</span>
                 </td>
             </tr>
         </th:block>

@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,11 +24,11 @@ public class Film extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
     private Set<Rating> ratingSet;
 
-    @ManyToMany(cascade = CascadeType.ALL) // TODO Саня решить вопрос с каскадностью
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "films_genres", joinColumns =
     @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<Genre> genreSet;
+    private List<Genre> genreList;
 
     @Column(name = "date_shoot_start", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -81,12 +82,12 @@ public class Film extends BaseEntity {
         this.ratingSet = ratingSet;
     }
 
-    public Set<Genre> getGenreSet() {
-        return genreSet;
+    public List<Genre> getGenreList() {
+        return genreList;
     }
 
-    public void setGenreSet(Set<Genre> genreSet) {
-        this.genreSet = genreSet;
+    public void setGenreList(List<Genre> genreList) {
+        this.genreList = genreList;
     }
 
     public Instant getDateShootingStart() {

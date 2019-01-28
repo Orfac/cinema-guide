@@ -75,7 +75,7 @@
                         <li class="list-inline-item">
                             Жанры:
                         </li>
-                        <li th:each="genre : ${film.genreSet}" class="list-inline-item">
+                        <li th:each="genre : ${film.genreList}" class="list-inline-item">
                             <a th:text="${genre.name}" href="#" class="btn btn-outline-info" role="button">Анимация</a>
                         </li>
                     </ul>
