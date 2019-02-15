@@ -38,11 +38,18 @@ public class CinemaController {
             today.set(Calendar.HOUR_OF_DAY, 0);
             day = today.getTime();
         }
-        Date currentDay = day;
+        Date currentDate = day;
         Calendar cal = Calendar.getInstance();
         cal.setTime(day);
+        cal.add(Calendar.HOUR,-4*24);
+        ArrayList<Date> dates = new ArrayList<>(7);
+        for (int i = 0; i < 7; i++) {
+            cal.add(Calendar.HOUR,24);
+            cal.setTime(dates.get(i));
+        }
 
-        model.put("currentDate", currentDay);
+        model.addAttribute("week", dates);
+        model.addAttribute("currentDate", currentDate);
 
         //model.put("cinemaNetwork",cinemaTheatre.getCinemaNetwork());
         //model.put("cinemaTheatre", cinemaTheatre);
