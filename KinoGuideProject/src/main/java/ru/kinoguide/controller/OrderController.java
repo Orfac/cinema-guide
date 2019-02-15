@@ -37,4 +37,12 @@ public class OrderController {
         return "userOrders";
     }
 
+    @RequestMapping("auto")
+    public String getAuto(
+    ){
+        return "autoOrder";
+    }
+
+
+
 }

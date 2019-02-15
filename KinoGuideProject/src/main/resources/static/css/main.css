@@ -15,7 +15,6 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-
 }
 
 .help-login-link-right{
@@ -34,3 +33,10 @@ body {
     }
 }
 
+.btn-rounded{
+    border-radius: 90%;
+}
+
+.btn-circle{
+    border-radius: 50%;
+}
