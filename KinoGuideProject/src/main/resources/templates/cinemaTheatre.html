@@ -27,46 +27,30 @@
     <div class="row">
         <div class="col-md-4">
             <h4>
-                Список сеансов на <b><u th:text="${currentDate.getDay() + currentDate.getMonth()}"></u></b>
+                Список сеансов на
+                <b>
+                    <u>
+                    <span th:text="${currentDay.getDay()}"></span>
+                    <span th:text="${currentDay.getMonth() + 1}"></span>
+                    </u>
+                </b>
             </h4>
         </div>
         <div class="col-md-8 text-right">
             <ul class="list-inline">
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>21.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>22.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>23.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-info">
-                        <small>24.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>25.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>26.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>27.01</small>
-                    </button>
-                </li>
+                <th:block th:each="day : ${week}">
+                    <li class="list-inline-item">
+                        <button class="btn btn-outline-info">
+                            <small>
+                                <span th:text="${day.getDay()}"></span>
+                                .
+                                <span th:text="${day.getMonth()}"></span>
+                            </small>
+                        </button>
+                    </li>
+                </th:block>
+
+
             </ul>
         </div>
     </div>

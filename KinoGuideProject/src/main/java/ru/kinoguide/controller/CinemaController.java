@@ -5,10 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.kinoguide.entity.CinemaNetwork;
 import ru.kinoguide.entity.CinemaTheatre;
 import ru.kinoguide.repository.CinemaNetworkRepository;
@@ -17,10 +14,13 @@ import ru.kinoguide.repository.CinemaTheatreRepository;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cinema")
 public class CinemaController {
+
+    private final int HOUR_IN_DAY = 24;
 
     @Autowired
     private CinemaTheatreRepository cinemaTheatreRepository;
@@ -32,27 +32,36 @@ public class CinemaController {
     public String index(ModelMap model, @PathVariable("id") int id,
                         @RequestParam(required=false) @DateTimeFormat(pattern="MMddyyyy") Date day){
         CinemaTheatre cinemaTheatre = cinemaTheatreRepository.findById(id);
-        //if (cinemaTheatre == null){return "error";}
-        if (day == null) {
-            Calendar today = Calendar.getInstance();
-            today.set(Calendar.HOUR_OF_DAY, 0);
-            day = today.getTime();
+        if (cinemaTheatre == null) {
+            return "error";
         }
-        Date currentDate = day;
+        // Задаёт текущую дату, если дата не была задана
+        if (day == null) {
+            day = Calendar.getInstance().getTime();
+        }
         Calendar cal = Calendar.getInstance();
         cal.setTime(day);
-        cal.add(Calendar.HOUR,-4*24);
-        ArrayList<Date> dates = new ArrayList<>(7);
+
+
+        cal.add(Calendar.HOUR,-4*HOUR_IN_DAY);
+        ArrayList<Date> week = new ArrayList<>();
+
         for (int i = 0; i < 7; i++) {
-            cal.add(Calendar.HOUR,24);
-            cal.setTime(dates.get(i));
+            cal.add(Calendar.HOUR,HOUR_IN_DAY);
+            week.add(cal.getTime());
         }
 
-        model.addAttribute("week", dates);
-        model.addAttribute("currentDate", currentDate);
+        model.addAttribute("week", week);
+        model.addAttribute("currentDay", day);
 
         //model.put("cinemaNetwork",cinemaTheatre.getCinemaNetwork());
-        //model.put("cinemaTheatre", cinemaTheatre);
+        model.addAttribute("cinemaTheatre", cinemaTheatre);
         return "cinemaTheatre";
+    }
+
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public List<CinemaTheatre> getAllCinemaTheatres() {
+        List<CinemaTheatre> cinemaTheatres = cinemaTheatreRepository.findAll();
+        return cinemaTheatres;
     }
 }
