@@ -59,8 +59,8 @@
                         <input class="form-control" id="password-repeat" type="password" placeholder="Ваш пароль"/>
                     </div>
                 </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-success btn-block" value="Зарегистрироваться">
+                <div class="form-group" onclick="return checkRegister()">
+                    <input type="submit" class="btn btn-success btn-block" value="Зарегистрироваться" >
                 </div>
                 <div class="row">
                     <div class="col-md-6 help-login-link-left">Уже есть аккаунт? </div>
@@ -74,6 +74,17 @@
 
 </th:block>
 <th:block th:fragment="scripts">
+<script>
+    function checkRegister() {
+        let pass1 = document.getElementById("password").value;
+        let pass2 = document.getElementById("password-repeat").value;
+        let email = document.getElementById("email");
+
+        return !(pass1 !== pass2 || pass1 === null ||
+            email.innerText === null || !email.checkValidity());
+
+    }
+</script>
 
 </th:block>
 </body>
