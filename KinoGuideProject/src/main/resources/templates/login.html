@@ -11,7 +11,7 @@
         <div class="col-md-4 col-xs-6">
             <h3 class="text-center">Авторизация</h3>
             <form th:object="${user}" th:action="@{/user/login}" method="post">
-                <div th:if="${param.error}" class="alert alert-error">
+                <div th:if="${param.error}" class="alert alert-danger">
                     Неправильная комбинация логина и пароля.
                 </div>
                 <div th:if="${param.logout}" class="alert alert-success">
