@@ -12,17 +12,17 @@
             <h3 class="text-center">Регистрация</h3>
             <form th:action="@{/user/register}" th:object="${user}" method="post">
                 <div class="form-group">
-                    <label class="control-label" for="login">
+                    <label class="control-label" for="name">
                         Выберите имя пользователя
                     </label>
                     <div class="input-group">
                         <div class="input-group-text">
                             <span class="fa fa-user"></span>
                         </div>
-                        <input th:field="*{name}" class="form-control" id="login" type="text" placeholder="Ваш логин"/>
+                        <input th:field="*{name}" class="form-control" type="text" placeholder="Ваш логин"/>
                     </div>
-                    <p th:each="error: ${#fields.errors('name')}"
-                       th:text="${error}">Validation error</p>
+                    <div class="alert alert-danger" th:each="error: ${#fields.errors('name')}"
+                       th:text="${error}">Validation error</div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="email">
@@ -32,8 +32,10 @@
                         <div class="input-group-text">
                             <span class="fa fa-at"></span>
                         </div>
-                        <input class="form-control" id="email" type="email" placeholder="Ваша почта"/>
+                        <input th:field="*{email}" class="form-control" type="text" placeholder="Ваша почта"/>
                     </div>
+                    <div class="alert alert-danger" th:each="error: ${#fields.errors('email')}"
+                       th:text="${error}">Validation error</div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="password">
@@ -43,10 +45,11 @@
                         <div class="input-group-text">
                             <span class="fa fa-lock"></span>
                         </div>
-                        <input th:field="*{password}" class="form-control" id="password" type="password" placeholder="Ваш пароль"/>
+                        <input th:field="*{password}" class="form-control" type="password" placeholder="Ваш пароль"/>
                     </div>
-                    <p th:each="error: ${#fields.errors('password')}"
-                       th:text="${error}">Validation error</p>
+                    <div class="alert alert-danger" th:each="error: ${#fields.errors('password')}"
+                         th:text="${error}">Validation error
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="password-repeat">
@@ -56,14 +59,18 @@
                         <div class="input-group-text">
                             <span class="fa fa-lock"></span>
                         </div>
-                        <input class="form-control" id="password-repeat" type="password" placeholder="Ваш пароль"/>
+                        <input class="form-control" th:field="*{passwordRepeat}" type="password"
+                               placeholder="Ваш пароль"/>
+                    </div>
+                    <div class="alert alert-danger" th:each="error: ${#fields.errors('passwordRepeat')}"
+                         th:text="${error}">Validation error
                     </div>
                 </div>
-                <div class="form-group" onclick="return checkRegister()">
-                    <input type="submit" class="btn btn-success btn-block" value="Зарегистрироваться" >
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-block" value="Зарегистрироваться">
                 </div>
                 <div class="row">
-                    <div class="col-md-6 help-login-link-left">Уже есть аккаунт? </div>
+                    <div class="col-md-6 help-login-link-left">Уже есть аккаунт?</div>
                     <div class="col-md-6 help-login-link-right"><span><a href="/user/login">Войти</a> </span></div>
                 </div>
             </form>
@@ -74,17 +81,17 @@
 
 </th:block>
 <th:block th:fragment="scripts">
-<script>
-    function checkRegister() {
-        let pass1 = document.getElementById("password").value;
-        let pass2 = document.getElementById("password-repeat").value;
-        let email = document.getElementById("email");
+    <script>
+        function checkRegister() {
+            let pass1 = document.getElementById("password").value;
+            let pass2 = document.getElementById("password-repeat").value;
+            let email = document.getElementById("email");
 
-        return !(pass1 !== pass2 || pass1 === null ||
-            email.innerText === null || !email.checkValidity());
+            return !(pass1 !== pass2 || pass1 === null ||
+                email.innerText === null || !email.checkValidity());
 
-    }
-</script>
+        }
+    </script>
 
 </th:block>
 </body>

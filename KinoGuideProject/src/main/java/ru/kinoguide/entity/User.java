@@ -1,10 +1,11 @@
 package ru.kinoguide.entity;
 
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -12,12 +13,20 @@ import java.util.Set;
 @Table(name = "\"user\"") // Table here is required because User extends BaseEntity
 public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
-    @NotEmpty
+    @NotBlank(message = "Логин должен быть указан")
     private String name;
 
     @Column(nullable = false)
-    @NotEmpty
+    @NotBlank(message = "Пароль должен быть указан")
     private String password;
+
+    @Transient
+    @NotEmpty(message = "Повторите пароль")
+    private String passwordRepeat;
+
+    @NotBlank(message = "E-mail должен быть указан")
+    @Email(message = "Невалидный формат email")
+    private String email;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Rating> ratingSet;
@@ -55,5 +64,21 @@ public class User extends BaseEntity {
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
+    }
+
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

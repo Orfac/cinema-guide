@@ -37,14 +37,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String register(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+    public String register(User user) {
         return "register";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(@Valid User user, BindingResult userBindingResult) {
+        if (!userBindingResult.hasFieldErrors("password") && !userBindingResult.hasFieldErrors("passwordRepeat")) {
+            if (!user.getPassword().equals(user.getPasswordRepeat())) {
+                userBindingResult.rejectValue("passwordRepeat", "Пароли должны совпадать", "Пароли должны совпадать");
+            }
+        }
         if (!userBindingResult.hasErrors()) {
             if (usersRepo.findByName(user.getName()) == null) {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -74,5 +77,6 @@ public class UserController {
         model.put("message", "User has been deleted successfully!");
         return "redirect:/user";
     }
+
 
 }
