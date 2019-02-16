@@ -34,6 +34,12 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> orderList;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user1", orphanRemoval = true)
+    private List<UsersRatingProximity> ratingProximities1;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user2", orphanRemoval = true)
+    private List<UsersRatingProximity> ratingProximities2;
+
     public String getName() {
         return name;
     }

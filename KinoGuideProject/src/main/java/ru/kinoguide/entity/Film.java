@@ -1,10 +1,12 @@
 package ru.kinoguide.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +14,8 @@ import java.util.Set;
 @Entity
 public class Film extends BaseEntity {
 
-    @Column(name = "name", nullable = false, unique = false)
+    @Column(name = "name")
+    @NotBlank
     private String name;
 
     @Column(columnDefinition = "TEXT", nullable = false)
@@ -56,6 +59,7 @@ public class Film extends BaseEntity {
     private String country;
 
     @Column(name = "ageRating", nullable = false)
+    @Pattern(regexp = "PG-18|PG-13|NC-17")
     private String ageRating;
 
     public String getName() {

@@ -1,6 +1,7 @@
 package ru.kinoguide.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Rating extends BaseEntity {
     private User user;
 
     @Column(nullable = false)
+    @Range(min = 1, max = 10)
     private int rate;
 
     @Column(name = "date", nullable = false)
