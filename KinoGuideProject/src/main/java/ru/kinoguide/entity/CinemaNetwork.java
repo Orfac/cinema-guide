@@ -1,18 +1,19 @@
 package ru.kinoguide.entity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
-public class CinemaNetwork extends BaseEntity {
+public class CinemaNetwork extends DisplayableEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork")
     private Set<CinemaTheatre> cinemaTheatreSet;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork")
-    private Set<Media> mediaSet;
 
     public String getName() {
         return name;
@@ -30,11 +31,4 @@ public class CinemaNetwork extends BaseEntity {
         this.cinemaTheatreSet = cinemaTheatreSet;
     }
 
-    public Set<Media> getMediaSet() {
-        return mediaSet;
-    }
-
-    public void setMediaSet(Set<Media> mediaSet) {
-        this.mediaSet = mediaSet;
-    }
 }

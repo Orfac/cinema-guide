@@ -1,7 +1,9 @@
 package ru.kinoguide.service;
 
-import ru.kinoguide.entity.User;
+import ru.kinoguide.entity.Rating;
+
+import java.util.List;
 
 public interface UserProximityCalculator {
-    public double calculateProximity(User u1, User u2);
+    double calculateProximityByCommonRatings(List<Object[]> commonRatings);
 }

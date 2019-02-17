@@ -1,31 +1,32 @@
 package ru.kinoguide.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Film extends BaseEntity {
+public class Film extends DisplayableEntity {
 
-    @Column(name = "name", nullable = false, unique = false)
+    @Column(name = "name")
+    @NotBlank
     private String name;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
+    @NotBlank
     private String info;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film", orphanRemoval = true)
     private Set<Group> groupSet;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film", orphanRemoval = true)
     private Set<Rating> ratingSet;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
-    private Set<Media> mediaSet;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "films_genres", joinColumns =
@@ -33,7 +34,7 @@ public class Film extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genreList;
 
-    @Column(name = "date_shoot_start", nullable = false)
+    @Column(name = "date_shoot_start")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
     private Instant dateShootingStart;
@@ -52,13 +53,16 @@ public class Film extends BaseEntity {
     @Min(1)
     private int duration;
 
-    @Column(name = "annotation", nullable = false)
+    @Column(name = "annotation")
+    @NotBlank
     private String annotation;
 
-    @Column(name = "country", nullable = false)
+    @Column(name = "country")
+    @NotBlank
     private String country;
 
     @Column(name = "ageRating", nullable = false)
+    @Pattern(regexp = "PG-18|PG-13|NC-17")
     private String ageRating;
 
     public String getName() {
@@ -157,11 +161,4 @@ public class Film extends BaseEntity {
         this.groupSet = groupSet;
     }
 
-    public Set<Media> getMediaSet() {
-        return mediaSet;
-    }
-
-    public void setMediaSet(Set<Media> mediaSet) {
-        this.mediaSet = mediaSet;
-    }
 }
