@@ -11,6 +11,9 @@ public class CinemaNetwork extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork")
     private Set<CinemaTheatre> cinemaTheatreSet;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork")
+    private Set<Media> mediaSet;
+
     public String getName() {
         return name;
     }
@@ -25,5 +28,13 @@ public class CinemaNetwork extends BaseEntity {
 
     public void setCinemaTheatreSet(Set<CinemaTheatre> cinemaTheatreSet) {
         this.cinemaTheatreSet = cinemaTheatreSet;
+    }
+
+    public Set<Media> getMediaSet() {
+        return mediaSet;
+    }
+
+    public void setMediaSet(Set<Media> mediaSet) {
+        this.mediaSet = mediaSet;
     }
 }

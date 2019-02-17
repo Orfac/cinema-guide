@@ -27,6 +27,9 @@ public class Film extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
     private Set<Rating> ratingSet;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film")
+    private Set<Media> mediaSet;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "films_genres", joinColumns =
     @JoinColumn(name = "film_id"),
@@ -156,5 +159,13 @@ public class Film extends BaseEntity {
 
     public void setGroupSet(Set<Group> groupSet) {
         this.groupSet = groupSet;
+    }
+
+    public Set<Media> getMediaSet() {
+        return mediaSet;
+    }
+
+    public void setMediaSet(Set<Media> mediaSet) {
+        this.mediaSet = mediaSet;
     }
 }
