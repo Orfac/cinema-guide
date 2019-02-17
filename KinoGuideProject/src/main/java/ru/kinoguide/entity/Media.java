@@ -2,8 +2,8 @@ package ru.kinoguide.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Media extends BaseEntity {
@@ -14,17 +14,8 @@ public class Media extends BaseEntity {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "cinema_network_id")
-    private CinemaNetwork cinemaNetwork;
-
-    @ManyToOne
-    @JoinColumn(name = "cinema_theatre_id")
-    private CinemaTheatre cinemaTheatre;
-
-    @ManyToOne
-    @JoinColumn(name = "film_id")
-    private Film film;
-
+    @NotNull
+    private DisplayableEntity entity;
 
     public String getUrl() {
         return url;
@@ -40,29 +31,5 @@ public class Media extends BaseEntity {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public CinemaNetwork getCinemaNetwork() {
-        return cinemaNetwork;
-    }
-
-    public void setCinemaNetwork(CinemaNetwork cinemaNetwork) {
-        this.cinemaNetwork = cinemaNetwork;
-    }
-
-    public CinemaTheatre getCinemaTheatre() {
-        return cinemaTheatre;
-    }
-
-    public void setCinemaTheatre(CinemaTheatre cinemaTheatre) {
-        this.cinemaTheatre = cinemaTheatre;
-    }
-
-    public Film getFilm() {
-        return film;
-    }
-
-    public void setFilm(Film film) {
-        this.film = film;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 @Entity
 public class CinemaHall extends BaseEntity {
     @Column(nullable = false, unique = true)
-    private int number;
+    private int number; // TODO number of what? What the hell =D?
 
     @ManyToOne
     @JoinColumn(name = "cinema_theatre_id", nullable = false)
@@ -14,4 +14,6 @@ public class CinemaHall extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaHall")
     private Set<Seat> seats;
+
+
 }

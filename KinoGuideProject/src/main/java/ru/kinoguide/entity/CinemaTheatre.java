@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class CinemaTheatre extends BaseEntity {
+public class CinemaTheatre extends DisplayableEntity {
 
     @Column(nullable = false)
     private String city;
@@ -14,9 +14,6 @@ public class CinemaTheatre extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaTheatre")
     private Set<CinemaHall> cinemaHalls;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaTheatre")
-    private Set<Media> mediaSet;
 
     @ManyToOne
     @JoinColumn(name = "network_id", nullable = false)
@@ -44,14 +41,6 @@ public class CinemaTheatre extends BaseEntity {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Set<Media> getMediaSet() {
-        return mediaSet;
-    }
-
-    public void setMediaSet(Set<Media> mediaSet) {
-        this.mediaSet = mediaSet;
     }
 
     public Set<CinemaHall> getCinemaHalls() {
