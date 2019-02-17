@@ -138,7 +138,7 @@ public class StringDataGenerator {
                 "2"
                 , "3",
                 "ремейк",
-                 "- начало",
+                "- начало",
                 "в Лас Вентурасе",
                 "в Паломино Крик",
                 "в салуне Эль Пасо",
@@ -155,4 +155,67 @@ public class StringDataGenerator {
         filmRatingGenerator.addPart("PG-13", "PG-18", "NC-17");
         return filmRatingGenerator;
     }
+
+    @Bean("addressGenerator")
+    public static StringDataGenerator buildAddressGenerator() {
+        StringDataGenerator addressGenerator = new StringDataGenerator();
+        addressGenerator.addPart(
+                "Gor'kovskiy",
+                "Kronverkskiy",
+                "Lenina",
+                "Karl Marks",
+                "Max Karl",
+                "Angels",
+                "Moonshine",
+                "Rome",
+                "Vinyl",
+                "Vanilla");
+        addressGenerator.addPart(
+                "avenue",
+                "boulevard",
+                "ave",
+                "street",
+                "square",
+                "hall",
+                "park",
+                "mall",
+                "st.",
+                "station");
+        return addressGenerator;
+    }
+
+    @Bean("cinemaNetworkNameGenerator")
+    public static StringDataGenerator buildCinemaNetworkNameGenerator() {
+        StringDataGenerator cinemaNetworkNameGenerator = new StringDataGenerator();
+        cinemaNetworkNameGenerator.addPart(
+                "Звезда",
+                "Мираж",
+                "Формула",
+                "КрасныйОктябрь",
+                "Дэнни Дэ Вито");
+        cinemaNetworkNameGenerator.addPart(
+                "Синема",
+                "Кино",
+                "Тысяча Дэ (Но 2D тоже есть)");
+        return cinemaNetworkNameGenerator;
+    }
+
+    @Bean("cityNameGenerator")
+    public static StringDataGenerator buildCityNameGenerator() {
+        StringDataGenerator cityNameGenerator = new StringDataGenerator();
+        cityNameGenerator.addPart(
+                "Питер",
+                "Нори",
+                "Итмо",
+                "Лондон");
+        cityNameGenerator.addPart(
+                "град",
+                "стан",
+                "таун",
+                "чинск",
+                "нинск",
+                "сити");
+        return cityNameGenerator;
+    }
+
 }

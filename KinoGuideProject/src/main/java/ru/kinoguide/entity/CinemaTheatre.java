@@ -12,7 +12,7 @@ public class CinemaTheatre extends DisplayableEntity {
     @Column(nullable = false)
     private String address;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaTheatre")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaTheatre", orphanRemoval = true)
     private Set<CinemaHall> cinemaHalls;
 
     @ManyToOne

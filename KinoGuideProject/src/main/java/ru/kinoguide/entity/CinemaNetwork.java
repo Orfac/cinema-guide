@@ -11,7 +11,7 @@ public class CinemaNetwork extends DisplayableEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork", orphanRemoval = true)
     private Set<CinemaTheatre> cinemaTheatreSet;
 
 

@@ -44,7 +44,7 @@ public class Film extends DisplayableEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
     private Instant dateShootingEnd;
 
-    @Column(name = "date_premiere")
+    @Column(name = "date_premiere", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
     private Instant datePremiere;

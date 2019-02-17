@@ -1,6 +1,7 @@
 package ru.kinoguide.entity;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
 
@@ -8,10 +9,10 @@ import java.util.Set;
 public class Session  extends BaseEntity {
 
     @Column(name = "start_time", nullable = false)
-    private Date startTime;
+    private Instant startTime;
 
     @Column(name = "end_time", nullable = false)
-    private Date endTime;
+    private Instant endTime;
 
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id", nullable = false)
@@ -21,22 +22,22 @@ public class Session  extends BaseEntity {
     @JoinColumn(name = "film_id", nullable = false)
     private Film film;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "session")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "session", orphanRemoval = true)
     private Set<Ticket> tickets;
 
-    public Date getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Instant startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Instant getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Instant endTime) {
         this.endTime = endTime;
     }
 

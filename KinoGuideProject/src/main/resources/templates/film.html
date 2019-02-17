@@ -7,7 +7,7 @@
 <body>
 <th:block th:fragment="content">
 
-    <h2 class="text-center mb-3">
+    <h2 th:text="${film.name}" class="text-center mb-3">
         Астерикс и тайное зелье, 2018
     </h2>
 
@@ -84,15 +84,15 @@
                     <span>Страна: </span>
                     <span th:text="${film.country}"></span>
                 </li>
-                <li class="list-group-item">
+                <li th:if="${film.dateShootingStart != null}" class="list-group-item">
                     <span>Дата начала съемок: </span>
                     <span th:text="${#temporals.format(film.dateShootingStart.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
                 </li>
-                <li class="list-group-item" th:if="${film.dateShootingEnd != null}">
+                <li th:if="${film.dateShootingEnd != null}" class="list-group-item">
                     <span>Дата конца съемок: </span>
                     <span th:text="${#temporals.format(film.dateShootingEnd.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
                 </li>
-                <li class="list-group-item" th:if="${film.datePremiere != null}">
+                <li th:if="${film.datePremiere != null}" class="list-group-item">
                     <span>Дата премьеры: </span>
                     <span th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
                 </li>
