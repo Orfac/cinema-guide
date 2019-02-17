@@ -78,10 +78,6 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
                 entityManager.persist(rating);
             }
         }
-
-
-        System.out.println("hey");
-
         entityManager.flush();
     }
 }

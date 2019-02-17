@@ -13,6 +13,7 @@ import ru.kinoguide.repository.RatingRepository;
 import ru.kinoguide.repository.UserRepository;
 import ru.kinoguide.repository.UsersRatingProximityRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,17 +33,22 @@ public class ScheduledProximityCalculationTask implements ApplicationListener<Co
     @Qualifier("linearUserProximityCalculator")
     private LinearUserProximityCalculator userProximityCalculator;
 
+    /**
+     * Recalculate proximities using more redundancy info approach that implies less complicated queries to write (two rows per relationship)
+     */
     @Scheduled(cron = "* * 0/12 * * *")
     public void recalculateProximities() {
         usersRatingProximityRepository.deleteAll();
         List<User> users = userRepository.findAll();
+        List<UsersRatingProximity> proximities = new ArrayList<>(users.size() * users.size());
         for (int i = 0; i < users.size(); i++) {
             for (int k = i + 1; k < users.size(); k++) {
                 double proximity = userProximityCalculator.calculateProximityByCommonRatings(ratingRepository.findCommonRates(users.get(i), users.get(k)));
-                UsersRatingProximity usersRatingProximity = new UsersRatingProximity(users.get(i), users.get(k), proximity);
-                usersRatingProximityRepository.save(usersRatingProximity);
+                proximities.add( new UsersRatingProximity(users.get(i), users.get(k), proximity));
+                proximities.add( new UsersRatingProximity(users.get(k), users.get(i), proximity));
             }
         }
+        usersRatingProximityRepository.save(proximities);
     }
 
     @Override
