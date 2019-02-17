@@ -15,6 +15,9 @@ public class CinemaTheatre extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaTheatre")
     private Set<CinemaHall> cinemaHalls;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaTheatre")
+    private Set<Media> mediaSet;
+
     @ManyToOne
     @JoinColumn(name = "network_id", nullable = false)
     private CinemaNetwork cinemaNetwork;
@@ -41,5 +44,21 @@ public class CinemaTheatre extends BaseEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Set<Media> getMediaSet() {
+        return mediaSet;
+    }
+
+    public void setMediaSet(Set<Media> mediaSet) {
+        this.mediaSet = mediaSet;
+    }
+
+    public Set<CinemaHall> getCinemaHalls() {
+        return cinemaHalls;
+    }
+
+    public void setCinemaHalls(Set<CinemaHall> cinemaHalls) {
+        this.cinemaHalls = cinemaHalls;
     }
 }
