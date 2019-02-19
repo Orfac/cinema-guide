@@ -41,9 +41,6 @@ public class OrderController {
     public String getAuto(
             ModelMap model
     ){
-        String[] testGenreArray = {"Хоррор", "Приключения", "Комедия", "Артхаус", "Фэнтези"};
-
-        model.addAttribute("genres",testGenreArray);
         return "autoOrder";
     }
 
