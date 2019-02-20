@@ -25,11 +25,25 @@
                             </li>
 
                         <li class="list-inline-item" >
-                            <button class="btn btn-outline-success btn-lg btn-circle" onclick="onGenreAdd()">
+                            <button class="btn btn-outline-success btn-lg btn-circle"
+                                    onclick="onGenreAdd()"
+                                    data-toggle="collapse"
+                                    data-target="#FilmCollapse"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample"
+                            >
                                 <strong class="lg">+</strong>
                             </button>
                         </li>
                     </ul>
+                    <div class="collapse" id="FilmCollapse">
+                        <input type="text" id="filmInput" list="languageList" >
+                        <datalist id="languageList">
+                            <th:block th:each="filmName : ${filmNames}">
+                                <option th:value="${filmName}"></option>
+                            </th:block>
+                        </datalist>
+                    </div>
                 </li>
                 <li class="list-group-item">
                     <h4>Время:</h4>
@@ -62,13 +76,13 @@
         function onTimeAdd(){
             let timeElementDescription = "<li class='list-inline-item'><button class='btn btn-outline-info'>11:30 - 15:00</button></li>";
             let timeElement = $(timeElementDescription);
-            $("#timeList").append(timeElement);
+            //$("#timeList").append(timeElement);
         }
         
         function onGenreAdd() {
             let genreElementDescription = "<li class='list-inline-item'><button class='btn btn-outline-info'>Блокбастер</button></li>";
             let genreElement = $(genreElementDescription);
-            $("#genreList").append(genreElement);
+            //$("#genreList").append(genreElement);
         }
         
         function onPriceAdd() {

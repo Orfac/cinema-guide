@@ -7,9 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.User;
+import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.repository.UserRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/order")
@@ -20,6 +25,9 @@ public class OrderController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FilmRepository filmRepository;
 
     @RequestMapping("")
     public String getOrdersByUserId(
@@ -41,6 +49,9 @@ public class OrderController {
     public String getAuto(
             ModelMap model
     ){
+        List<Film> filmList = filmRepository.findAll();
+        List<String> filmNamesList = filmList.stream().map(Film::getName).distinct().collect(Collectors.toList());
+        model.addAttribute("filmNames", filmNamesList);
         return "autoOrder";
     }
 
