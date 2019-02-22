@@ -9,6 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -161,4 +162,24 @@ public class Film extends DisplayableEntity {
         this.groupSet = groupSet;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Film film = (Film) o;
+        return duration == film.duration &&
+                Objects.equals(name, film.name) &&
+                Objects.equals(info, film.info) &&
+                Objects.equals(dateShootingStart, film.dateShootingStart) &&
+                Objects.equals(dateShootingEnd, film.dateShootingEnd) &&
+                Objects.equals(datePremiere, film.datePremiere) &&
+                Objects.equals(annotation, film.annotation) &&
+                Objects.equals(country, film.country) &&
+                Objects.equals(ageRating, film.ageRating);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, info, dateShootingStart, dateShootingEnd, datePremiere, duration, annotation, country, ageRating);
+    }
 }

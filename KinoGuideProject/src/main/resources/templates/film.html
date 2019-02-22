@@ -26,7 +26,7 @@
                     Средняя оценка: <span class="text-success">7/10</span>
                 </li>
 
-                <li class="list-group-item text-center">
+                <li th:if="${loggedUser != null}" class="list-group-item text-center">
                     <table class="table table-sm w-100 m-0">
                         <thead>
                         <tr>
@@ -36,31 +36,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Антон</td>
-                            <td class="text-success">7/10</td>
-                            <td>100%</td>
+                        <tr th:each="closeUserRelatedProximity : ${closeUserRelatedProximityList}">
+                            <td th:text="${closeUserRelatedProximity.getUser().getName()}">Антон</td>
+                            <td th:text="${closeUserRelatedProximity.getRate()}" class="text-success">7/10</td>
+                            <td th:text="${closeUserRelatedProximity.getProximity()}">100%</td>
                         </tr>
-                        <tr>
-                            <td>Антон</td>
-                            <td class="text-success">10/10</td>
-                            <td>83%</td>
-                        </tr>
-                        <tr>
-                            <td>Антон</td>
-                            <td class="text-warning">5/10</td>
-                            <td>52%</td>
-                        </tr>
-                        <tr>
-                            <td>Антон</td>
-                            <td class="text-danger">2/10</td>
-                            <td>40%</td>
-                        </tr>
-                        <tr>
-                            <td>Антон</td>
-                            <td class="text-danger">1/10</td>
-                            <td>30%</td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<td>Антон</td>-->
+                            <!--<td class="text-success">10/10</td>-->
+                            <!--<td>83%</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>Антон</td>-->
+                            <!--<td class="text-warning">5/10</td>-->
+                            <!--<td>52%</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>Антон</td>-->
+                            <!--<td class="text-danger">2/10</td>-->
+                            <!--<td>40%</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>Антон</td>-->
+                            <!--<td class="text-danger">1/10</td>-->
+                            <!--<td>30%</td>-->
+                        <!--</tr>-->
                         </tbody>
                     </table>
                 </li>
