@@ -76,7 +76,7 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
             User user = new User();
             user.setName("test" + i);
             user.setEmail("test@mail.ru");
-            user.setPassword("test");
+            user.setPassword("$2a$10$/kuzRcxvSmGsUQMSaXxiieDYtFes8lmwhPtu4VJ8v7qw2mMO9dBAK");
             user.setPasswordRepeat("test");
             userList.add(user);
             entityManager.persist(user);

@@ -87,4 +87,28 @@ public class User extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<UsersRatingProximity> getRatingProximities1() {
+        return ratingProximities1;
+    }
+
+    public void setRatingProximities1(List<UsersRatingProximity> ratingProximities1) {
+        this.ratingProximities1 = ratingProximities1;
+    }
+
+    public List<UsersRatingProximity> getRatingProximities2() {
+        return ratingProximities2;
+    }
+
+    public void setRatingProximities2(List<UsersRatingProximity> ratingProximities2) {
+        this.ratingProximities2 = ratingProximities2;
+    }
+
+    /**
+     * @param film
+     * @return rating for this film of {@code this} user or null if not found
+     */
+    public Rating getRatingByFilm(Film film) {
+        return ratingSet.stream().filter(r -> r.getFilm().equals(film)).findFirst().orElse(null);
+    }
 }
