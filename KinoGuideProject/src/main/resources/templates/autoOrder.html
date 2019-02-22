@@ -16,17 +16,10 @@
                 </li>
                 <li class="list-group-item">
                     <h4>Фильмы:</h4>
-                    <ul class="list-inline list-group-flush" id="genreList">
-
-                            <li class="list-inline-item">
-                                <strong class="btn btn-outline-info">
-                                    привет
-                                </strong>
-                            </li>
+                    <ul class="list-inline list-group-flush" id="filmList">
 
                         <li class="list-inline-item" >
                             <button class="btn btn-outline-success btn-lg btn-circle"
-                                    onclick="onGenreAdd()"
                                     data-toggle="collapse"
                                     data-target="#FilmCollapse"
                                     aria-expanded="false"
@@ -36,13 +29,26 @@
                             </button>
                         </li>
                     </ul>
-                    <div class="collapse" id="FilmCollapse">
-                        <input type="text" id="filmInput" list="languageList" >
-                        <datalist id="languageList">
-                            <th:block th:each="filmName : ${filmNames}">
-                                <option th:value="${filmName}"></option>
-                            </th:block>
-                        </datalist>
+                    <div class="collapse mt-2" id="FilmCollapse">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" id="filmInput" list="languageList" class="form-control h-100" >
+                                <datalist id="languageList">
+                                    <th:block th:each="filmName : ${filmNames}">
+                                        <option th:value="${filmName}"></option>
+                                    </th:block>
+                                </datalist>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-success h-100" onclick="onFilmAdd()">
+                                    <strong class="lg">Добавить</strong>
+                                </button>
+                            </div>
+
+                        </div>
+
+
+
                     </div>
                 </li>
                 <li class="list-group-item">
@@ -73,18 +79,21 @@
 </th:block>
 <th:block th:fragment="scripts">
     <script>
+        let films = [];
+        let filmName = document.getElementById("filmInput");
+        function onFilmAdd() {
+            let filmElementDescription = "<li class='list-inline-item'><button class='btn btn-outline-info'>" + filmName.value + "</button></li>";
+            let filmElement = $(filmElementDescription);
+            films.push(filmName.value);
+            $("#filmList").prepend(filmElement);
+        }
+
         function onTimeAdd(){
             let timeElementDescription = "<li class='list-inline-item'><button class='btn btn-outline-info'>11:30 - 15:00</button></li>";
             let timeElement = $(timeElementDescription);
             //$("#timeList").append(timeElement);
         }
-        
-        function onGenreAdd() {
-            let genreElementDescription = "<li class='list-inline-item'><button class='btn btn-outline-info'>Блокбастер</button></li>";
-            let genreElement = $(genreElementDescription);
-            //$("#genreList").append(genreElement);
-        }
-        
+
         function onPriceAdd() {
             // TODO прикрутить добавление цены
         }
@@ -93,7 +102,7 @@
             // TODO прикрутить перерасчёт расстояний до кинотеатров через Yandex API - route
         }
 
-        $( document ).ready(function() {
+        $(document).ready(function() {
             updateCinemaDistance();
         });
     </script>
