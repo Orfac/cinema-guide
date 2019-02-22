@@ -10,7 +10,6 @@ import ru.kinoguide.entity.UsersRatingProximity;
 import java.util.List;
 
 public interface UsersRatingProximityRepository extends JpaRepository<UsersRatingProximity, Integer> {
-    @Query("SELECT p FROM UsersRatingProximity p, Rating r WHERE p.user1 = :user AND r.film = :film AND r.user = p.user2 ORDER BY p.proximity DESC")
-//    @Query(value = "SELECT p FROM UsersRatingProximity p JOIN p.user2 u ON (p.user2 = u) JOIN p.user2.ratingSet r ON (r.user = p.user2 AND r.film = :film) WHERE p.user1 = :user ORDER BY p.proximity ASC")
-    List<UsersRatingProximity> getMostProximityUsersByFilmAndUser(@Param("user") User user, @Param("film") Film film);
+    @Query(value = "SELECT u.* FROM users_rating_proximity AS u JOIN rating AS r ON (r.user_id = u.user2_id AND r.film_id=:film) WHERE u.user1_id=:user ORDER BY u.proximity DESC", nativeQuery = true)
+    List<UsersRatingProximity> getMostProximityUsersByFilmAndUser(@Param("user") Integer userId, @Param("film") Integer filmId);
 }

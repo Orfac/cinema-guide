@@ -59,7 +59,7 @@ public class FilmsController {
         User loggedUser = (User) modelMap.get("loggedUser");
         if (loggedUser != null) {
             List<UserRelatedProximity> userRelatedProximityList = new ArrayList<>();
-            List<UsersRatingProximity> usersRatingProximityList = usersRatingProximityRepository.getMostProximityUsersByFilmAndUser(loggedUser, film);
+            List<UsersRatingProximity> usersRatingProximityList = usersRatingProximityRepository.getMostProximityUsersByFilmAndUser(loggedUser.getId(), film.getId());
             for (int i = 0; i < usersRatingProximityList.size() && i < TOP_PROXIMITY_USER_RATES; i++) {
                 UsersRatingProximity usersRatingProximity = usersRatingProximityList.get(i);
                 UserRelatedProximity userRelatedProximity = new UserRelatedProximity(usersRatingProximity.getUser2(), usersRatingProximity, film);

@@ -46,7 +46,7 @@ public class UserRelatedProximity {
         return user.getRatingByFilm(film).getRate();
     }
 
-    public double getProximity() {
-        return usersRatingProximity.getProximity();
+    public int getProximity() {
+        return (int) Math.round(usersRatingProximity.getProximity());
     }
 }
