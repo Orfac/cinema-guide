@@ -36,7 +36,7 @@ public class ScheduledProximityCalculationTask implements ApplicationListener<Co
     /**
      * Recalculate proximities using more redundancy info approach that implies less complicated queries to write (two rows per relationship)
      */
-    @Scheduled(cron = "* * 0/12 * * *")
+    @Scheduled(cron = "0 0 0/12 * * *")
     public void recalculateProximities() {
         usersRatingProximityRepository.deleteAll();
         List<User> users = userRepository.findAll();
