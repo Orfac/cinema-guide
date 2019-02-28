@@ -1,16 +1,19 @@
 package ru.kinoguide.service.proximity;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.entity.UsersRatingProximity;
 import ru.kinoguide.repository.RatingRepository;
 import ru.kinoguide.repository.UserRepository;
 import ru.kinoguide.repository.UsersRatingProximityRepository;
+import ru.kinoguide.view.UserRelatedProximity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ public class ProximityService implements ApplicationListener<ContextRefreshedEve
     private LinearUserProximityCalculator userProximityCalculator;
 
 
+    @Autowired
     public ProximityService(UserRepository userRepository, RatingRepository ratingRepository, UsersRatingProximityRepository usersRatingProximityRepository,
                             @Qualifier("linearUserProximityCalculator") LinearUserProximityCalculator userProximityCalculator) {
         this.userRepository = userRepository;
@@ -57,5 +61,19 @@ public class ProximityService implements ApplicationListener<ContextRefreshedEve
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recalculateProximities();
+    }
+
+    /**
+     * @return List of objects which contain info about one of the users who has similar film favours (high proximity) and his rate for the specified film
+     */
+    public List<UserRelatedProximity> getUsersWithClosestProximityByFilm(User user, Film film, int resultsNumber) {
+        List<UserRelatedProximity> userRelatedProximityList = new ArrayList<>();
+        List<UsersRatingProximity> proximityList = usersRatingProximityRepository.getUsersWithClosestProximityByFilm(user.getId(), film.getId(), resultsNumber);
+
+        for (UsersRatingProximity ratingProximity : proximityList) {
+            UserRelatedProximity userRelatedProximity = new UserRelatedProximity(ratingProximity, film);
+            userRelatedProximityList.add(userRelatedProximity);
+        }
+        return userRelatedProximityList;
     }
 }

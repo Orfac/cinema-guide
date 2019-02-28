@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.User;
-import ru.kinoguide.entity.UsersRatingProximity;
-import ru.kinoguide.repository.FilmRepository;
-import ru.kinoguide.repository.UsersRatingProximityRepository;
-import ru.kinoguide.view.UserRelatedProximity;
+import ru.kinoguide.service.FilmService;
+import ru.kinoguide.service.proximity.ProximityService;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Controller
@@ -26,11 +22,15 @@ public class FilmsController {
 
     private static final int TOP_PROXIMITY_USER_RATES = 5;
 
-    @Autowired
-    private FilmRepository filmRepository;
+    private FilmService filmService;
+
+    private ProximityService proximityService;
 
     @Autowired
-    private UsersRatingProximityRepository usersRatingProximityRepository;
+    public FilmsController(FilmService filmService, ProximityService proximityService) {
+        this.filmService = filmService;
+        this.proximityService = proximityService;
+    }
 
     @RequestMapping("billboard")
     public String billboard(
@@ -39,7 +39,7 @@ public class FilmsController {
             @RequestParam(name = "size", required = false, defaultValue = "20") Integer filmsOnPage
 
     ) {
-        model.put("films", filmRepository.findFilmsWhichHaveSessionsSinceNow(new PageRequest(page, filmsOnPage, Sort.Direction.DESC, "datePremiere")));
+        model.put("films", filmService.findFilmsWhichHaveSessionsSinceNow(new PageRequest(page, filmsOnPage, Sort.Direction.DESC, "datePremiere")));
         return "billboard";
     }
 
@@ -51,21 +51,14 @@ public class FilmsController {
             @RequestParam(name = "date", required = false) Instant sessionsDate
 
     ) {
-        Film film = filmRepository.findOne(id);
+        Film film = filmService.findOne(id);
         if (film == null) {
             modelMap.addAttribute("error", "Фильм не найден");
             return "error";
         }
         User loggedUser = (User) modelMap.get("loggedUser");
         if (loggedUser != null) {
-            List<UserRelatedProximity> userRelatedProximityList = new ArrayList<>();
-            List<UsersRatingProximity> usersRatingProximityList = usersRatingProximityRepository.getMostProximityUsersByFilmAndUser(loggedUser.getId(), film.getId());
-            for (int i = 0; i < usersRatingProximityList.size() && i < TOP_PROXIMITY_USER_RATES; i++) {
-                UsersRatingProximity usersRatingProximity = usersRatingProximityList.get(i);
-                UserRelatedProximity userRelatedProximity = new UserRelatedProximity(usersRatingProximity.getUser2(), usersRatingProximity, film);
-                userRelatedProximityList.add(userRelatedProximity);
-            }
-            modelMap.addAttribute("closeUserRelatedProximityList", userRelatedProximityList);
+            modelMap.addAttribute("closeUserRelatedProximityList", proximityService.getUsersWithClosestProximityByFilm(loggedUser, film, TOP_PROXIMITY_USER_RATES));
         }
         modelMap.addAttribute("film", film);
         return "film";

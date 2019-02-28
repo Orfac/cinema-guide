@@ -14,11 +14,12 @@ public class LoggingAspect {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Around("ru.kinoguide.util.JoinPointConfiguration.serviceLayerExecution()")
-    public void logServiceLayerMethods(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object logServiceLayerMethods(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
-        joinPoint.proceed();
+        Object object = joinPoint.proceed();
         long timeTaken = System.currentTimeMillis() - startTime;
         logger.info(joinPoint.getSignature() + " (time taken: {})", timeTaken);
+        return object;
     }
 
 }

@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="closeUserRelatedProximity : ${closeUserRelatedProximityList}">
-                            <td th:text="${closeUserRelatedProximity.getUser().getName()}">Антон</td>
+                            <td th:text="${closeUserRelatedProximity.getProximityFriend().getName()}">Антон</td>
                             <td th:text="${closeUserRelatedProximity.getRate()}" class="text-success">7/10</td>
                             <td th:text="${closeUserRelatedProximity.getProximity()}">100%</td>
                         </tr>
