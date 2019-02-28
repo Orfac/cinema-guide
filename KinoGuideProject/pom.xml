@@ -144,11 +144,14 @@
         </dependency>
         <!--Testing-->
 
+        <!-- AOP & AspectJ -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
+        <!-- AOP & AspectJ -->
+
     </dependencies>
 
 

@@ -13,7 +13,6 @@ import ru.kinoguide.entity.User;
 import ru.kinoguide.entity.UsersRatingProximity;
 import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.UsersRatingProximityRepository;
-import ru.kinoguide.util.Loggable;
 import ru.kinoguide.view.UserRelatedProximity;
 
 import java.time.Instant;
@@ -46,7 +45,6 @@ public class FilmsController {
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    @Loggable
     public String film(
             ModelMap modelMap,
             @RequestParam(name = "id") Integer id,

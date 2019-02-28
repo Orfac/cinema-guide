@@ -30,7 +30,6 @@ public class UserPrincipalImpl implements UserDetails {
         return name;
     }
 
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

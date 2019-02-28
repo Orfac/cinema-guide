@@ -1,6 +1,5 @@
-package ru.kinoguide.service;
+package ru.kinoguide.service.proximity;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -18,20 +17,24 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ScheduledProximityCalculationTask implements ApplicationListener<ContextRefreshedEvent> {
+public class ProximityService implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private RatingRepository ratingRepository;
 
-    @Autowired
     private UsersRatingProximityRepository usersRatingProximityRepository;
 
-    @Autowired
-    @Qualifier("linearUserProximityCalculator")
     private LinearUserProximityCalculator userProximityCalculator;
+
+
+    public ProximityService(UserRepository userRepository, RatingRepository ratingRepository, UsersRatingProximityRepository usersRatingProximityRepository,
+                            @Qualifier("linearUserProximityCalculator") LinearUserProximityCalculator userProximityCalculator) {
+        this.userRepository = userRepository;
+        this.ratingRepository = ratingRepository;
+        this.usersRatingProximityRepository = usersRatingProximityRepository;
+        this.userProximityCalculator = userProximityCalculator;
+    }
 
     /**
      * Recalculate proximities using more redundancy info approach that implies less complicated queries to write (two rows per relationship)
@@ -44,8 +47,8 @@ public class ScheduledProximityCalculationTask implements ApplicationListener<Co
         for (int i = 0; i < users.size(); i++) {
             for (int k = i + 1; k < users.size(); k++) {
                 double proximity = userProximityCalculator.calculateProximityByCommonRatings(ratingRepository.findCommonRates(users.get(i), users.get(k)));
-                proximities.add( new UsersRatingProximity(users.get(i), users.get(k), proximity));
-                proximities.add( new UsersRatingProximity(users.get(k), users.get(i), proximity));
+                proximities.add(new UsersRatingProximity(users.get(i), users.get(k), proximity));
+                proximities.add(new UsersRatingProximity(users.get(k), users.get(i), proximity));
             }
         }
         usersRatingProximityRepository.save(proximities);

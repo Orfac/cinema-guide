@@ -1,17 +1,15 @@
 package ru.kinoguide.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kinoguide.entity.User;
-import ru.kinoguide.repository.UserRepository;
+import ru.kinoguide.exception.NameOccupiedException;
+import ru.kinoguide.service.UserService;
 
 import javax.validation.Valid;
 
@@ -19,12 +17,13 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
-    private UserRepository usersRepo;
+    private UserService userService;
 
-    @Qualifier("passwordEncoder")
+
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping("login")
     public String login(
@@ -49,34 +48,14 @@ public class UserController {
             }
         }
         if (!userBindingResult.hasErrors()) {
-            if (usersRepo.findByName(user.getName()) == null) {
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
-                usersRepo.save(user);
+            try {
+                userService.registerUser(user);
                 return "redirect:login";
-            } else {
+            } catch (NameOccupiedException ex) {
                 userBindingResult.rejectValue("name", "Имя уже занято", "Имя уже занято");
             }
         }
         return "register";
     }
-
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String updateUser(User user) {
-        try {
-            usersRepo.save(user);
-        } catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
-        }
-        return "redirect:/user";
-    }
-
-
-    @RequestMapping(value = "delete", method = RequestMethod.GET)
-    public String deleteUser(Integer id, ModelMap model) {
-        usersRepo.delete(id);
-        model.put("message", "User has been deleted successfully!");
-        return "redirect:/user";
-    }
-
 
 }

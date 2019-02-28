@@ -1,4 +1,4 @@
-package ru.kinoguide.service;
+package ru.kinoguide.service.proximity;
 
 import org.springframework.stereotype.Service;
 import ru.kinoguide.entity.Rating;

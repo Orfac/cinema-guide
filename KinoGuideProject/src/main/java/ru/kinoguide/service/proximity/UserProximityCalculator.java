@@ -1,4 +1,4 @@
-package ru.kinoguide.service;
+package ru.kinoguide.service.proximity;
 
 import ru.kinoguide.entity.Rating;
 
