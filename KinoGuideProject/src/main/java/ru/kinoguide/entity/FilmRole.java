@@ -4,7 +4,7 @@ package ru.kinoguide.entity;
 import javax.persistence.*;
 
 @Entity
-public class Role extends BaseEntity {
+public class FilmRole extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 

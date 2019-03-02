@@ -6,8 +6,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kinoguide.entity.User;
+import ru.kinoguide.entity.UserRole;
 import ru.kinoguide.exception.NameOccupiedException;
 import ru.kinoguide.repository.UserRepository;
+import ru.kinoguide.repository.UserRoleRepository;
 
 @Service
 @Transactional
@@ -15,12 +17,15 @@ public class UserService {
 
     private UserRepository userRepository;
 
+    private UserRoleRepository userRoleRepository;
+
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
     }
 
     private User getUserByName(String name) {
@@ -37,6 +42,7 @@ public class UserService {
         }
         if (getUserByName(user.getName()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setUserRoles(userRoleRepository.findByName("ROLE_USER"));
             return userRepository.save(user);
         } else {
             throw new NameOccupiedException(user.getName());

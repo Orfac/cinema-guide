@@ -10,16 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kinoguide.entity.*;
 import ru.kinoguide.repository.CinemaHallRepository;
 import ru.kinoguide.repository.RatingRepository;
+import ru.kinoguide.repository.UserRoleRepository;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -47,7 +45,6 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
     @Qualifier("cinemaNetworkNameGenerator")
     private StringDataGenerator cinemaNetworkNameGenerator;
 
-
     @Autowired
     private EntityManager entityManager;
 
@@ -56,6 +53,9 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
 
     @Autowired
     private CinemaHallRepository cinemaHallRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     private final static int FILMS_NUMBER = 100;
 
@@ -71,6 +71,12 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        UserRole regularUserRole = new UserRole("ROLE_USER");
+        UserRole adminUserRole = new UserRole("ROLE_ADMIN");
+
+        userRoleRepository.save(regularUserRole);
+        userRoleRepository.save(adminUserRole);
+
         ArrayList<User> userList = new ArrayList<>();
         for (int i = 0; i < USERS_NUMBER; i++) {
             User user = new User();
@@ -78,6 +84,7 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
             user.setEmail("test@mail.ru");
             user.setPassword("$2a$10$/kuzRcxvSmGsUQMSaXxiieDYtFes8lmwhPtu4VJ8v7qw2mMO9dBAK");
             user.setPasswordRepeat("test");
+            user.setUserRoles(Arrays.asList(regularUserRole));
             userList.add(user);
             entityManager.persist(user);
         }
