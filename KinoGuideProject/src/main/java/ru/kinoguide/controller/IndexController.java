@@ -32,4 +32,5 @@ public class IndexController implements ErrorController {
     public String root() {
         return "redirect:/film/billboard";
     }
+
 }

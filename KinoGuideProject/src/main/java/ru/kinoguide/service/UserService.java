@@ -28,8 +28,12 @@ public class UserService {
         this.userRoleRepository = userRoleRepository;
     }
 
-    private User getUserByName(String name) {
+    public User getUserByName(String name) {
         return userRepository.findByName(name);
+    }
+
+    public User findOne(Integer userId) {
+        return userRepository.findOne(userId);
     }
 
     /**

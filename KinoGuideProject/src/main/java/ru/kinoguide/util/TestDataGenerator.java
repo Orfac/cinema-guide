@@ -11,6 +11,8 @@ import ru.kinoguide.entity.*;
 import ru.kinoguide.repository.CinemaHallRepository;
 import ru.kinoguide.repository.RatingRepository;
 import ru.kinoguide.repository.UserRoleRepository;
+import ru.kinoguide.security.TokenGenerator;
+import ru.kinoguide.service.CinemaNetworkService;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
@@ -57,6 +59,12 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private UserRoleRepository userRoleRepository;
 
+    @Autowired
+    private TokenGenerator tokenGenerator;
+
+    @Autowired
+    private CinemaNetworkService cinemaNetworkService;
+
     private final static int FILMS_NUMBER = 100;
 
     private final static int SESSIONS_PER_FILM = 100;
@@ -92,6 +100,7 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
         for (int i = 0; i < CINEMA_NETWORKS; i++) {
             CinemaNetwork cinemaNetwork = new CinemaNetwork();
             cinemaNetwork.setCinemaTheatreSet(new HashSet<>());
+            cinemaNetwork.setToken(tokenGenerator.next());
             cinemaNetwork.setName(cinemaNetworkNameGenerator.generateNextValue() + " " + i);
             for (int l = 0; l < CINEMA_THEATRES_PER_NETWORK; l++) {
                 CinemaTheatre cinemaTheatre = new CinemaTheatre();

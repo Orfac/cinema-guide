@@ -31,7 +31,6 @@ public class OrderController {
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "20") Integer ordersOnPage
     ) {
-
         User loggedUser = (User) modelMap.get("loggedUser");
 
         if (userId != null && !userId.equals(loggedUser.getId()) && !loggedUser.hasRole("ROLE_ADMIN")) {
