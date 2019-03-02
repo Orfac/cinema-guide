@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.User;
+import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.repository.UserRepository;
+import ru.kinoguide.service.OrderService;
 
 import java.util.ArrayList;
 import java.util.List;
