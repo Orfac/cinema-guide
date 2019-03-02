@@ -6,13 +6,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +58,18 @@ public class OrderController {
         return "autoOrder";
     }
 
+    @RequestMapping(value = "relevant", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getRelevantOrders(
+        @RequestParam String[] dates,
+        @RequestParam String[] leftTimes,
+        @RequestParam String[] rightTimes
+    ) {
+        ArrayList<String> orders = new ArrayList<>();
+        orders.add("privet");
+        orders.add("poka");
+        return orders;
+    }
 
 
 }
