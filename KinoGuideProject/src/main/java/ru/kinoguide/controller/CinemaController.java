@@ -64,10 +64,9 @@ public class CinemaController {
     @ResponseBody
     public List<String> getAllCinemaTheatres() {
         List<CinemaTheatre> cinemaTheatresList = cinemaTheatreRepository.findAll();
-        List<String> cinemaTheatresAddresses = cinemaTheatresList.stream()
+        return cinemaTheatresList.stream()
                 .map(CinemaTheatre::getAddress)
                 .distinct()
                 .collect(Collectors.toList());
-        return cinemaTheatresAddresses;
     }
 }
