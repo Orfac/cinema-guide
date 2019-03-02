@@ -3,16 +3,26 @@ package ru.kinoguide.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.kinoguide.entity.Privilege;
 import ru.kinoguide.entity.User;
+import ru.kinoguide.entity.UserRole;
 import ru.kinoguide.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+@Transactional
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -44,6 +54,18 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         if (user == null) {
             throw new UsernameNotFoundException(name);
         }
-        return new UserPrincipalImpl(name, user.getPassword());
+//        return new UserPrincipalImpl(name, user.getPassword());
+        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), getUserAuthorities(user));
+    }
+
+    private Collection<GrantedAuthority> getUserAuthorities(User user) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (UserRole userRole : user.getUserRoles()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(userRole.getName()));
+            for (Privilege privilege : userRole.getPrivileges()) {
+                grantedAuthorities.add(new SimpleGrantedAuthority(privilege.getName()));
+            }
+        }
+        return grantedAuthorities;
     }
 }

@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class CinemaNetwork extends DisplayableEntity {
@@ -14,6 +15,11 @@ public class CinemaNetwork extends DisplayableEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaNetwork", orphanRemoval = true)
     private Set<CinemaTheatre> cinemaTheatreSet;
 
+    @Column(unique = true)
+    private String token;
+
+    public CinemaNetwork() {
+    }
 
     public String getName() {
         return name;
@@ -31,4 +37,11 @@ public class CinemaNetwork extends DisplayableEntity {
         this.cinemaTheatreSet = cinemaTheatreSet;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

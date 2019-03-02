@@ -1,5 +1,6 @@
 package ru.kinoguide.security;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kinoguide.entity.User;
@@ -29,7 +30,6 @@ public class UserPrincipalImpl implements UserDetails {
     public String getUsername() {
         return name;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
