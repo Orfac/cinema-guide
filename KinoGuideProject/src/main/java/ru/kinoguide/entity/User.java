@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,9 @@ public class User extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user2", orphanRemoval = true)
     private List<UsersRatingProximity> ratingProximities2;
+
+    @ManyToMany
+    private Collection<UserRole> userRoles;
 
     public String getName() {
         return name;
@@ -110,5 +114,22 @@ public class User extends BaseEntity {
      */
     public Rating getRatingByFilm(Film film) {
         return ratingSet.stream().filter(r -> r.getFilm().equals(film)).findFirst().orElse(null);
+    }
+
+    public Collection<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Collection<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    public boolean hasRole(String roleName) {
+        for (UserRole userRole : userRoles) {
+            if (userRole.getName().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

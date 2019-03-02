@@ -12,7 +12,7 @@ public class Person extends BaseEntity {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    private Set<Role> roleSet;
+    private Set<FilmRole> filmRoleSet;
 
     public Person(String name) {
         this.name = name;
@@ -26,11 +26,11 @@ public class Person extends BaseEntity {
         this.name = name;
     }
 
-    public Set<Role> getRoleSet() {
-        return roleSet;
+    public Set<FilmRole> getFilmRoleSet() {
+        return filmRoleSet;
     }
 
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
+    public void setFilmRoleSet(Set<FilmRole> filmRoleSet) {
+        this.filmRoleSet = filmRoleSet;
     }
 }

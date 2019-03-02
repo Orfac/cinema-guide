@@ -30,6 +30,7 @@ public class IndexController implements ErrorController {
 
     @RequestMapping(value = {"", "/"})
     public String root() {
-        return "index";
+        return "redirect:/film/billboard";
     }
+
 }

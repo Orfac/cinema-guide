@@ -10,7 +10,7 @@ public class Group extends BaseEntity {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
-    private Set<Role> roleSet;
+    private Set<FilmRole> filmRoleSet;
 
     @ManyToOne
     @JoinColumn(name = "film_id", nullable = false)
@@ -24,12 +24,12 @@ public class Group extends BaseEntity {
         this.name = name;
     }
 
-    public Set<Role> getRoleSet() {
-        return roleSet;
+    public Set<FilmRole> getFilmRoleSet() {
+        return filmRoleSet;
     }
 
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
+    public void setFilmRoleSet(Set<FilmRole> filmRoleSet) {
+        this.filmRoleSet = filmRoleSet;
     }
 
     public Film getFilm() {

@@ -11,5 +11,7 @@ import ru.kinoguide.entity.User;
 public interface OrderRepository extends PagingAndSortingRepository<Order, Integer> {
 
     Page<Order> findAllByUser(User user, Pageable pageRequest);
+    Page<Order> findAllByUserId(Integer userId, Pageable pageRequest);
+
 
 }

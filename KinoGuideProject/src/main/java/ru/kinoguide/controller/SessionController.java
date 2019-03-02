@@ -14,6 +14,7 @@ public class SessionController {
 
     @Autowired
     private SessionRepository sessionRepository;
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String index(ModelMap model, @PathVariable("id") int id){
         return "session";

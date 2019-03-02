@@ -6,24 +6,17 @@ import ru.kinoguide.entity.UsersRatingProximity;
 
 public class UserRelatedProximity {
 
-    private User user;
-
     private UsersRatingProximity usersRatingProximity;
 
     private Film film;
 
-    public UserRelatedProximity(User user, UsersRatingProximity usersRatingProximity, Film film) {
-        this.user = user;
+    public UserRelatedProximity(UsersRatingProximity usersRatingProximity, Film film) {
         this.usersRatingProximity = usersRatingProximity;
         this.film = film;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public User getProximityFriend() {
+        return usersRatingProximity.getUser2();
     }
 
     public UsersRatingProximity getUsersRatingProximity() {
@@ -34,19 +27,19 @@ public class UserRelatedProximity {
         this.usersRatingProximity = usersRatingProximity;
     }
 
+    public int getProximity() {
+        return (int) Math.round(usersRatingProximity.getProximity());
+    }
+
+    public User getUser() {
+        return usersRatingProximity.getUser1();
+    }
+
     public Film getFilm() {
         return film;
     }
 
-    public void setFilm(Film film) {
-        this.film = film;
-    }
-
     public int getRate() {
-        return user.getRatingByFilm(film).getRate();
-    }
-
-    public double getProximity() {
-        return usersRatingProximity.getProximity();
+        return getProximityFriend().getRatingByFilm(film).getRate();
     }
 }
