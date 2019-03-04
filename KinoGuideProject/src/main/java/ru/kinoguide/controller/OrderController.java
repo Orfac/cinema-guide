@@ -3,14 +3,12 @@ package ru.kinoguide.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.repository.FilmRepository;
@@ -18,6 +16,8 @@ import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.repository.UserRepository;
 import ru.kinoguide.service.OrderService;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,13 +69,18 @@ public class OrderController {
     @RequestMapping(value = "relevant", method = RequestMethod.GET)
     @ResponseBody
     public List<String> getRelevantOrders(
-            @RequestParam String[] dates,
-            @RequestParam String[] leftTimes,
-            @RequestParam String[] rightTimes
+            @RequestParam(value = "films[]", required = false) String[] films,
+            @RequestParam(value = "dates[]",required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate[] dates,
+            @RequestParam(value = "leftTimes[]",required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime[] leftTimes,
+            @RequestParam(value = "rightTimes[]",required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime[] rightTimes,
+            @RequestParam(value = "prices[]",required = false) int[] prices
     ) {
-        ArrayList<String> orders = new ArrayList<>();
-        orders.add("privet");
-        orders.add("poka");
-        return orders;
+        int[] _prices = prices ;
+        String[] _films = films;
+        LocalDate[] _dates = dates;
+        ArrayList<String> filmsList = new ArrayList<>();
+        filmsList.add("privet");
+        filmsList.add("poka");
+        return filmsList;
     }
 }
