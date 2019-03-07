@@ -15,7 +15,7 @@ public class Media extends BaseEntity {
 
     @ManyToOne
     @NotNull
-    private DisplayableEntity entity;
+    private EntityMedia entity;
 
     public String getUrl() {
         return url;
@@ -31,5 +31,13 @@ public class Media extends BaseEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public EntityMedia getEntity() {
+        return entity;
+    }
+
+    public void setEntity(EntityMedia entity) {
+        this.entity = entity;
     }
 }

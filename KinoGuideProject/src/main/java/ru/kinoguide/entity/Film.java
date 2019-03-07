@@ -15,6 +15,8 @@ import java.util.Set;
 @Entity
 public class Film extends DisplayableEntity {
 
+    public final static String PREVIEW_IMAGE_MEDIA_TYPE = "preview";
+
     @Column(name = "name")
     @NotBlank
     private String name;
@@ -182,4 +184,15 @@ public class Film extends DisplayableEntity {
     public int hashCode() {
         return Objects.hash(name, info, dateShootingStart, dateShootingEnd, datePremiere, duration, annotation, country, ageRating);
     }
+
+    public String getPreviewImageURI() {
+        Media previewMedia = super.getMediaByType(PREVIEW_IMAGE_MEDIA_TYPE);
+        if (previewMedia != null) {
+            return previewMedia.getUrl();
+        } else {
+            return null;
+        }
+    }
+
+
 }

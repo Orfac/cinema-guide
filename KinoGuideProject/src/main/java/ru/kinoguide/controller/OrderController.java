@@ -61,9 +61,7 @@ public class OrderController {
     }
 
     @RequestMapping("auto")
-    public String getAuto(
-            ModelMap model
-    ){
+    public String getAuto(ModelMap model){
         List<Film> filmList = filmRepository.findFilmsWhichHaveSessionsSinceNow();
         List<String> filmNamesList = filmList.stream().map(Film::getName).distinct().collect(Collectors.toList());
         model.addAttribute("filmNames", filmNamesList);

@@ -48,6 +48,10 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
     private StringDataGenerator cinemaNetworkNameGenerator;
 
     @Autowired
+    @Qualifier("filmPreviewGenerator")
+    private StringDataGenerator filmPreviewGenerator;
+
+    @Autowired
     private EntityManager entityManager;
 
     @Autowired
@@ -124,12 +128,28 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
             Film film = new Film();
             film.setName(filmNameGenerator.generateNextValue());
             film.setAgeRating(filmRatingGenerator.generateNextValue());
-            film.setDuration((int) Math.random() * 100 + 10);
+            film.setDuration((int) (Math.random() * 120.0 + 10));
             film.setCountry("Russia");
             film.setInfo("Info");
             film.setAnnotation("Annotation");
             film.setDatePremiere(OffsetDateTime.of((int) (Math.random() * 5 + 2018), (int) (Math.random() * 11) + 1, (int) (Math.random() * 27) + 1, 0, 0, 0, 0, ZoneOffset.UTC).toInstant());
+
+            if (Math.random() > 0.1) {
+                // Film preview image
+                Media media = new Media();
+                media.setType(Film.PREVIEW_IMAGE_MEDIA_TYPE);
+                media.setUrl(filmPreviewGenerator.generateNextValue());
+
+                EntityMedia entityMedia = new EntityMedia();
+                entityMedia.setDisplayableEntity(film);
+                entityMedia.setMediaList(new LinkedList<>(Arrays.asList(new Media[]{media})));
+                media.setEntity(entityMedia);
+                film.setMediaEntity(entityMedia);
+            }
+
             entityManager.persist(film);
+
+
             Collections.shuffle(userList);
             for (int k = 0; k < FILM_USERS_RATED; k++) {
                 Rating rating = new Rating();
@@ -139,6 +159,7 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
                 rating.setDate(Instant.now().minusSeconds((long) (1000 * Math.random() * 1000)));
                 entityManager.persist(rating);
             }
+
             for (int k = 0; k < SESSIONS_PER_FILM; k++) {
                 Session session = new Session();
                 Instant startInstant = film.getDatePremiere().plus((int) (Math.random() * 30) + 60, ChronoUnit.DAYS);

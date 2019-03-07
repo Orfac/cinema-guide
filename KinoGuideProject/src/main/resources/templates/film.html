@@ -14,7 +14,11 @@
     <div class="row">
 
         <div class="col-md-3">
-            <img src="http://happy-cinema.ru/upload/iblock/522/5222b8f5fd17d01d410007f525a894e5.jpg"
+            <img th:if="${film.getPreviewImageURI() != null}"
+                 th:src="${film.getPreviewImageURI()}"
+                 alt="asteriks" class="img-fluid">
+            <img th:unless="${film.getPreviewImageURI() != null}"
+                 src="/assets/img/placeholder300x300.jpg"
                  alt="asteriks" class="img-fluid">
 
             <h3 class="text-center">Оценки</h3>
@@ -42,24 +46,24 @@
                             <td th:text="${closeUserRelatedProximity.getProximity()}">100%</td>
                         </tr>
                         <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-success">10/10</td>-->
-                            <!--<td>83%</td>-->
+                        <!--<td>Антон</td>-->
+                        <!--<td class="text-success">10/10</td>-->
+                        <!--<td>83%</td>-->
                         <!--</tr>-->
                         <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-warning">5/10</td>-->
-                            <!--<td>52%</td>-->
+                        <!--<td>Антон</td>-->
+                        <!--<td class="text-warning">5/10</td>-->
+                        <!--<td>52%</td>-->
                         <!--</tr>-->
                         <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-danger">2/10</td>-->
-                            <!--<td>40%</td>-->
+                        <!--<td>Антон</td>-->
+                        <!--<td class="text-danger">2/10</td>-->
+                        <!--<td>40%</td>-->
                         <!--</tr>-->
                         <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-danger">1/10</td>-->
-                            <!--<td>30%</td>-->
+                        <!--<td>Антон</td>-->
+                        <!--<td class="text-danger">1/10</td>-->
+                        <!--<td>30%</td>-->
                         <!--</tr>-->
                         </tbody>
                     </table>
@@ -113,7 +117,8 @@
                             Полная аннотация
                         </button>
                     </h5>
-                    <div th:text="${film.annotation}" id="collapsePlot" class="collapse" aria-labelledby="headingOne" data-parent="#plot">
+                    <div th:text="${film.annotation}" id="collapsePlot" class="collapse" aria-labelledby="headingOne"
+                         data-parent="#plot">
                         <div class="card-body pl-0">
                             Могучие галлы издревле черпали силу в секретном напитке, который готовил великий старец.
                             Но пришла беда, откуда не ждали – почтенный друид свалился с дерева и сломал обе ноги.
@@ -126,7 +131,8 @@
                 </li>
                 <li th:each="group : ${film.groupSet}" class="list-group-item" id="cast">
                     <h5 class="mb-0">
-                        <button th:text="'Съёмочная группа: ' + ${group.name}" class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
+                        <button th:text="'Съёмочная группа: ' + ${group.name}"
+                                class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
                                 data-target="#collapseCast"
                                 aria-expanded="true" aria-controls="collapseCast">
 

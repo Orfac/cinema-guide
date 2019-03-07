@@ -192,6 +192,22 @@ public class StringDataGenerator {
         return addressGenerator;
     }
 
+    @Bean("filmPreviewGenerator")
+    public static StringDataGenerator buildFilmPreviewGenerator() {
+        StringDataGenerator filmPreviewGenerator = new StringDataGenerator();
+        filmPreviewGenerator.addPart(
+                " /assets/img/film-preview/2.jpg",
+                "/assets/img/film-preview/3.jpg",
+                "/assets/img/film-preview/4.jpg",
+                "/assets/img/film-preview/5.jpg",
+                "/assets/img/film-preview/6.jpg",
+                "/assets/img/film-preview/7.jpg",
+                "/assets/img/film-preview/8.jpg",
+                "/assets/img/film-preview/9.jpg");
+        return filmPreviewGenerator;
+    }
+
+
     @Bean("cinemaNetworkNameGenerator")
     public static StringDataGenerator buildCinemaNetworkNameGenerator() {
         StringDataGenerator cinemaNetworkNameGenerator = new StringDataGenerator();
