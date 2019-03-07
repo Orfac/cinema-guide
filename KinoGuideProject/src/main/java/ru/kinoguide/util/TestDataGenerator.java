@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kinoguide.entity.*;
 import ru.kinoguide.repository.CinemaHallRepository;
+import ru.kinoguide.repository.GenreRepository;
 import ru.kinoguide.repository.RatingRepository;
 import ru.kinoguide.repository.UserRoleRepository;
 import ru.kinoguide.security.TokenGenerator;
@@ -69,6 +70,9 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private CinemaNetworkService cinemaNetworkService;
 
+    @Autowired
+    private GenreRepository genreRepository;
+
     private final static int FILMS_NUMBER = 100;
 
     private final static int SESSIONS_PER_FILM = 100;
@@ -80,6 +84,21 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
     private final static int CINEMA_THEATRES_PER_NETWORK = 10;
     private final static int CINEMA_HALLS_PER_THEATER = 10;
 
+
+    private final static List<Genre> genreList;
+
+    static {
+        Genre[] genres = new Genre[]{
+                new Genre("драма"),
+                new Genre("комедия"),
+                new Genre("трагедия"),
+                new Genre("мелодрама"),
+                new Genre("триллер"),
+                new Genre("ужасы"),
+                new Genre("для детей")
+        };
+        genreList = Arrays.asList(genres);
+    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -124,6 +143,10 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
         }
         List<CinemaHall> cinemaHallList = cinemaHallRepository.findAll();
 
+        for (Genre genre : genreList) {
+            entityManager.persist(genre);
+        }
+
         for (int i = 0; i < FILMS_NUMBER; i++) {
             Film film = new Film();
             film.setName(filmNameGenerator.generateNextValue());
@@ -131,6 +154,20 @@ public class TestDataGenerator implements ApplicationListener<ContextRefreshedEv
             film.setDuration((int) (Math.random() * 120.0 + 10));
             film.setCountry("Russia");
             film.setInfo("Info");
+            film.setGenreList(new LinkedList<>());
+
+            double genreProbability = 0.6;
+            for (int k = 0; k < genreList.size(); k++) {
+                if (Math.random() < genreProbability) {
+                    film.addGenre(genreList.get(k));
+                    genreProbability /= 2;
+                    Collections.shuffle(genreList);
+                }
+            }
+            if (film.getGenreList().size() == 0) {
+                film.addGenre(genreList.get(0));
+            }
+
             film.setAnnotation("Annotation");
             film.setDatePremiere(OffsetDateTime.of((int) (Math.random() * 5 + 2018), (int) (Math.random() * 11) + 1, (int) (Math.random() * 27) + 1, 0, 0, 0, 0, ZoneOffset.UTC).toInstant());
 

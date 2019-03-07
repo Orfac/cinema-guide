@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.Instant;
 import java.util.List;
@@ -191,6 +192,15 @@ public class Film extends DisplayableEntity {
             return previewMedia.getUrl();
         } else {
             return null;
+        }
+    }
+
+    public boolean addGenre(Genre genre) {
+        if (genreList.contains(genre)) {
+            return false;
+        } else {
+            genreList.add(genre);
+            return true;
         }
     }
 
