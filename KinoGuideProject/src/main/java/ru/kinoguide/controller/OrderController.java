@@ -10,11 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kinoguide.entity.Film;
+import ru.kinoguide.entity.Session;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.repository.UserRepository;
 import ru.kinoguide.service.OrderService;
+import ru.kinoguide.service.SessionService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,10 +29,12 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private OrderService orderService;
+    private SessionService sessionService;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, SessionService sessionService) {
         this.orderService = orderService;
+        this.sessionService = sessionService;
     }
 
     @Autowired
@@ -68,19 +72,14 @@ public class OrderController {
 
     @RequestMapping(value = "relevant", method = RequestMethod.GET)
     @ResponseBody
-    public List<String> getRelevantOrders(
+    public List<Session> getRelevantOrders(
             @RequestParam(value = "films[]", required = false) String[] films,
             @RequestParam(value = "dates[]",required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate[] dates,
             @RequestParam(value = "leftTimes[]",required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime[] leftTimes,
             @RequestParam(value = "rightTimes[]",required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime[] rightTimes,
             @RequestParam(value = "prices[]",required = false) int[] prices
     ) {
-        int[] _prices = prices ;
-        String[] _films = films;
-        LocalDate[] _dates = dates;
-        ArrayList<String> filmsList = new ArrayList<>();
-        filmsList.add("privet");
-        filmsList.add("poka");
-        return filmsList;
+        return sessionService.findRelevant(films,dates,leftTimes,rightTimes,prices);
+
     }
 }
