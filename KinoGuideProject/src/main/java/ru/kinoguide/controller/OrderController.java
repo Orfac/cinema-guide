@@ -64,7 +64,7 @@ public class OrderController {
     public String getAuto(
             ModelMap model
     ){
-        List<Film> filmList = filmRepository.findAll();
+        List<Film> filmList = filmRepository.findFilmsWhichHaveSessionsSinceNow();
         List<String> filmNamesList = filmList.stream().map(Film::getName).distinct().collect(Collectors.toList());
         model.addAttribute("filmNames", filmNamesList);
         return "autoOrder";
