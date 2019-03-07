@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kinoguide.entity.Film;
-import ru.kinoguide.entity.Session;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ public interface FilmRepository extends PagingAndSortingRepository<Film, Integer
             "(SELECT s FROM Session s WHERE s.startTime > CURRENT_DATE and s.film = f)")
     Page<Film> findFilmsWhichHaveSessionsSinceNow(Pageable pageable);
 
-    // TODO написать метод, который берёт все фильмы с сеансами на данный момент
-    List<Film> findAll();
+    @Query("SELECT f from Film f WHERE EXISTS " +
+            "(SELECT s FROM Session s WHERE s.startTime > CURRENT_DATE and s.film = f)")
+    List<Film> findFilmsWhichHaveSessionsSinceNow();
 }
