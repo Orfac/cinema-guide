@@ -7,49 +7,265 @@
 <th:block th:fragment="content">
 
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <ul class="list-group">
-                <ul class="list-group-item">
-                    <h4>Жанры:</h4>
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            <a href="#" class="btn btn-outline-info btn-rounded" role="button">Хорор</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn btn-outline-info rounded" role="button">Хорор</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn btn-outline-success rounded-circle" role="button">+</a>
-                        </li>
+        <div class="col-md-7">
+            <ul class="list-group-flush w-100">
+                <li class="list-group-item">
 
+                    <h3 id="AutoOrderTitle" class="text-center">
+                        Автозаказ
+                    </h3>
+                </li>
+                <li class="list-group-item">
+                    <h4>Фильмы:</h4>
+                    <ul class="list-inline list-group-flush" id="filmList">
+                        <li class="list-inline-item" >
+                            <button class="btn btn-outline-success btn-lg btn-circle"
+                                    data-toggle="collapse"
+                                    data-target="#FilmCollapse"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample"
+                            >
+                                <strong class="lg">+</strong>
+                            </button>
+                        </li>
                     </ul>
-                </ul>
-                <ul class="list-group-item">
-                    asd
-                </ul>
-                <ul class="list-group-item">
-                    asd
-                </ul>
+                    <div class="collapse mt-2" id="FilmCollapse">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" id="filmInput" list="filmListData"
+                                       class="form-control h-100" placeholder="Название фильма" >
+                                <datalist id="filmListData">
+                                    <th:block th:each="filmName : ${filmNames}">
+                                        <option th:value="${filmName}"></option>
+                                    </th:block>
+                                </datalist>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-success h-100" onclick="onFilmAdd()">
+                                    <strong class="lg">Добавить</strong>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <h4>Дата:</h4>
+
+                    <ul class="list-inline" id="dateList">
+                        <li class="list-inline-item" >
+                            <button class="btn btn-outline-success btn-lg btn-circle"
+                                    data-toggle="collapse"
+                                    data-target="#DateCollapse"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample"
+                            >
+                                <strong class="lg">+</strong>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="collapse mt-2" id="DateCollapse">
+                        <div class="row">
+
+                            <div class="col-md-9">
+                                <input type="text" id="dateInput" class="form-control h-100" placeholder="День в формате дд.мм.гггг">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-success h-100" onclick="onDateAdd()">
+                                    <strong class="lg">Добавить</strong>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <h4>Время:</h4>
+                    <ul class="list-inline" id="timeList">
+                        <li class="list-inline-item" >
+                            <button class="btn btn-outline-success btn-lg btn-circle"
+                                    data-toggle="collapse"
+                                    data-target="#TimeCollapse"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample"
+                            >
+                                <strong class="lg">+</strong>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="collapse mt-2" id="TimeCollapse">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <input type="text" id="leftTimeInput" class="form-control h-100" placeholder="От">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" id="rightTimeInput" class="form-control h-100" placeholder="До" >
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-success h-100" onclick="onTimeAdd()">
+                                    <strong class="lg">Добавить</strong>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <h4>Стоимость:</h4>
+
+                    <ul class="list-inline" id="priceList">
+                        <li class="list-inline-item" >
+                            <button class="btn btn-outline-success btn-lg btn-circle"
+                                    data-toggle="collapse"
+                                    data-target="#PriceCollapse"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample"
+                            >
+                                <strong class="lg">+</strong>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="collapse mt-2" id="PriceCollapse">
+                        <div class="row">
+
+                            <div class="col-md-9">
+                                <input type="text" id="priceInput" class="form-control h-100" placeholder="Лимит в рублях">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-success h-100" onclick="onPriceAdd()">
+                                    <strong class="lg">Добавить</strong>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+
+
+
             </ul>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <ul class="list-group-flush">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="span4">
+                        <button class="btn btn-outline-success btn-circle fa fa-refresh" onclick="doUpdateSessionsRequest()"></button>
+                    </div>
+                    <div class="span4">
+                        <h3>
+                            &nbsp;
+                        </h3>
+                    </div>
+                    <div class="span4">
+                        <h3>Список сеансов</h3>
+                    </div>
+
+                </div>
+
+
+
+            </li>
+            <li class="list-group-item">
+
+            </li>
+            <li class="list-group-item">
+
+            </li>
+            </ul>
+        </div>
     </div>
 
 </th:block>
 <th:block th:fragment="scripts">
     <script>
-        function checkRegister() {
-            let pass1 = document.getElementById("password").value;
-            let pass2 = document.getElementById("password-repeat").value;
-            let email = document.getElementById("email");
-
-            return !(pass1 !== pass2 || pass1 === null ||
-                email.innerText === null || !email.checkValidity());
-
+        let films = [];
+        let filmName = document.getElementById("filmInput");
+        function onFilmAdd() {
+            if (filmName.value === '') return;
+            let filmElementDescription = "<li class='list-inline-item'><button class='btn btn-outline-info'>" + filmName.value + "</button></li>";
+            let filmElement = $(filmElementDescription);
+            films.push(filmName.value);
+            $("#filmList").prepend(filmElement);
         }
-    </script>
 
+        let leftTimes = [];
+        let rightTimes = [];
+        let leftTime = document.getElementById("leftTimeInput");
+        let rightTime = document.getElementById("rightTimeInput");
+        function onTimeAdd(){
+
+            if (leftTime.value === '' || rightTime.value === '') return;
+            let timeElementDescription =
+                "<li class='list-inline-item'><button class='btn btn-outline-info'>" + leftTime.value + " - " + rightTime.value + "</button></li>";
+            let timeElement = $(timeElementDescription);
+            leftTimes.push(leftTime.value);
+            rightTimes.push(rightTime.value);
+            $("#timeList").prepend(timeElement);
+        }
+
+        let dates = [];
+        let date = document.getElementById("dateInput");
+        function onDateAdd(){
+            if (date.value === '') return;
+            let dateElementDescription =
+                "<li class='list-inline-item'><button class='btn btn-outline-info'>" + date.value + "</button></li>";
+            let dateElement = $(dateElementDescription);
+            dates.push(date.value);
+            $("#dateList").prepend(dateElement);
+            // TODO moment js добавить
+        }
+
+        let prices = [];
+        let price =document.getElementById("priceInput");
+        function onPriceAdd() {
+            if (price.value === '') return;
+            let priceElementDescription =
+                "<li class='list-inline-item'><button class='btn btn-outline-info'>" + price.value + "</button></li>";
+            let priceElement = $(priceElementDescription);
+            prices.push(price.value);
+            $("#priceList").prepend(priceElement);
+        }
+
+        function prepareData() {
+            return {
+                "prices" : prices,
+                "leftTimes" : leftTimes,
+                "rightTimes" : rightTimes,
+                "dates" : dates,
+                "films" : films
+            }
+        }
+
+        function doUpdateSessionsRequest(){
+            let url = "relevant";
+            let data = prepareData();
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: data,
+                success: function (responseData, textStatus, xhr) {
+                    onUpdateSuccess(responseData, textStatus, xhr)
+                },
+                error: function (a, jqXHR, exception) { console.log(a); console.log(jqXHR); console.log(exception); }
+
+            });
+        }
+
+        function onUpdateSuccess(data, status, xhr){
+            console.log(data);
+        }
+
+        function updateCinemaDistance() {
+            // TODO прикрутить обмен данными о кинотеатрах
+            // TODO прикрутить перерасчёт расстояний до кинотеатров через Yandex API - route
+        }
+
+        $(document).ready(function() {
+            updateCinemaDistance();
+        });
+    </script>
 </th:block>
 </body>
 </html>

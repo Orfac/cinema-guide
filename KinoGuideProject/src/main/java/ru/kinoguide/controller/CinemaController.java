@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/cinema")
@@ -59,9 +60,13 @@ public class CinemaController {
         return "cinemaTheatre";
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public List<CinemaTheatre> getAllCinemaTheatres() {
-        List<CinemaTheatre> cinemaTheatres = cinemaTheatreRepository.findAll();
-        return cinemaTheatres;
+    @RequestMapping(value = "listAddresses", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getAllCinemaTheatres() {
+        List<CinemaTheatre> cinemaTheatresList = cinemaTheatreRepository.findAll();
+        return cinemaTheatresList.stream()
+                .map(CinemaTheatre::getAddress)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

@@ -3,11 +3,12 @@ package ru.kinoguide.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kinoguide.entity.CinemaNetwork;
-import ru.kinoguide.entity.Seat;
 import ru.kinoguide.entity.Session;
-import ru.kinoguide.entity.Ticket;
 import ru.kinoguide.repository.SessionRepository;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -22,5 +23,13 @@ public class SessionService {
 
     public Session addSession(Session session) {
         return sessionRepository.save(session);
+    }
+
+    public List<Session> findRelevant(String[] films, LocalDate[] dates,
+                                      LocalTime[] leftTimes, LocalTime[] rightTimes,
+                                      int[] Prices) {
+
+        // TODO время в формате ISO с учётом часового пояса пользователя
+        return null;
     }
 }
