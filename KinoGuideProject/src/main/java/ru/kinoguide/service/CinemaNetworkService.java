@@ -39,6 +39,14 @@ public class CinemaNetworkService {
         return cinemaHallRepository.save(cinemaHall);
     }
 
+    public CinemaHall getCinemaHall(CinemaNetwork cinemaNetwork, int number) {
+        return cinemaHallRepository.findOneByNumberAndCinemaTheatreCinemaNetwork(cinemaNetwork, number);
+    }
+
+    public CinemaNetwork findCinemaNetworkByToken(String token) {
+        return cinemaNetworkRepository.findOneByToken(token);
+    }
+
     private String generateAuthenticationToken() {
         return secureTokenGenerator.next();
     }

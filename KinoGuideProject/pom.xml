@@ -79,6 +79,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!--For hot swapping (fast reload of thymeleaf templates, static and event classes and etc when I click BUILD in idea just in one second ;)-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,6 +96,14 @@
             <version>${spring-boot.version}</version>
         </dependency>
         <!-- ***Spring Boot*** -->
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <!-- Testing -->
 
         <!--Data handling-->
         <dependency>
@@ -135,14 +148,6 @@
             <version>2.9.8</version>
         </dependency>
         <!--***Serialization***-->
-
-        <!--Testing-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
-        <!--Testing-->
 
         <!-- AOP & AspectJ -->
         <dependency>

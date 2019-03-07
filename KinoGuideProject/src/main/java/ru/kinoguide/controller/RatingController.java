@@ -47,5 +47,4 @@ public class RatingController {
         model.put("rates", ratingService.findAllByUser(user, new PageRequest(page, ordersOnPage, Sort.Direction.DESC, "date")));
         return "userRating";
     }
-
 }

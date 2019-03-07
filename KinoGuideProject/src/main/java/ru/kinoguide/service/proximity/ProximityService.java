@@ -58,6 +58,11 @@ public class ProximityService implements ApplicationListener<ContextRefreshedEve
         usersRatingProximityRepository.save(proximities);
     }
 
+    /**
+     * Proximities recalculation on start of application
+     *
+     * @param event
+     */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recalculateProximities();

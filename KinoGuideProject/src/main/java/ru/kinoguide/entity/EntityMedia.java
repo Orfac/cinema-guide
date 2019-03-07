@@ -14,7 +14,6 @@ public class EntityMedia extends BaseEntity {
     @OneToOne(mappedBy = "mediaEntity")
     private DisplayableEntity displayableEntity;
 
-
     public List<Media> getMediaList() {
         return mediaList;
     }
