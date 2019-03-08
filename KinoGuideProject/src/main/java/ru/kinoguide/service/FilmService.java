@@ -9,6 +9,9 @@ import ru.kinoguide.entity.Film;
 import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.UsersRatingProximityRepository;
 
+import java.time.Instant;
+import java.util.List;
+
 @Service
 @Transactional
 public class FilmService {
@@ -27,7 +30,20 @@ public class FilmService {
         return filmRepository.findOne(filmId);
     }
 
-    public Page<Film> findFilmsWhichHaveSessionsSinceNow(Pageable pageable) {
-        return filmRepository.findFilmsWhichHaveSessionsSinceNow(pageable);
+
+    public List<Film> findAllBySessionStartTimeAfterAndGenreIdIn(Instant instant, Integer[] genreIds) {
+        return filmRepository.findAllDistinctFilmsBySessionsStartTimeAfterAndGenresIdIn(instant, genreIds);
+    }
+
+    public Page<Film> findBySessionStartTimeAfterAndGenreIdIn(Pageable pageable, Instant instant, Integer[] genreIds) {
+        return filmRepository.findDistinctFilmsBySessionsStartTimeAfterAndGenresIdIn(pageable, instant, genreIds);
+    }
+
+    public List<Film> findAllDistinctFilmsBySessionsStartTimeAfter(Instant instant) {
+        return filmRepository.findAllDistinctFilmsBySessionsStartTimeAfter(instant);
+    }
+
+    public List<Film> findFilmsWhichHaveSessionsSinceNow() {
+        return findAllDistinctFilmsBySessionsStartTimeAfter(Instant.now());
     }
 }

@@ -15,6 +15,8 @@ import java.util.Set;
 @Entity
 public class Film extends DisplayableEntity {
 
+    public final static String PREVIEW_IMAGE_MEDIA_TYPE = "preview";
+
     @Column(name = "name")
     @NotBlank
     private String name;
@@ -33,7 +35,7 @@ public class Film extends DisplayableEntity {
     @JoinTable(name = "films_genres", joinColumns =
     @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> genreList;
+    private List<Genre> genres;
 
     @Column(name = "date_shoot_start")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -66,6 +68,9 @@ public class Film extends DisplayableEntity {
     @Pattern(regexp = "PG-18|PG-13|NC-17")
     private String ageRating;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film", orphanRemoval = true)
+    private List<Session> sessions;
+
     public String getName() {
         return name;
     }
@@ -90,12 +95,12 @@ public class Film extends DisplayableEntity {
         this.ratingSet = ratingSet;
     }
 
-    public List<Genre> getGenreList() {
-        return genreList;
+    public List<Genre> getGenres() {
+        return genres;
     }
 
-    public void setGenreList(List<Genre> genreList) {
-        this.genreList = genreList;
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     public Instant getDateShootingStart() {
@@ -181,5 +186,32 @@ public class Film extends DisplayableEntity {
     @Override
     public int hashCode() {
         return Objects.hash(name, info, dateShootingStart, dateShootingEnd, datePremiere, duration, annotation, country, ageRating);
+    }
+
+    public String getPreviewImageURI() {
+        Media previewMedia = super.getMediaByType(PREVIEW_IMAGE_MEDIA_TYPE);
+        if (previewMedia != null) {
+            return previewMedia.getUrl();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean addGenre(Genre genre) {
+        if (genres.contains(genre)) {
+            return false;
+        } else {
+            genres.add(genre);
+            return true;
+        }
+    }
+
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
     }
 }

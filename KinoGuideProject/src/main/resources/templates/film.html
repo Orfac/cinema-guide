@@ -14,7 +14,11 @@
     <div class="row">
 
         <div class="col-md-3">
-            <img src="http://happy-cinema.ru/upload/iblock/522/5222b8f5fd17d01d410007f525a894e5.jpg"
+            <img th:if="${film.getPreviewImageURI() != null}"
+                 th:src="${film.getPreviewImageURI()}"
+                 alt="asteriks" class="img-fluid">
+            <img th:unless="${film.getPreviewImageURI() != null}"
+                 src="/assets/img/placeholder300x300.jpg"
                  alt="asteriks" class="img-fluid">
 
             <h3 class="text-center">Оценки</h3>
@@ -41,32 +45,10 @@
                             <td th:text="${closeUserRelatedProximity.getRate()}" class="text-success">7/10</td>
                             <td th:text="${closeUserRelatedProximity.getProximity()}">100%</td>
                         </tr>
-                        <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-success">10/10</td>-->
-                            <!--<td>83%</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-warning">5/10</td>-->
-                            <!--<td>52%</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-danger">2/10</td>-->
-                            <!--<td>40%</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>Антон</td>-->
-                            <!--<td class="text-danger">1/10</td>-->
-                            <!--<td>30%</td>-->
-                        <!--</tr>-->
                         </tbody>
                     </table>
                 </li>
-
             </ul>
-
         </div>
         <div class="col-md-9">
             <ul class="list-group">
@@ -75,7 +57,7 @@
                         <li class="list-inline-item">
                             Жанры:
                         </li>
-                        <li th:each="genre : ${film.genreList}" class="list-inline-item">
+                        <li th:each="genre : ${film.genres}" class="list-inline-item">
                             <a th:text="${genre.name}" href="#" class="btn btn-outline-info" role="button">Анимация</a>
                         </li>
                     </ul>
@@ -86,15 +68,15 @@
                 </li>
                 <li th:if="${film.dateShootingStart != null}" class="list-group-item">
                     <span>Дата начала съемок: </span>
-                    <span th:text="${#temporals.format(film.dateShootingStart.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                    <span th:text="${#temporals.format(film.dateShootingStart.atZone(zoneOffset), 'dd.MM.yyyy')}"></span>
                 </li>
                 <li th:if="${film.dateShootingEnd != null}" class="list-group-item">
                     <span>Дата конца съемок: </span>
-                    <span th:text="${#temporals.format(film.dateShootingEnd.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                    <span th:text="${#temporals.format(film.dateShootingEnd.atZone(zoneOffset), 'dd.MM.yyyy')}"></span>
                 </li>
                 <li th:if="${film.datePremiere != null}" class="list-group-item">
                     <span>Дата премьеры: </span>
-                    <span th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'dd.MM.yyyy', #locale)}"></span>
+                    <span th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'dd.MM.yyyy')}"></span>
                 </li>
                 <li class="list-group-item">
                     <span>Продолжительность: </span>
@@ -113,7 +95,8 @@
                             Полная аннотация
                         </button>
                     </h5>
-                    <div th:text="${film.annotation}" id="collapsePlot" class="collapse" aria-labelledby="headingOne" data-parent="#plot">
+                    <div th:text="${film.annotation}" id="collapsePlot" class="collapse" aria-labelledby="headingOne"
+                         data-parent="#plot">
                         <div class="card-body pl-0">
                             Могучие галлы издревле черпали силу в секретном напитке, который готовил великий старец.
                             Но пришла беда, откуда не ждали – почтенный друид свалился с дерева и сломал обе ноги.
@@ -122,11 +105,11 @@
                             друида, достойного постичь рецепт тайного зелья…
                         </div>
                     </div>
-
                 </li>
                 <li th:each="group : ${film.groupSet}" class="list-group-item" id="cast">
                     <h5 class="mb-0">
-                        <button th:text="'Съёмочная группа: ' + ${group.name}" class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
+                        <button th:text="'Съёмочная группа: ' + ${group.name}"
+                                class="btn container-fluid btn-outline-info text-left" data-toggle="collapse"
                                 data-target="#collapseCast"
                                 aria-expanded="true" aria-controls="collapseCast">
 
@@ -166,188 +149,65 @@
                                     <li class="list-inline-item m-0">
                                         Курнаков И.Е.
                                     </li>
-
                                 </ul>
                             </ul>
                         </div>
                     </div>
-
                 </li>
-
             </ul>
-
-
         </div>
     </div>
-
     <div class="row mt-5">
         <div class="col-md-4">
             <h4>
-                Список сеансов на <b><u>24.01</u></b>
+                Список сеансов на <b><u th:text="${#temporals.format(currentDate, 'dd.MM')}">24.01</u></b>
             </h4>
         </div>
         <div class="col-md-8 text-right">
             <ul class="list-inline">
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>21.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>22.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>23.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-info">
-                        <small>24.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>25.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>26.01</small>
-                    </button>
-                </li>
-                <li class="list-inline-item">
-                    <button class="btn btn-outline-info">
-                        <small>27.01</small>
+                <li th:each="date : ${dates}" class="list-inline-item">
+                    <button th:class="${currentDate.equals(date)} ? 'btn btn-info' : 'btn btn-outline-info'">
+                        <a th:href="@{film(id=${film.id},date=${date})}">
+                            <small th:text="${#temporals.format(date, 'dd.MM')}">23.01</small>
+                        </a>
                     </button>
                 </li>
             </ul>
         </div>
+        <div>
+        <a style="font-size: 50px;" th:if="${cinemaTheatresSessions.hasNextPage()}" th:href="@{film(id=${film.id},date=${currentDate}, page=${page + 1})}">Next page</a>
+            <a style="font-size: 50px;" th:if="${cinemaTheatresSessions.hasPreviousPage()}" th:href="@{film(id=${film.id},date=${currentDate}, page=${page - 1})}">Previous page</a>
+        </div>
     </div>
 
-    <div class="row">
+    <div th:each="cinemaTheatre : ${cinemaTheatresSessions.getCinemaTheatres()}" class="row">
         <div class="col-md-2 small">
-
             <a href="#">
                 <button class="btn btn-outline-light">
-                    <img src="https://st.kp.yandex.net/im/poster/3/1/7/kinopoisk.ru-Bohemian-Rhapsody-3173882.jpg"
-                         alt="bogem-raps" class="img-fluid">
+                    <img th:if="${cinemaTheatre.getPreviewImageURI() != null}"
+                         th:src="${cinemaTheatre.getPreviewImageURI()}"
+                         alt="asteriks" class="img-fluid">
+                    <img th:unless="${cinemaTheatre.getPreviewImageURI() != null}"
+                         src="/assets/img/placeholder300x300.jpg"
+                         alt="asteriks" class="img-fluid">
                 </button>
             </a>
-
-
+            <p th:text="${cinemaTheatre.address}"></p>
         </div>
         <div class="col-md-10">
             <ul class="list-inline">
-                <li class="list-inline-item">
+                <li th:each="filmSession : ${cinemaTheatresSessions.getSessionsByCinemaTheatre(cinemaTheatre)}" class="list-inline-item">
                     <div class="card">
                         <button class="btn btn-link">
                             <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
+                                <p th:text="${#temporals.format(filmSession.getStartTime(), 'HH:mm')}">13:30</p>
+                                <p th:if="${filmSession.getTicketWithMinPrice() != null}" th:text="${'от ' + filmSession.getTicketWithMinPrice().intPrice() + 'р'}">200р</p>
+                                <p th:unless="${filmSession.getTicketWithMinPrice() != null}">Билетов нет</p>
+                                <p th:text="${'Зал ' + filmSession.cinemaHall.number}"></p>
                             </div>
                         </button>
-
                     </div>
                 </li>
-                <li class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
-                            </div>
-                        </button>
-
-                    </div>
-                </li>
-                <li class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
-                            </div>
-                        </button>
-
-                    </div>
-                </li>
-                <li class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
-                            </div>
-                        </button>
-
-                    </div>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 small">
-
-            <a href="#">
-                <button class="btn btn-outline-light">
-                    <img src="https://st.kp.yandex.net/im/poster/3/1/7/kinopoisk.ru-Bohemian-Rhapsody-3173882.jpg"
-                         alt="bogem-raps" class="img-fluid">
-                </button>
-            </a>
-
-
-        </div>
-        <div class="col-md-10">
-            <ul class="list-inline">
-                <li class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
-                            </div>
-                        </button>
-
-                    </div>
-                </li>
-                <li class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
-                            </div>
-                        </button>
-
-                    </div>
-                </li>
-                <li class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
-                            </div>
-                        </button>
-
-                    </div>
-                </li>
-                <li class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p>13:30</p>
-                                <p>200р</p>
-                            </div>
-                        </button>
-
-                    </div>
-                </li>
-
             </ul>
         </div>
     </div>

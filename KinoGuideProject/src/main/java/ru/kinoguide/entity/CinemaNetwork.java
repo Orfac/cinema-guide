@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,5 +44,19 @@ public class CinemaNetwork extends DisplayableEntity {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CinemaNetwork that = (CinemaNetwork) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(token, that.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, token);
     }
 }

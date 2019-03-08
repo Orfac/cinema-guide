@@ -7,11 +7,26 @@
 <body>
 <th:block th:fragment="content">
     <div>
-
+        <form action="">
+            <th:block th:each="genre : ${genres}">
+                <label th:for="${'genre-' + genre}" th:text="${genre.name}"></label>
+                <input th:id="${'genre' + genre.id}" th:checked="${genre.selected}" th:value="${genre.id}"
+                       type="checkbox" name="genres">
+            </th:block>
+            <input type="submit"/>
+        </form>
     </div>
     <table>
         <th:block th:each="film : ${films}">
             <tr>
+                <td>
+                    <img th:if="${film.getPreviewImageURI() != null}"
+                         th:src="${film.getPreviewImageURI()}"
+                         alt="asteriks" class="img-fluid">
+                    <img th:unless="${film.getPreviewImageURI() != null}"
+                         src="/assets/img/placeholder300x300.jpg"
+                         alt="asteriks" class="img-fluid">
+                </td>
                 <td th:text="${film.name}">
                     Название фильма
                 </td>
@@ -19,10 +34,10 @@
                     Краткая информация
                 </td>
                 <td th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'yyyy', #locale)}">
-                        Год
+                    Год
                 </td>
                 <td>
-                    <span th:each="genre : ${film.genreList}" th:text="${genre.name}">Жанр</span>
+                    <span th:each="genre : ${film.genres}" th:text="${genre.name}">Жанр</span>
                 </td>
             </tr>
         </th:block>

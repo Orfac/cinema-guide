@@ -19,6 +19,5 @@ public class SessionController {
     public String index(ModelMap model, @PathVariable("id") int id){
         return "session";
     }
-    // TODO добавить метод изменения статуса заявки {POST}
-    // TODO добавить метод получения сеансов по кинотеатру {GET}
+
 }

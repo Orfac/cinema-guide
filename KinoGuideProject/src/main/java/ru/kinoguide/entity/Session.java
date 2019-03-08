@@ -2,11 +2,10 @@ package ru.kinoguide.entity;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-public class Session  extends BaseEntity {
+public class Session extends BaseEntity {
 
     @Column(name = "start_time", nullable = false)
     private Instant startTime;
@@ -23,7 +22,18 @@ public class Session  extends BaseEntity {
     private Film film;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "session", orphanRemoval = true)
-    private Set<Ticket> tickets;
+    @OrderBy("price ASC")
+    private List<Ticket> tickets;
+
+    public Session() {
+    }
+
+    public Session(Instant startTime, Instant endTime, CinemaHall cinemaHall, Film film) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.cinemaHall = cinemaHall;
+        this.film = film;
+    }
 
     public Instant getStartTime() {
         return startTime;
@@ -57,11 +67,19 @@ public class Session  extends BaseEntity {
         this.film = film;
     }
 
-    public Set<Ticket> getTickets() {
+    public List<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Set<Ticket> tickets) {
+    public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public Ticket getTicketWithMinPrice() {
+        if (tickets.size() > 0) {
+            return tickets.get(0);
+        } else {
+            return null;
+        }
     }
 }

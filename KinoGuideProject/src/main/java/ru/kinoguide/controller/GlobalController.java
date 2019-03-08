@@ -2,13 +2,18 @@ package ru.kinoguide.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.service.UserService;
 
+import java.beans.PropertyEditorSupport;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 @ControllerAdvice
 public class GlobalController {
@@ -20,6 +25,7 @@ public class GlobalController {
         this.userService = userService;
     }
 
+
     @ModelAttribute
     public void initUser(ModelMap modelMap, Principal principal) {
         if (principal != null) {
@@ -28,7 +34,7 @@ public class GlobalController {
         }
     }
 
-    // Moscow GMT+3 (TODO: zone offset should be user-dependent)
+    // Moscow GMT+3 is set by default (TODO: zone offset should be user-dependent)
     @ModelAttribute("zoneOffset")
     public ZoneOffset getZoneOffset() {
         return ZoneOffset.ofHours(3);

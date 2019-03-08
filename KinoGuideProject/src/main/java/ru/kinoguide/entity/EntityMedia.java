@@ -29,4 +29,14 @@ public class EntityMedia extends BaseEntity {
     public void setDisplayableEntity(DisplayableEntity displayableEntity) {
         this.displayableEntity = displayableEntity;
     }
+
+    public Media getMediaByType(String type) {
+        for (Media media : mediaList) {
+            if (media.getType().equals(type)) {
+                return media;
+            }
+        }
+        return null;
+    }
+
 }
