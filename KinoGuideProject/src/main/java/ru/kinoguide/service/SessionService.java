@@ -24,12 +24,4 @@ public class SessionService {
     public Session addSession(Session session) {
         return sessionRepository.save(session);
     }
-
-    public List<Session> findRelevant(String[] films, LocalDate[] dates,
-                                      LocalTime[] leftTimes, LocalTime[] rightTimes,
-                                      int[] Prices) {
-
-        // TODO время в формате ISO с учётом часового пояса пользователя
-        return null;
-    }
 }
