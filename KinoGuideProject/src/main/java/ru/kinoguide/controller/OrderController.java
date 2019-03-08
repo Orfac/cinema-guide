@@ -17,7 +17,10 @@ import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.repository.UserRepository;
 import ru.kinoguide.service.OrderService;
 import ru.kinoguide.service.SessionService;
+import ru.kinoguide.service.relevance.RelevanceService;
+import ru.kinoguide.view.SessionViewModel;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -29,16 +32,17 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private OrderService orderService;
-    private SessionService sessionService;
+    private RelevanceService relevanceService;
+    private FilmRepository filmRepository;
 
     @Autowired
-    public OrderController(OrderService orderService, SessionService sessionService) {
+    public OrderController(OrderService orderService, RelevanceService relevanceService, FilmRepository filmRepository) {
         this.orderService = orderService;
-        this.sessionService = sessionService;
+        this.relevanceService = relevanceService;
+        this.filmRepository = filmRepository;
     }
 
-    @Autowired
-    private FilmRepository filmRepository;
+
 
     @RequestMapping("")
     @Secured({"ROLE_USER"})
@@ -72,14 +76,21 @@ public class OrderController {
 
     @RequestMapping(value = "relevant", method = RequestMethod.GET)
     @ResponseBody
-    public List<Session> getRelevantOrders(
+    public SessionViewModel[] getRelevantOrders(
             @RequestParam(value = "films[]", required = false) String[] films,
-            @RequestParam(value = "dates[]",required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate[] dates,
-            @RequestParam(value = "leftTimes[]",required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime[] leftTimes,
-            @RequestParam(value = "rightTimes[]",required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime[] rightTimes,
-            @RequestParam(value = "prices[]",required = false) int[] prices
+            @RequestParam(value = "leftInstant[]",required = false) @DateTimeFormat(pattern = "HH:mm") Instant[] startTimes,
+            @RequestParam(value = "rightInstant[]",required = false) @DateTimeFormat(pattern = "HH:mm") Instant[] endTimes,
+            @RequestParam(value = "price",required = false) double price
     ) {
-        return sessionService.findRelevant(films,dates,leftTimes,rightTimes,prices);
-
+        List<Session> relevantSessions = relevanceService.findRelevant(films,startTimes,endTimes,price);
+        SessionViewModel[] viewModels = new SessionViewModel[relevantSessions.size()];
+        for (int i = 0; i < relevantSessions.size(); i++) {
+            Film film = relevantSessions.get(i).getFilm();
+            viewModels[i].setFilmId(film.getId());
+            viewModels[i].setFilmName(film.getName());
+            viewModels[i].setImageLink("http://images.filmfestival.be/image/filmfest/900-0/16-1455_poster.jpg");
+            viewModels[i].setSessionId(relevantSessions.get(i).getId());
+        }
+        return viewModels;
     }
 }
