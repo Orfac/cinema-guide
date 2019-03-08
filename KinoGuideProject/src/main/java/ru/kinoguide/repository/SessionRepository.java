@@ -22,4 +22,7 @@ public interface SessionRepository extends PagingAndSortingRepository<Session, I
     @Query("select s from Session s where s.film.name in (filmsNames)")
     List<Session> findSessionsByFilms(String[] filmsNames);
 
+    @Query("select s from Session s where s.startTime > CURRENT_DATE")
+    List<Session> findAllSinceNow();
+
 }

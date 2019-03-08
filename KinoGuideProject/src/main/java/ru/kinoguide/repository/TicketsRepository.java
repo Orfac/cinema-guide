@@ -7,5 +7,6 @@ import ru.kinoguide.entity.Ticket;
 import java.util.List;
 
 public interface TicketsRepository extends CrudRepository<Ticket, Integer> {
-    public List<Ticket> findTicketsBySessionAndPriceLessThanEqual(Session session, double price);
+    List<Ticket> findTicketsBySessionAndPriceLessThanEqual(Session session, double price);
+    List<Ticket> findTicketsByPriceLessThanEqual(double price);
 }
