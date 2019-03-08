@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.Instant;
 import java.util.List;
@@ -36,7 +35,7 @@ public class Film extends DisplayableEntity {
     @JoinTable(name = "films_genres", joinColumns =
     @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> genreList;
+    private List<Genre> genres;
 
     @Column(name = "date_shoot_start")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -69,6 +68,9 @@ public class Film extends DisplayableEntity {
     @Pattern(regexp = "PG-18|PG-13|NC-17")
     private String ageRating;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "film", orphanRemoval = true)
+    private List<Session> sessions;
+
     public String getName() {
         return name;
     }
@@ -93,12 +95,12 @@ public class Film extends DisplayableEntity {
         this.ratingSet = ratingSet;
     }
 
-    public List<Genre> getGenreList() {
-        return genreList;
+    public List<Genre> getGenres() {
+        return genres;
     }
 
-    public void setGenreList(List<Genre> genreList) {
-        this.genreList = genreList;
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     public Instant getDateShootingStart() {
@@ -196,13 +198,20 @@ public class Film extends DisplayableEntity {
     }
 
     public boolean addGenre(Genre genre) {
-        if (genreList.contains(genre)) {
+        if (genres.contains(genre)) {
             return false;
         } else {
-            genreList.add(genre);
+            genres.add(genre);
             return true;
         }
     }
 
 
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
+    }
 }

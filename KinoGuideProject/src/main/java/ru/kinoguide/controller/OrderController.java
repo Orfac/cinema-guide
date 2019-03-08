@@ -15,6 +15,7 @@ import ru.kinoguide.entity.User;
 import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.OrderRepository;
 import ru.kinoguide.repository.UserRepository;
+import ru.kinoguide.service.FilmService;
 import ru.kinoguide.service.OrderService;
 import ru.kinoguide.service.SessionService;
 
@@ -30,15 +31,15 @@ public class OrderController {
 
     private OrderService orderService;
     private SessionService sessionService;
+    private FilmService filmService;
 
     @Autowired
-    public OrderController(OrderService orderService, SessionService sessionService) {
+    public OrderController(OrderService orderService, SessionService sessionService, FilmService filmService) {
         this.orderService = orderService;
         this.sessionService = sessionService;
+        this.filmService = filmService;
     }
 
-    @Autowired
-    private FilmRepository filmRepository;
 
     @RequestMapping("")
     @Secured({"ROLE_USER"})
@@ -62,7 +63,7 @@ public class OrderController {
 
     @RequestMapping("auto")
     public String getAuto(ModelMap model){
-        List<Film> filmList = filmRepository.findFilmsWhichHaveSessionsSinceNow();
+        List<Film> filmList = filmService.findFilmsWhichHaveSessionsSinceNow();
         List<String> filmNamesList = filmList.stream().map(Film::getName).distinct().collect(Collectors.toList());
         model.addAttribute("filmNames", filmNamesList);
         return "autoOrder";

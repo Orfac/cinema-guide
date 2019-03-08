@@ -1,6 +1,8 @@
 package ru.kinoguide.entity;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,7 +16,7 @@ public class CinemaHall extends BaseEntity {
     private CinemaTheatre cinemaTheatre;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaHall", orphanRemoval = true)
-    private Set<Seat> seats;
+    private List<Seat> seats;
 
     public int getNumber() {
         return number;
@@ -32,11 +34,25 @@ public class CinemaHall extends BaseEntity {
         this.cinemaTheatre = cinemaTheatre;
     }
 
-    public Set<Seat> getSeats() {
+    public List<Seat> getSeats() {
         return seats;
     }
 
-    public void setSeats(Set<Seat> seats) {
+    public void setSeats(List<Seat> seats) {
         this.seats = seats;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CinemaHall that = (CinemaHall) o;
+        return number == that.number &&
+                Objects.equals(cinemaTheatre, that.cinemaTheatre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, cinemaTheatre);
     }
 }

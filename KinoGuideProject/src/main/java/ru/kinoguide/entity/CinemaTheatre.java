@@ -1,10 +1,13 @@
 package ru.kinoguide.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class CinemaTheatre extends DisplayableEntity {
+
+    public final static String PREVIEW_IMAGE_MEDIA_TYPE = "preview";
 
     @Column(nullable = false)
     private String city;
@@ -50,4 +53,29 @@ public class CinemaTheatre extends DisplayableEntity {
     public void setCinemaHalls(Set<CinemaHall> cinemaHalls) {
         this.cinemaHalls = cinemaHalls;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CinemaTheatre that = (CinemaTheatre) o;
+        return Objects.equals(city, that.city) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(cinemaNetwork, that.cinemaNetwork);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, address, cinemaNetwork);
+    }
+
+    public String getPreviewImageURI() {
+        Media previewMedia = super.getMediaByType(PREVIEW_IMAGE_MEDIA_TYPE);
+        if (previewMedia != null) {
+            return previewMedia.getUrl();
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -29,6 +29,15 @@ public class Ticket extends BaseEntity {
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
 
+    public Ticket() {
+    }
+
+    public Ticket(double price, Seat seat, Session session) {
+        this.price = price;
+        this.seat = seat;
+        this.session = session;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -59,5 +68,9 @@ public class Ticket extends BaseEntity {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    public int intPrice() {
+        return (int) price;
     }
 }

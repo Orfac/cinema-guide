@@ -4,13 +4,13 @@ import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.entity.UsersRatingProximity;
 
-public class UserRelatedProximity {
+public class UserRelatedProximityView {
 
     private UsersRatingProximity usersRatingProximity;
 
     private Film film;
 
-    public UserRelatedProximity(UsersRatingProximity usersRatingProximity, Film film) {
+    public UserRelatedProximityView(UsersRatingProximity usersRatingProximity, Film film) {
         this.usersRatingProximity = usersRatingProximity;
         this.film = film;
     }

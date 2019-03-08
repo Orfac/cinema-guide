@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import ru.kinoguide.entity.CinemaTheatre;
 import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.Session;
 
@@ -22,4 +23,9 @@ public interface SessionRepository extends PagingAndSortingRepository<Session, I
     @Query("select s from Session s where s.film.name in (filmsNames)")
     List<Session> findSessionsByFilms(String[] filmsNames);
 
+    Page<Session> findByFilmAndStartTimeBetweenOrderByStartTimeAsc(Pageable pageable, Film film, Instant start, Instant end);
+
+    List<Session> findByFilmAndStartTimeBetweenOrderByStartTimeAsc(Film film, Instant start, Instant end);
+
+    List<Session> findByCinemaHallCinemaTheatreAndStartTimeBetweenOrderByStartTimeAsc(CinemaTheatre cinemaTheatre, Instant start, Instant end);
 }
