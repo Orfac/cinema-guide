@@ -86,7 +86,7 @@ public class RelevanceService {
     }
 
     private boolean isSessionFitsByPrice(Session session, double price){
-        Set<Ticket> tickets = session.getTickets();
+        List<Ticket> tickets = session.getTickets();
         for (Ticket ticket : tickets){
             if (ticket.getPrice() <= price){
                 return true;
