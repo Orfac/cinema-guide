@@ -6,24 +6,40 @@
 </head>
 <body>
 <th:block th:fragment="content">
-    <div class="starter-template">
-        <table>
-            <th:block th:each="rating : ${rates}">
-                <tr>
-                    <td>Фильм</td>
-                    <td>Оценка</td>
-                    <td>Дата</td>
-                </tr>
-                <tr>
-                    <td th:text="${rating.film.name}"></td>
-                    <td th:text="${rating.rate}">
-                    </td>
-                    <td th:text="${#temporals.format(rating.date.atZone(zoneOffset), 'dd.MM.yyyy HH:mm', #locale)}">
-                    </td>
-                </tr>
-            </th:block>
-        </table>
-    </div>
+
+    <h3 class="text-center"> Ваши оценки </h3>
+    <ul class="list-group w-100">
+        <li th:each="rating : ${rates}" class="list-group-item mb-2 shadow">
+            <div class="row">
+                <div class="col-md-2">
+                    <img th:if="${rating.film.getPreviewImageURI() != null}"
+                         th:src="${rating.film.getPreviewImageURI()}"
+                         th:alt="${rating.film.name}" class="img-fluid">
+                    <img th:unless="${rating.film.getPreviewImageURI() != null}"
+                         src="/assets/img/placeholder300x300.jpg"
+                         alt="default-logo" class="img-fluid">
+                </div>
+                <div class="col-md-7 ">
+                    <h3 th:text="${rating.film.name}"></h3>
+                    <p th:text="${rating.film.country + ' , '
+                    + #temporals.format(rating.film.datePremiere.atZone(zoneOffset),'yyyy',#locale) }"></p>
+                    <div class="list-inline">
+                        <div class="list-inline-item" th:each="genre : ${rating.film.genres}">
+                            <div class="btn btn-outline-info" th:text="${genre.name}"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3 text-center">
+                    <h4 class="h-25">Оценка</h4>
+                    <h1 th:if="${rating.rate >= 7}" th:text="${rating.rate}" class="text-success"></h1>
+                    <h1 th:if="${rating.rate >= 4 && rating.rate < 7}" th:text="${rating.rate}" class="text-warning"></h1>
+                    <h1 th:if="${rating.rate < 3}" th:text="${rating.rate}" class="text-danger"></h1>
+                    <p  th:text="${#temporals.format(rating.date.atZone(zoneOffset), 'dd.MM.yyyy HH:mm', #locale)}"></p>
+                </div>
+            </div>
+        </li>
+    </ul>
 </th:block>
 <th:block th:fragment="scripts">
     <script>
