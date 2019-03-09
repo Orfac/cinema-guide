@@ -45,8 +45,6 @@ public class OrderController {
         this.relevanceService = relevanceService;
     }
 
-
-
     @RequestMapping("")
     @Secured({"ROLE_USER"})
     public String getLoggedUserOrders(
