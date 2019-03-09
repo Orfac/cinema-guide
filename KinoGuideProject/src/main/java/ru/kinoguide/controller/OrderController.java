@@ -79,9 +79,9 @@ public class OrderController {
     @ResponseBody
     public SessionViewModel[] getRelevantOrders(
             @RequestParam(value = "films[]", required = false) String[] films,
-            @RequestParam(value = "leftInstant[]",required = false) @DateTimeFormat(pattern = "HH:mm") Instant[] startTimes,
-            @RequestParam(value = "rightInstant[]",required = false) @DateTimeFormat(pattern = "HH:mm") Instant[] endTimes,
-            @RequestParam(value = "price",required = false) double price
+            @RequestParam(value = "leftInstant[]",required = false) @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") Instant[] startTimes,
+            @RequestParam(value = "rightInstant[]",required = false) @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") Instant[] endTimes,
+            @RequestParam(value = "price",required = false) Double price
     ) {
         List<Session> relevantSessions = relevanceService.findRelevant(films,startTimes,endTimes,price);
         SessionViewModel[] viewModels = new SessionViewModel[relevantSessions.size()];
