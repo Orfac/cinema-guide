@@ -64,7 +64,7 @@ public class FilmsController {
             ModelMap model,
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "sortField", required = false, defaultValue = "datePremiere") String sortField,
-            @RequestParam(name = "sortDirectionDesc", required = false, defaultValue = "true") boolean isSortDirectionDesc, // should be false if ASC
+            @RequestParam(name = "sortDirectionDesc", required = false, defaultValue = "false") boolean isSortDirectionDesc, // should be false if ASC
             @RequestParam(name = "genres", required = false) Integer[] genreIds
 
     ) {

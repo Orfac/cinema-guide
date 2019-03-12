@@ -6,47 +6,103 @@
 </head>
 <body>
 <th:block th:fragment="content">
-    <div>
-        <form action="">
-            <th:block th:each="genre : ${genres}">
-                <label th:for="${'genre-' + genre}" th:text="${genre.name}"></label>
-                <input th:id="${'genre' + genre.id}" th:checked="${genre.selected}" th:value="${genre.id}"
-                       type="checkbox" name="genres">
-            </th:block>
-            <input type="submit"/>
-        </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Афиша</h3>
+        </div>
     </div>
-    <table>
-        <th:block th:each="film : ${films}">
-            <tr>
-                <td>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button class="btn btn-outline-success" data-toggle="collapse" data-target="#filters">
+                Фильтры
+            </button>
+            <div class="collapse" id="filters">
+                <form action="">
+                    <div class="row mt-2">
+
+                        <div class="col-md-3 text-left ">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuGenres" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Жанры
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuGenres">
+                                    <div class="dropdown-item" th:each="genre : ${genres}">
+                                        <label th:for="${'genre-' + genre.id}" th:text="${genre.name}"></label>
+                                        <input th:id="${'genre-' + genre.id}" th:checked="${genre.selected}" th:value="${genre.id}"
+                                               type="checkbox" name="genres">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuSort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Сортировать
+                                </button>
+                                <label for="sortDirectionDesc">По убыванию</label>
+                                <input id="sortDirectionDesc"
+                                       type="checkbox" name="sortDirectionDesc">
+                                <input type="text" hidden id="sortHiddenField" name="sortField">
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSort">
+                                    <button class="dropdown-item" type="submit" onclick="updateSortField('name')">
+                                        По названию фильма
+                                    </button>
+                                    <button class="dropdown-item" type="submit" onclick="updateSortField('datePremiere')">
+                                        По дате премьеры
+                                    </button>
+                                    <button class="dropdown-item" type="submit" onclick="updateSortField('duration')">
+                                        По продолжительности
+                                    </button>
+                                    <button class="dropdown-item" type="submit" onclick="updateSortField('country')">
+                                        По стране
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 text-center">
+
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-outline-success btn-circle fa fa-refresh" type="submit"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="list-inline">
+        <div class="list-inline-item" th:each="film : ${films}">
+            <a th:href="@{'/film?id=' + ${film.id}}" class="">
+                <div class="card shadow text-center mt-2" style="width:13rem;">
                     <img th:if="${film.getPreviewImageURI() != null}"
                          th:src="${film.getPreviewImageURI()}"
-                         alt="asteriks" class="img-fluid">
+                         th:alt="${film.name}"  class="card-img card-img-top film-card-image" style="height: 20rem; ">
                     <img th:unless="${film.getPreviewImageURI() != null}"
                          src="/assets/img/placeholder300x300.jpg"
-                         alt="asteriks" class="img-fluid">
-                </td>
-                <td th:text="${film.name}">
-                    Название фильма
-                </td>
-                <td th:text="${film.info}">
-                    Краткая информация
-                </td>
-                <td th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'yyyy', #locale)}">
-                    Год
-                </td>
-                <td>
-                    <span th:each="genre : ${film.genres}" th:text="${genre.name}">Жанр</span>
-                </td>
-            </tr>
-        </th:block>
-    </table>
+                         alt="default-logo" class="card-img card-img-top film-card-image" style="height: 20rem;">
+                    <div class="card-body">
+                        <div class="card-title" th:text="${film.name}"></div>
+                        <div class="card-text" th:text="${film.country + ' , '
+                    + #temporals.format(film.datePremiere.atZone(zoneOffset),'yyyy',#locale) }"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 </th:block>
 <th:block th:fragment="scripts">
     <script>
-        // Сеня, скрипты везде на страницах вставлять вот так вот, в это место
-        // JQuery и прочая бурда уже подключена в fragments/layout.html
+        function updateSortField(value) {
+            let sortField = document.getElementById("sortHiddenField");
+            sortField.value = value;
+        }
     </script>
 </th:block>
 </body>
