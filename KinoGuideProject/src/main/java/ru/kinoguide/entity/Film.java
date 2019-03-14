@@ -2,6 +2,7 @@ package ru.kinoguide.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -70,6 +71,8 @@ public class Film extends DisplayableEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "film", orphanRemoval = true)
     private List<Session> sessions;
+
+    private double averageRating;
 
     public String getName() {
         return name;
@@ -213,5 +216,13 @@ public class Film extends DisplayableEntity {
 
     public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
     }
 }

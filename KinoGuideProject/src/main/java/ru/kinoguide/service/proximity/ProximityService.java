@@ -6,13 +6,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 import ru.kinoguide.entity.Film;
+import ru.kinoguide.entity.Rating;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.entity.UsersRatingProximity;
+import ru.kinoguide.repository.FilmRepository;
 import ru.kinoguide.repository.RatingRepository;
 import ru.kinoguide.repository.UserRepository;
 import ru.kinoguide.repository.UsersRatingProximityRepository;
@@ -31,24 +30,23 @@ public class ProximityService implements ApplicationListener<ContextRefreshedEve
 
     private RatingRepository ratingRepository;
 
+    private FilmRepository filmRepository;
+
     private UsersRatingProximityRepository usersRatingProximityRepository;
 
     private LinearUserProximityCalculator userProximityCalculator;
 
-    private final TransactionTemplate transactionTemplate;
-
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Autowired
     public ProximityService(UserRepository userRepository, RatingRepository ratingRepository, UsersRatingProximityRepository usersRatingProximityRepository,
-                            @Qualifier("linearUserProximityCalculator") LinearUserProximityCalculator userProximityCalculator, TransactionTemplate transactionTemplate) {
+                            @Qualifier("linearUserProximityCalculator") LinearUserProximityCalculator userProximityCalculator, FilmRepository filmRepository) {
         this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
         this.usersRatingProximityRepository = usersRatingProximityRepository;
         this.userProximityCalculator = userProximityCalculator;
-        this.transactionTemplate = transactionTemplate;
+        this.filmRepository = filmRepository;
     }
 
     /**
@@ -70,6 +68,19 @@ public class ProximityService implements ApplicationListener<ContextRefreshedEve
         usersRatingProximityRepository.save(proximities);
     }
 
+    @Scheduled(cron = "0 0 0/12 * * *")
+    public void recalculateAverageFilmRating() {
+        for (Film film : filmRepository.findAll()) {
+            double averageRate = 0;
+            for (Rating rating : film.getRatingSet()) {
+                averageRate += rating.getRate();
+            }
+            averageRate /= film.getRatingSet().size();
+            film.setAverageRating(averageRate);
+            filmRepository.save(film);
+        }
+    }
+
     /**
      * Proximities recalculation on start of application
      *
@@ -79,6 +90,7 @@ public class ProximityService implements ApplicationListener<ContextRefreshedEve
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (usersRatingProximityRepository.findAll().size() == 0) { // if not generated yet
             recalculateProximities();
+            recalculateAverageFilmRating();
         }
     }
 
