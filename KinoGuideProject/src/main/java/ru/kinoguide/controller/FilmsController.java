@@ -41,7 +41,7 @@ public class FilmsController {
 
     private static final int DAYS_SHOWN = 7;
 
-    private static final int FILMS_ON_BILLBOARD = 12;
+    private static final String FILMS_ON_BILLBOARD = "12";
 
     private FilmService filmService;
 
@@ -64,6 +64,7 @@ public class FilmsController {
             ModelMap model,
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "sortField", required = false, defaultValue = "datePremiere") String sortField,
+            @RequestParam(name = "filmsOnPage", required = false, defaultValue = FILMS_ON_BILLBOARD) Integer filmsOnPage,
             @RequestParam(name = "sortDirectionDesc", required = false, defaultValue = "false") boolean isSortDirectionDesc, // should be false if ASC
             @RequestParam(name = "genres", required = false) Integer[] genreIds
 
@@ -72,7 +73,7 @@ public class FilmsController {
             genreIds = genreService.findAll().stream().map(genre -> genre.getId()).toArray(Integer[]::new);
         }
 
-        PageRequest pageRequest = new PageRequest(page, FILMS_ON_BILLBOARD, isSortDirectionDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortField);
+        PageRequest pageRequest = new PageRequest(page, filmsOnPage, isSortDirectionDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortField);
 
         List<Integer> genreIdsList = Arrays.asList(genreIds);
         Page<Film> filmPage = filmService.findBySessionStartTimeAfterAndGenreIdIn(pageRequest, Instant.now(), genreIds);
@@ -86,7 +87,7 @@ public class FilmsController {
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String film(
+    public String getFilmPage(
             ModelMap modelMap,
             @RequestParam(name = "id") Integer id,
             @RequestParam(name = "date", required = false) LocalDate sessionsDate,

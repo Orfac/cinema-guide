@@ -134,7 +134,7 @@
                     Моя оценка: <span class="text-success">7/10</span>
                 </li>
                 <li class="list-group-item text-center">
-                    Средняя оценка: <span class="text-success">7/10</span>
+                    Средняя оценка: <span th:text="${film.averageRating}" class="text-success">7/10</span>
                 </li>
 
                 <li th:if="${loggedUser != null}" class="list-group-item text-center">

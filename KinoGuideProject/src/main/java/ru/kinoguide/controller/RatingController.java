@@ -7,8 +7,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kinoguide.entity.User;
+import ru.kinoguide.service.GenreService;
 import ru.kinoguide.service.RatingService;
 import ru.kinoguide.service.UserService;
 
@@ -20,20 +22,30 @@ public class RatingController {
 
     private RatingService ratingService;
 
+    private GenreService genreService;
+
     @Autowired
-    public RatingController(UserService userService, RatingService ratingService) {
+    public RatingController(UserService userService, RatingService ratingService, GenreService genreService) {
         this.userService = userService;
         this.ratingService = ratingService;
+        this.genreService = genreService;
     }
 
-    @RequestMapping("")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @Secured({"ROLE_USER"})
     public String getRateByUserId(
             ModelMap model,
             @RequestParam(name = "user", required = false) Integer userId,
-            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
-            @RequestParam(name = "size", required = false, defaultValue = "20") Integer ordersOnPage
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "ordersOnPage", required = false, defaultValue = "12") Integer ordersOnPage,
+            @RequestParam(name = "sortDirectionDesc", required = false, defaultValue = "false") boolean isSortDirectionDesc,
+            @RequestParam(name = "sortField", required = false, defaultValue = "date") String sortField,
+            @RequestParam(name = "genres", required = false) Integer[] genreIds
     ) {
+        if (genreIds == null || genreIds.length == 0) {
+            genreIds = genreService.findAll().stream().map(genre -> genre.getId()).toArray(Integer[]::new);
+        }
+
         User user;
         if (userId == null) {
             user = (User) model.get("loggedUser");
@@ -44,7 +56,8 @@ public class RatingController {
             }
         }
 
-        model.put("rates", ratingService.findAllByUser(user, new PageRequest(page, ordersOnPage, Sort.Direction.DESC, "date")));
+        model.put("rates", ratingService.findDistinctByUserAndFilmGenresIdIn(user, genreIds, new PageRequest(
+                page, ordersOnPage, isSortDirectionDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortField)));
         return "userRating";
     }
 }

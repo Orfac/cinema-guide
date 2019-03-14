@@ -2,14 +2,16 @@ package ru.kinoguide.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kinoguide.entity.Film;
 import ru.kinoguide.entity.Rating;
 import ru.kinoguide.entity.User;
 import ru.kinoguide.repository.RatingRepository;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -25,4 +27,7 @@ public class RatingService {
         return ratingRepository.findAllByUser(user, pageable);
     }
 
+    public Page<Rating> findDistinctByUserAndFilmGenresIdIn(User user, Integer[] genreIds, Pageable pageable) {
+        return ratingRepository.findDistinctRatingsByUserAndFilmGenresIdIn(pageable, user, genreIds);
+    }
 }
