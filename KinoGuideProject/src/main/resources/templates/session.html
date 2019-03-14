@@ -6,31 +6,164 @@
 </head>
 <body>
 <th:block th:fragment="content">
-    <div class="text-center">
-        <h2 th:text="${thisSession.getFilm().getName()}">Богемская рапсодия</h2>
-        <h3 th:text="${${#temporals.format(thisSession.getStartTime(), 'HH:mm')} +
-         '-' + ${#temporals.format(thisSession.getEndTime(), 'HH:mm')} }"></h3>
-        <p th:text="${${#temporals.format(thisSession.getStartTime(), 'dd.MM.yyyy')} +
-         '-' + ${#temporals.format(thisSession.getEndTime(), 'dd.MM.yyyy')} }"> 24.01.2019 13:30</p>
-        <h4><span class="fa fa-building-o"></span> Зал №5 </h4>
-        <h5><span class="fa fa-institution"></span><a href="#"> Синема парк "Дыбенко"</a></h5>
-        <h5><span class="fa fa-map-marker"></span> Ленинградская обл., Всеволожский район, Мурманское шоссе, 12 км</h5>
+    <div class="row text-center">
+        <div class="col-md-3 text-center">
+            <img th:if="${thisSession.getFilm().getPreviewImageURI() != null}"
+                 th:src="${thisSession.getFilm().getPreviewImageURI()}"
+                 alt="asteriks" class="img-fluid card-image-mini-scale">
+            <img th:unless="${thisSession.getFilm().getPreviewImageURI() != null}"
+                 src="/assets/img/placeholder300x300.jpg"
+                 alt="asteriks" class="card-image-mini-scale">
+        </div>
+        <div class="col-md-9 text-center">
+            <h2 th:text="${thisSession.getFilm().getName()}">Богемская рапсодия</h2>
+            <h3 th:text="${#temporals.format(thisSession.getStartTime(), 'HH:mm') +
+         '-' + #temporals.format(thisSession.getEndTime(), 'HH:mm')}"></h3>
+            <p th:text="${#temporals.format(thisSession.getStartTime(), 'dd.MM.yyyy') +
+         '-' + #temporals.format(thisSession.getEndTime(), 'dd.MM.yyyy')}"> 24.01.2019 13:30</p>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 th:text="${thisSession.getCinemaHall().getCinemaTheatre().getCinemaNetwork().name}"></h3>
+                    <h3 th:text="${thisSession.getCinemaHall().getCinemaTheatre().address}"> Синема парк "Дыбенко"</h3>
+                    <p th:text="${'Зал №' + thisSession.getCinemaHall().getNumber()}"></p>
+                </div>
+                <div class="col-md-4">
+                    <img th:if="${thisSession.getCinemaHall().getCinemaTheatre().getPreviewImageURI() != null}"
+                         th:src="${thisSession.getCinemaHall().getCinemaTheatre().getPreviewImageURI()}"
+                         alt="asteriks" class="img-fluid card-image-mini-scale">
+                    <img th:unless="${thisSession.getCinemaHall().getCinemaTheatre().getPreviewImageURI() != null}"
+                         src="/assets/img/placeholder300x300.jpg"
+                         alt="asteriks" class="img-fluid card-image-mini-scale">
+                </div>
+            </div>
+        </div>
+
 
     </div>
     <div class="row">
-
-
-
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="text-center w-100">
                 <h3 class="text-center ">Выберите места:</h3>
             </div>
             <div class="text-center w-100">
                 <ul class="list-group center-block text-center">
                     <li class="list-group-item">
-
                         <ul class="list-inline">
+                            <div class="list-inline-item align-middle">
+                                4
+                            </div>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        1
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        2
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        3
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        4
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        5
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        6
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        7
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="text-center">
+                                    <div class="h-25">
+                                        150р
+                                    </div>
+                                    <button class="btn btn-outline-success h-75">
+                                        8
+                                    </button>
+                                </div>
+                            </li>
                             <div class="list-inline-item align-middle   ">
+                                4
+                            </div>
+                        </ul>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center w-100">
+                <h3 class="text-center ">Выберите места:</h3>
+            </div>
+            <div class="text-center w-100">
+                <ul class="list-group center-block text-center">
+                    <li class="list-group-item">
+                        <ul class="list-inline">
+                            <div class="list-inline-item align-middle">
                                 4
                             </div>
                             <li class="list-inline-item">
@@ -296,14 +429,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-4 text-center">
-            <img th:if="${thisSession.getFilm().getPreviewImageURI() != null}"
-                 th:src="${thisSession.getFilm().getPreviewImageURI()}"
-                 alt="asteriks" class="card-image-mini-scale">
-            <img th:unless="${thisSession.getFilm().getPreviewImageURI() != null}"
-                 src="/assets/img/placeholder300x300.jpg"
-                 alt="asteriks" class="card-image-mini-scale">
-        </div>
+
     </div>
 
 </th:block>
