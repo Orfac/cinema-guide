@@ -3,7 +3,7 @@
 
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">КиноГайд</a>
+    <a class="navbar-brand" href="/film/billboard">КиноГайд</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -16,8 +16,7 @@
                     Название пункта меню
                 </a>
             </li>
-            <li th:replace="::menuItem ('/film/billboard','Афиша')">
-            </li>
+
             <li th:replace="::menuItem ('/order/auto','Автозаказ')">
             </li>
 
