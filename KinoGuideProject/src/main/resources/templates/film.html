@@ -16,41 +16,12 @@
         <div class="col-md-3">
             <img th:if="${film.getPreviewImageURI() != null}"
                  th:src="${film.getPreviewImageURI()}"
-                 alt="asteriks" class="img-fluid">
+                 alt="asteriks" class="img-fluid film-card-image shadow">
             <img th:unless="${film.getPreviewImageURI() != null}"
                  src="/assets/img/placeholder300x300.jpg"
-                 alt="asteriks" class="img-fluid">
-
-            <h3 class="text-center">Оценки</h3>
-            <ul class="list-group">
-                <li class="list-group-item text-center">
-                    Моя оценка: <span class="text-success">7/10</span>
-                </li>
-                <li class="list-group-item text-center">
-                    Средняя оценка: <span class="text-success">7/10</span>
-                </li>
-
-                <li th:if="${loggedUser != null}" class="list-group-item text-center">
-                    <table class="table table-sm w-100 m-0">
-                        <thead>
-                        <tr>
-                            <th scope="col">Имя</th>
-                            <th scope="col">Оценка</th>
-                            <th scope="col">Близость</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="closeUserRelatedProximity : ${closeUserRelatedProximityList}">
-                            <td th:text="${closeUserRelatedProximity.getProximityFriend().getName()}">Антон</td>
-                            <td th:text="${closeUserRelatedProximity.getRate()}" class="text-success">7/10</td>
-                            <td th:text="${closeUserRelatedProximity.getProximity()}">100%</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </li>
-            </ul>
+                 alt="asteriks" class="img-fluid film-card-image shadow">
         </div>
-        <div class="col-md-9">
+        <div class="col-md-6">
             <ul class="list-group">
                 <li class="list-group-item">
                     <ul class="list-inline">
@@ -64,23 +35,23 @@
                 </li>
                 <li class="list-group-item">
                     <span>Страна: </span>
-                    <span th:text="${film.country}"></span>
+                    <b><span th:text="${film.country}"></span></b>
                 </li>
                 <li th:if="${film.dateShootingStart != null}" class="list-group-item">
                     <span>Дата начала съемок: </span>
-                    <span th:text="${#temporals.format(film.dateShootingStart.atZone(zoneOffset), 'dd.MM.yyyy')}"></span>
+                    <b><span th:text="${#temporals.format(film.dateShootingStart.atZone(zoneOffset), 'dd.MM.yyyy')}"></span></b>
                 </li>
                 <li th:if="${film.dateShootingEnd != null}" class="list-group-item">
                     <span>Дата конца съемок: </span>
-                    <span th:text="${#temporals.format(film.dateShootingEnd.atZone(zoneOffset), 'dd.MM.yyyy')}"></span>
+                    <b><span th:text="${#temporals.format(film.dateShootingEnd.atZone(zoneOffset), 'dd.MM.yyyy')}"></span></b>
                 </li>
                 <li th:if="${film.datePremiere != null}" class="list-group-item">
                     <span>Дата премьеры: </span>
-                    <span th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'dd.MM.yyyy')}"></span>
+                    <b><span th:text="${#temporals.format(film.datePremiere.atZone(zoneOffset), 'dd.MM.yyyy')}"></span></b>
                 </li>
                 <li class="list-group-item">
                     <span>Продолжительность: </span>
-                    <span th:text="${film.duration}"></span>
+                    <b><span th:text="${film.duration}"></span></b>
                     <span> минут</span>
                 </li>
                 <li class="list-group-item">
@@ -156,56 +127,94 @@
                 </li>
             </ul>
         </div>
+        <div class="col-md-3">
+            <h2 class="text-center">Оценки</h2>
+            <ul class="list-group">
+                <li class="list-group-item text-center">
+                    Моя оценка: <span class="text-success">7/10</span>
+                </li>
+                <li class="list-group-item text-center">
+                    Средняя оценка: <span class="text-success">7/10</span>
+                </li>
+
+                <li th:if="${loggedUser != null}" class="list-group-item text-center">
+                    <table class="table table-sm w-100 table-hover">
+                        <tr>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Близость</th>
+                            <th scope="col">Оценка</th>
+                        </tr>
+                        <tr th:each="closeUserRelatedProximity : ${closeUserRelatedProximityList}">
+                            <td th:text="${closeUserRelatedProximity.getProximityFriend().getName()}">Антон</td>
+
+                            <td th:text="${closeUserRelatedProximity.getProximity() + '%'}">100%</td>
+                            <td th:if="${closeUserRelatedProximity.getRate() >= 7 }"
+                                class="text-success"
+                                th:text="${closeUserRelatedProximity.getRate() + '/10'}" >7/10</td>
+                            <td th:if="${closeUserRelatedProximity.getRate() > 3 && closeUserRelatedProximity.getRate() < 7}"
+                                class="text-warning"
+                                th:text="${closeUserRelatedProximity.getRate() + '/10'}" >7/10</td>
+                            <td th:if="${closeUserRelatedProximity.getRate() <= 3  }"
+                                class="text-danger"
+                                th:text="${closeUserRelatedProximity.getRate() + '/10'}" >7/10</td>
+                        </tr>
+
+                    </table>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col-md-4">
-            <h4>
+            <h4 class="text-left">
                 Список сеансов на <b><u th:text="${#temporals.format(currentDate, 'dd.MM')}">24.01</u></b>
             </h4>
         </div>
         <div class="col-md-8 text-right">
             <ul class="list-inline">
                 <li th:each="date : ${dates}" class="list-inline-item">
-                    <button th:class="${currentDate.equals(date)} ? 'btn btn-info' : 'btn btn-outline-info'">
-                        <a th:href="@{film(id=${film.id},date=${date})}">
+                    <a th:href="@{film(id=${film.id},date=${date})}">
+                        <button th:class="${currentDate.equals(date)} ? 'btn btn-info' : 'btn btn-outline-info'">
                             <small th:text="${#temporals.format(date, 'dd.MM')}">23.01</small>
-                        </a>
-                    </button>
+                        </button>
+                    </a>
                 </li>
             </ul>
         </div>
-        <div>
-        <a style="font-size: 50px;" th:if="${cinemaTheatresSessions.hasNextPage()}" th:href="@{film(id=${film.id},date=${currentDate}, page=${page + 1})}">Next page</a>
-            <a style="font-size: 50px;" th:if="${cinemaTheatresSessions.hasPreviousPage()}" th:href="@{film(id=${film.id},date=${currentDate}, page=${page - 1})}">Previous page</a>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <a th:if="${cinemaTheatresSessions.hasPreviousPage()}" th:href="@{film(id=${film.id},date=${currentDate}, page=${page - 1})}">Предыдущие сеансы</a>
+            <a th:if="${cinemaTheatresSessions.hasNextPage()}" th:href="@{film(id=${film.id},date=${currentDate}, page=${page + 1})}">Следующие сеансы</a>
         </div>
     </div>
-
-    <div th:each="cinemaTheatre : ${cinemaTheatresSessions.getCinemaTheatres()}" class="row">
-        <div class="col-md-2 small">
-            <a href="#">
-                <button class="btn btn-outline-light">
+    <div th:each="cinemaTheatre : ${cinemaTheatresSessions.getCinemaTheatres()}" class="row mt-2">
+        <div class="col-md-2 ">
+            <a th:href="@{'/cinema?id=' + ${cinemaTheatre.id}}">
+                <div class="card shadow">
                     <img th:if="${cinemaTheatre.getPreviewImageURI() != null}"
                          th:src="${cinemaTheatre.getPreviewImageURI()}"
-                         alt="asteriks" class="img-fluid">
+                         alt="asteriks" class="card-img-top card-image-mini-scale">
                     <img th:unless="${cinemaTheatre.getPreviewImageURI() != null}"
                          src="/assets/img/placeholder300x300.jpg"
-                         alt="asteriks" class="img-fluid">
-                </button>
+                         alt="asteriks" class="card-img-top card-image-mini-scale">
+                    <div class="card-header">
+                        <div class="card-title text-center" th:text="${cinemaTheatre.address}"></div>
+                    </div>
+                </div>
             </a>
-            <p th:text="${cinemaTheatre.address}"></p>
         </div>
         <div class="col-md-10">
             <ul class="list-inline">
                 <li th:each="filmSession : ${cinemaTheatresSessions.getSessionsByCinemaTheatre(cinemaTheatre)}" class="list-inline-item">
-                    <div class="card">
-                        <button class="btn btn-link">
-                            <div class="card-body text-center">
-                                <p th:text="${#temporals.format(filmSession.getStartTime(), 'HH:mm')}">13:30</p>
-                                <p th:if="${filmSession.getTicketWithMinPrice() != null}" th:text="${'от ' + filmSession.getTicketWithMinPrice().intPrice() + 'р'}">200р</p>
-                                <p th:unless="${filmSession.getTicketWithMinPrice() != null}">Билетов нет</p>
-                                <p th:text="${'Зал ' + filmSession.cinemaHall.number}"></p>
-                            </div>
+                    <div class="card shadow-sm">
+                        <a th:href="@{'/session/' + ${filmSession.id}}">
+                        <button class="btn btn-outline-success" >
+                            <h3 class="text-center" th:text="${#temporals.format(filmSession.getStartTime(), 'HH:mm')}">13:30</h3>
+                            <p class="text-left mt-0" th:if="${filmSession.getTicketWithMinPrice() != null}" th:text="${'от ' + filmSession.getTicketWithMinPrice().intPrice() + 'р'}">200р</p>
+                            <p class="text-left" th:unless="${filmSession.getTicketWithMinPrice() != null}">Билетов нет</p>
                         </button>
+                        </a>
                     </div>
                 </li>
             </ul>

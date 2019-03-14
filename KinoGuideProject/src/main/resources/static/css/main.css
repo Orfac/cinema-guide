@@ -48,3 +48,11 @@ body {
 .film-card-image:hover{
     transform: scale(1.2);
 }
+
+.card-image-mini-scale{
+    transition: transform .3s;
+}
+
+.card-image-mini-scale:hover{
+    transform: scale(1.1);
+}
